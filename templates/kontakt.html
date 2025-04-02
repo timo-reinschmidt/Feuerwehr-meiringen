@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero -->
+<section class="relative h-[50vh] min-h-[300px] flex items-center justify-center bg-cover bg-center" style="background-image: url('/static/images/kontakt-header.jpg');">
+  <div class="absolute inset-0 bg-black/50"></div>
+  <div class="relative z-10 text-white text-center px-4">
+    <h1 class="text-4xl md:text-5xl font-bold drop-shadow">Kontakt</h1>
+    <p class="text-md md:text-xl mt-2 drop-shadow">Wir sind für Sie da – melden Sie sich gern.</p>
+  </div>
+</section>
+
+<!-- Kontaktinformationen -->
+<section class="py-16 bg-fwhell">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-12">
+      <div>
+        <h2 class="text-2xl font-semibold mb-4 text-fwrot">Anschrift</h2>
+        <p class="text-gray-800 leading-relaxed">
+          Feuerwehr Meiringen<br>
+          Alpbachstrasse 10<br>
+          3860 Meiringen<br>
+          Schweiz
+        </p>
+
+        <h2 class="text-2xl font-semibold mt-8 mb-4 text-fwrot">Kontakt</h2>
+        <p class="text-gray-800">
+          📞 Telefon (Zentrale Gemeinde): <a href="tel:+41339721010" class="text-blue-600 underline">+41 33 972 10 10</a><br>
+          ✉️ E-Mail: <a href="mailto:feuerwehr@meiringen.ch" class="text-blue-600 underline">feuerwehr@meiringen.ch</a>
+        </p>
+
+        <h2 class="text-2xl font-semibold mt-8 mb-4 text-fwrot">Anfahrt</h2>
+        <p class="text-gray-800">Unser Feuerwehrmagazin befindet sich direkt bei der Sportanlage Alpbach. Parkplätze sind vorhanden.</p>
+      </div>
+
+      <!-- Kontaktformular -->
+      <div>
+        <h2 class="text-2xl font-semibold mb-4 text-fwrot">Schreiben Sie uns</h2>
+        <form class="grid gap-4">
+          <input type="text" placeholder="Name *" required class="p-2 rounded border">
+          <input type="email" placeholder="E-Mail *" required class="p-2 rounded border">
+          <input type="text" placeholder="Telefon" class="p-2 rounded border">
+          <textarea placeholder="Nachricht *" required class="p-2 rounded border h-32"></textarea>
+          <button type="submit" class="bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded">Nachricht senden</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>FW Meiringen – Prototyp</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    .menu-section {
+      padding: 1rem;
+    }
+    .w3-sidebar {
+      width: 260px;
+    }
+    .w3-bar-item {
+      font-size: 16px;
+    }
+    .content {
+      margin-left: 270px;
+      padding: 2rem;
+    }
+    .w3-button.dropdown {
+      width: 100%;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="w3-sidebar w3-bar-block w3-light-grey w3-card">
+  <h3 class="w3-bar-item w3-dark-grey">FW Meiringen</h3>
+  <a href="#startseite" class="w3-bar-item w3-button">🏠 Startseite</a>
+
+  <button onclick="toggleDropdown('about')" class="w3-button dropdown">🚒 Über uns ▾</button>
+  <div id="about" class="w3-bar-block w3-hide w3-white">
+    <a href="#ueber-uns" class="w3-bar-item w3-button">Unsere Feuerwehr</a>
+    <a href="#kommando" class="w3-bar-item w3-button">Kommando & Mitglieder</a>
+    <a href="#einsatzgebiet" class="w3-bar-item w3-button">Einsatzgebiet</a>
+  </div>
+
+  <a href="#einsaetze" class="w3-bar-item w3-button">📢 Einsätze & Aktuelles</a>
+  <a href="#mitmachen" class="w3-bar-item w3-button">👥 Mitmachen</a>
+  <a href="#fahrzeuge" class="w3-bar-item w3-button">🚐 Fahrzeuge & Ausrüstung</a>
+  <a href="#buergerinfos" class="w3-bar-item w3-button">🧯 Bürgerinfos</a>
+  <a href="#downloads" class="w3-bar-item w3-button">📂 Formulare & Downloads</a>
+  <a href="#galerie" class="w3-bar-item w3-button">🖼️ Galerie</a>
+  <a href="#kontakt" class="w3-bar-item w3-button">📞 Kontakt & Partner</a>
+</nav>
+
+<!-- Content Area -->
+<div class="content">
+  <section id="startseite">
+    <h2>🏠 Startseite</h2>
+    <p>Willkommen bei der Feuerwehr Meiringen. Wir sind rund um die Uhr einsatzbereit – für Ihre Sicherheit.</p>
+  </section>
+
+  <section id="ueber-uns">
+    <h2>🚒 Unsere Feuerwehr</h2>
+    <p>Erfahren Sie mehr über die Struktur, Geschichte und Werte unserer Organisation.</p>
+  </section>
+
+  <section id="kommando">
+    <h2>👨‍🚒 Kommando & Mitglieder</h2>
+    <p>Hier stellen wir unser Kommando-Team und unsere motivierten Einsatzkräfte vor.</p>
+  </section>
+
+  <section id="einsatzgebiet">
+    <h2>🌍 Einsatzgebiet</h2>
+    <p>Das Einsatzgebiet der Feuerwehr Meiringen umfasst das Haslital und angrenzende Regionen.</p>
+  </section>
+
+  <section id="einsaetze">
+    <h2>📢 Einsätze & Aktuelles</h2>
+    <p>Berichte über unsere letzten Einsätze, Medienartikel und aktuelle Neuigkeiten.</p>
+  </section>
+
+  <section id="mitmachen">
+    <h2>👥 Mitmachen</h2>
+    <p>Ob Quereinsteiger oder Feuerwehrbegeistert – hier erfahren Sie, wie Sie Teil unseres Teams werden.</p>
+  </section>
+
+  <section id="fahrzeuge">
+    <h2>🚐 Fahrzeuge & Ausrüstung</h2>
+    <p>Unsere moderne Fahrzeugflotte und Ausrüstung für verschiedenste Einsatzlagen.</p>
+  </section>
+
+  <section id="buergerinfos">
+    <h2>🧯 Bürgerinfos & Notfalltipps</h2>
+    <p>Wichtige Hinweise für Notfälle, Verhalten im Brandfall und Präventionsmaterial.</p>
+  </section>
+
+  <section id="downloads">
+    <h2>📂 Formulare & Downloads</h2>
+    <p>Mitgliedschaftsanträge, Reglemente und Formulare zum Herunterladen.</p>
+  </section>
+
+  <section id="galerie">
+    <h2>🖼️ Galerie</h2>
+    <p>Einblicke in unsere Arbeit – in Bildern festgehalten.</p>
+  </section>
+
+  <section id="kontakt">
+    <h2>📞 Kontakt & Partner</h2>
+    <p>Hier finden Sie unsere Kontaktdaten sowie Links zu Partnerorganisationen.</p>
+  </section>
+</div>
+
+<script>
+function toggleDropdown(id) {
+  const x = document.getElementById(id);
+  if (x.classList.contains("w3-show")) {
+    x.classList.remove("w3-show");
+    x.classList.add("w3-hide");
+  } else {
+    x.classList.remove("w3-hide");
+    x.classList.add("w3-show");
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero -->
+<section class="relative h-[50vh] min-h-[300px] flex items-center justify-center bg-cover bg-center" style="background-image: url('/static/images/einsaetze-header.jpg');">
+  <div class="absolute inset-0 bg-black/50"></div>
+  <div class="relative z-10 text-white text-center px-4">
+    <h1 class="text-4xl md:text-5xl font-bold drop-shadow">Einsätze & Aktuelles</h1>
+    <p class="text-md md:text-xl mt-2 drop-shadow">Echte Einblicke in unser Einsatzgeschehen und aktuelle Mitteilungen.</p>
+  </div>
+</section>
+
+<!-- Letzte Einsätze -->
+<section class="py-16 bg-fwhell">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-2xl font-semibold mb-8 text-fwrot">Letzte Einsätze (2025)</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-white p-5 rounded shadow border-l-4 border-fwrot">
+        <p class="text-sm text-gray-500">29. März 2025</p>
+        <h3 class="font-bold text-lg mb-2">Kaminbrand</h3>
+        <p class="text-sm text-gray-800">Brandentwicklung im Kamin – gelöscht unter Atemschutz.</p>
+      </div>
+      <div class="bg-white p-5 rounded shadow border-l-4 border-fwrot">
+        <p class="text-sm text-gray-500">24. März 2025</p>
+        <h3 class="font-bold text-lg mb-2">Ölunfall</h3>
+        <p class="text-sm text-gray-800">Ölspur gebunden – schnelle Reaktion verhinderte Umweltschaden.</p>
+      </div>
+      <div class="bg-white p-5 rounded shadow border-l-4 border-fwrot">
+        <p class="text-sm text-gray-500">23. März 2025</p>
+        <h3 class="font-bold text-lg mb-2">Rauchentwicklung Brätelstelle</h3>
+        <p class="text-sm text-gray-800">Glutreste verursachten Rauch – kontrolliert und gelöscht.</p>
+      </div>
+      <div class="bg-white p-5 rounded shadow border-l-4 border-fwrot">
+        <p class="text-sm text-gray-500">20. März 2025</p>
+        <h3 class="font-bold text-lg mb-2">Fehlalarm</h3>
+        <p class="text-sm text-gray-800">Automatischer Brandmelder ohne Brandereignis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tag der offenen Tür -->
+<section id="tag-der-offenen-tuer-section" class="py-16">
+  <div class="max-w-4xl mx-auto px-4 bg-white border-l-4 border-fworange p-6 rounded shadow">
+    <h2 class="text-2xl font-bold text-fwrot mb-2">Tag der offenen Tür</h2>
+    <p class="text-lg font-semibold text-fworange">Samstag, 17. Mai 2025, 13.00–17.00 Uhr</p>
+    <p class="text-md font-medium text-fwrot mb-4">Feuerwehrmagazin Meiringen</p>
+    <p class="mb-4">Im Rahmen des Coop Gemeinde Duells öffnen wir unsere Türen und laden dich ein, die Feuerwehr hautnah zu erleben!</p>
+    <p class="font-semibold mb-2">Das erwartet dich:</p>
+    <ul class="list-disc list-inside italic mb-4 text-gray-800">
+      <li>Feuerwehr hautnah erleben</li>
+      <li>Kleine Brände selbst löschen – ein Erlebnis für Gross & Klein</li>
+      <li>Fahrzeugausstellung – entdecke unsere Einsatzfahrzeuge</li>
+      <li>Magazinrundgang – ein Blick hinter die Kulissen</li>
+    </ul>
+    <p class="mb-2">Komm vorbei und werde Teil dieses spannenden Nachmittags!<br>Wir freuen uns auf deinen Besuch. 🚒👨‍🚒</p>
+    <p class="text-sm text-gray-600">Weitere Informationen zum Coop Gemeindeduell findest du <a href="#" class="text-blue-600 underline">hier</a>.</p>
+  </div>
+</section>
+
+<!-- Mitteilungen -->
+<section class="py-16 bg-fwhell">
+  <div class="max-w-4xl mx-auto px-4">
+    <h2 class="text-2xl font-semibold mb-6">News & Mitteilungen</h2>
+    <ul class="list-disc list-inside text-gray-800">
+      <li>Neue Einsatzkleidung für Atemschutztrupps ab Mai</li>
+      <li>Erfolgreicher Winterdienst-Einsatz beim Lawinenvorfall in Gadmen</li>
+      <li>Technische Schulung zum Wassertransport erfolgreich abgeschlossen</li>
+    </ul>
+  </div>
+</section>
+
+{% endblock %}

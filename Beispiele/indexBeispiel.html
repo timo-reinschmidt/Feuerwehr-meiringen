@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Seitenbaum – Feuerwehr Meiringen</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+      background-color: #f7f7f7;
+    }
+    ul {
+      list-style: none;
+      padding-left: 1em;
+      line-height: 1.6;
+    }
+    .tree-item {
+      cursor: pointer;
+      user-select: none;
+    }
+    .tree-item::before {
+      content: "\25B6";
+      display: inline-block;
+      margin-right: 6px;
+      transition: transform 0.2s;
+    }
+    .tree-item.open::before {
+      transform: rotate(90deg);
+    }
+    .nested {
+      display: none;
+      margin-left: 1em;
+      padding-left: 1em;
+      border-left: 1px solid #ccc;
+    }
+    .nested.open {
+      display: block;
+    }
+    a {
+      text-decoration: none;
+      color: #004080;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🔍 Seitenbaum – Feuerwehr Meiringen (Optimierte Struktur mit Textvorschlägen)</h2>
+
+<ul>
+  <li><a href="/">🏠 Startseite</a><br><small>Willkommen bei der Feuerwehr Meiringen – erfahren Sie mehr über unsere Arbeit und wie Sie uns unterstützen können.</small></li>
+
+  <li>
+    <span class="tree-item">🚒 Über uns</span>
+    <ul class="nested">
+      <li><a href="/organisation/">Unsere Feuerwehr</a><br><small>Struktur, Werte und Geschichte der Feuerwehr Meiringen.</small></li>
+      <li><a href="/organisation/kommando/">Kommando & Mitglieder</a><br><small>Das Führungsteam und engagierte Einsatzkräfte im Überblick.</small></li>
+      <li><a href="/organisation/einsatzgebiet/">Einsatzgebiet</a><br><small>Die Regionen und Orte, in denen wir im Einsatz stehen.</small></li>
+      <li><a href="/organisation/terminkalender/">Terminkalender</a><br><small>Alle Übungen, Sitzungen und Veranstaltungen auf einen Blick.</small></li>
+    </ul>
+  </li>
+
+  <li>
+    <span class="tree-item">📢 Einsätze & Aktuelles</span>
+    <ul class="nested">
+      <li><a href="/organisation/letzte-einsaetze-presseartikel/">Letzte Einsätze</a><br><small>Berichte und Fotos unserer aktuellen Einsätze.</small></li>
+      <li><a href="/organisation/letzte-einsaetze-presseartikel/">Presseartikel</a><br><small>Medienberichte über unsere Tätigkeit und Engagement.</small></li>
+      <li><a href="#">News & Veranstaltungen</a><br><small>Wichtige Mitteilungen und kommende Feuerwehr-Events.</small></li>
+    </ul>
+  </li>
+
+  <li>
+    <span class="tree-item">👥 Mitmachen</span>
+    <ul class="nested">
+      <li><a href="#">Warum Feuerwehr?</a><br><small>Gemeinschaft, Verantwortung und Sinn – Gründe für deinen Einstieg.</small></li>
+      <li><a href="#">Ausbildung & Einstieg</a><br><small>Informationen zu Ausbildungswegen und Einstiegsmöglichkeiten.</small></li>
+      <li><a href="#">Erfahrungsberichte</a><br><small>Mitglieder erzählen: Mein Weg zur Feuerwehr Meiringen.</small></li>
+      <li><a href="#">Jetzt mitmachen</a><br><small>Direkt anfragen oder Schnuppertermin vereinbaren.</small></li>
+    </ul>
+  </li>
+
+  <li>
+    <span class="tree-item">🚐 Fahrzeuge & Ausrüstung</span>
+    <ul class="nested">
+      <li><a href="/einsatzmittel/">Fahrzeuge</a><br><small>Unsere Einsatzfahrzeuge im Detail – von Pionier bis Atemschutz.</small></li>
+      <li><a href="/einsatzmittel/">Spezialgeräte</a><br><small>Technische Ausrüstung für komplexe Einsätze.</small></li>
+    </ul>
+  </li>
+
+  <li>
+    <span class="tree-item">🧯 Bürgerinfos & Notfalltipps</span>
+    <ul class="nested">
+      <li><a href="#">Notrufnummern</a><br><small>Wichtige Nummern für den Ernstfall – immer griffbereit.</small></li>
+      <li><a href="#">Verhalten im Ernstfall</a><br><small>So reagieren Sie richtig bei Brand, Unfall oder Naturgefahr.</small></li>
+      <li><a href="#">Sicherheitsinformationen</a><br><small>Prävention, Rauchmelder & Co. – schützen Sie sich und andere.</small></li>
+      <li><a href="/formulare-reglemente/">Downloads für Bürger</a><br><small>Infomaterial und Merkblätter zur persönlichen Sicherheit.</small></li>
+    </ul>
+  </li>
+
+  <li>
+    <span class="tree-item">📂 Formulare & Reglemente</span>
+    <ul class="nested">
+      <li><a href="/formulare-reglemente/">Mitgliedschaftsantrag</a><br><small>Jetzt Teil der Feuerwehr werden – so einfach geht’s.</small></li>
+      <li><a href="/formulare-reglemente/">Dienstreglement</a><br><small>Regeln und Abläufe im Feuerwehrdienst – transparent erklärt.</small></li>
+      <li><a href="/formulare-reglemente/">Interne Formulare</a><br><small>Dokumente für aktive Mitglieder zum Download.</small></li>
+    </ul>
+  </li>
+
+  <li><a href="/galerie/">🖼️ Galerie</a><br><small>Impressionen aus Einsätzen, Übungen und Kameradschaft.</small></li>
+
+  <li>
+    <span class="tree-item">📞 Kontakt & Partner</span>
+    <ul class="nested">
+      <li><a href="/kontakt-links/">Kontaktformular</a><br><small>Fragen? Wir sind für Sie da.</small></li>
+      <li><a href="/kontakt-links/">Ansprechpartner</a><br><small>Direkte Kontakte zu unseren Verantwortlichen.</small></li>
+      <li><a href="/kontakt-links/">Links & Partnerorganisationen</a><br><small>Unsere Partner im Sicherheitsnetzwerk.</small></li>
+    </ul>
+  </li>
+</ul>
+
+<script>
+  const togglers = document.querySelectorAll('.tree-item');
+  togglers.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('open');
+      const nested = item.nextElementSibling;
+      if (nested) nested.classList.toggle('open');
+    });
+  });
+</script>
+
+</body>
+</html>

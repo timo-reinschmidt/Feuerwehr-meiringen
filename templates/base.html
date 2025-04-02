@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }} – Feuerwehr Meiringen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            fwrot: '#D62828',
+            fworange: '#F77F00',
+            fwhell: '#F8F9FA',
+            fwdunkel: '#212529'
+          }
+        }
+      }
+    }
+  </script>
+  <script>
+  let lastScrollY = window.scrollY;
+  const navbar = document.getElementById("navbar");
+
+  window.addEventListener("scroll", () => {
+    const currentScrollY = window.scrollY;
+    const scrollingDown = currentScrollY > lastScrollY;
+
+    if (scrollingDown && currentScrollY > 80) {
+      navbar.classList.add("-translate-y-full");
+    } else {
+      navbar.classList.remove("-translate-y-full");
+    }
+
+    lastScrollY = currentScrollY;
+  });
+</script>
+</head>
+<body class="bg-fwhell text-fwdunkel">
+
+<!-- Navigation -->
+<nav x-data="{ mobileOpen: false }" id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-gray-900 text-white shadow transition-transform duration-300">
+  <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 font-bold text-lg">
+      <img src="/static/images/feuerwehr-meiringen_logo.png" alt="Feuerwehr Meiringen Logo" class="h-8 w-auto">
+      <span class="hidden sm:inline">Feuerwehr Meiringen</span>
+    </a>
+
+    <!-- Desktop-Navigation -->
+    <div class="hidden md:flex gap-6 text-sm">
+      <a href="/ueber-uns" class="hover:text-fworange">Über uns</a>
+      <a href="/einsaetze" class="hover:text-fworange">Einsätze</a>
+      <a href="/mitmachen" class="hover:text-fworange">Mitmachen</a>
+      <a href="/fahrzeuge" class="hover:text-fworange">Fahrzeuge</a>
+      <a href="/buergerinfos" class="hover:text-fworange">Bürgerinfos</a>
+      <a href="/downloads" class="hover:text-fworange">Downloads</a>
+      <a href="/galerie" class="hover:text-fworange">Galerie</a>
+      <a href="/kontakt" class="hover:text-fworange">Kontakt</a>
+    </div>
+
+    <!-- Notruf-Button (Desktop) -->
+    <div class="hidden md:block">
+      <a href="tel:188" class="bg-black hover:bg-white hover:text-fwrot transition px-4 py-2 rounded font-semibold text-sm">🚨 Notruf 188</a>
+    </div>
+
+    <!-- Mobile Toggle Button -->
+    <button @click="mobileOpen = !mobileOpen" class="md:hidden focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path :class="mobileOpen ? 'hidden' : 'inline'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        <path :class="mobileOpen ? 'inline' : 'hidden'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile-Menü -->
+  <div x-show="mobileOpen" x-transition class="md:hidden bg-gray-800 px-4 py-4 space-y-2 text-sm">
+    <a href="/ueber-uns" class="block hover:text-fworange">Über uns</a>
+    <a href="/einsaetze" class="block hover:text-fworange">Einsätze</a>
+    <a href="/mitmachen" class="block hover:text-fworange">Mitmachen</a>
+    <a href="/fahrzeuge" class="block hover:text-fworange">Fahrzeuge</a>
+    <a href="/buergerinfos" class="block hover:text-fworange">Bürgerinfos</a>
+    <a href="/downloads" class="block hover:text-fworange">Downloads</a>
+    <a href="/galerie" class="block hover:text-fworange">Galerie</a>
+    <a href="/kontakt" class="block hover:text-fworange">Kontakt</a>
+    <a href="tel:188" class="block text-center mt-4 bg-fwrot text-white font-semibold py-2 rounded">🚨 Notruf 188</a>
+  </div>
+</nav>
+
+
+<!-- Page Content -->
+<main class="max-w-7xl mx-auto pt-32 pb-12 px-4">
+  {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>
