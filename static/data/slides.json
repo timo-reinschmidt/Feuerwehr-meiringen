@@ -1,0 +1,29 @@
+[
+  {
+    "image": "/static/images/fw_gruppenfoto.jpg",
+    "title": "Feuerwehr Meiringen",
+    "subtitle": "Retten. Löschen. Bergen. Schützen. – 24/7 für Ihre Sicherheit im Einsatz.",
+    "button": {
+      "text": "Jetzt mitmachen",
+      "link": "/mitmachen"
+    }
+  },
+  {
+    "image": "/static/images/tag_der_offenen_tuer.jpg",
+    "title": "Tag der offenen Tür",
+    "subtitle": "Besuche uns am 17. Mai",
+    "button": {
+      "text": "Mehr Infos",
+      "link": "/einsaetze"
+    }
+  },
+  {
+    "image": "/static/images/news_lawinen.jpg",
+    "title": "Lawineneinsatz Gadmen",
+    "subtitle": "Im Einsatz für Sicherheit und Unterstützung in Extremsituationen.",
+    "button": {
+      "text": "Zum Einsatzbericht",
+      "link": "/einsaetze"
+    }
+  }
+]
