@@ -28,7 +28,7 @@
             <p class="text-2xl font-semibold mt-4 text-fworange">Wir suchen DICH!</p>
         </div>
 
-        <div x-data="{ open: 0 }" class="space-y-4">
+        <div x-data="{ open: null }" class="space-y-4">
             <!-- Schritt 1: Kontaktformular -->
             <div class="border border-gray-300 rounded overflow-hidden">
                 <button @click="open === 0 ? open = null : open = 0"
@@ -137,7 +137,7 @@
         <template x-for="(eintraege, monat) in gruppiereNachMonat(zukunftsTermine)" :key="monat">
             <div class="mb-10">
                 <h3 class="text-xl font-bold mb-4 text-fwblack" x-text="monat"></h3>
-                <div class="grid md:grid-cols-2 gap-6">
+                <div class="grid md:grid-cols-3 gap-6">
                     <template x-for="(eintrag, index) in eintraege" :key="index">
                         <div class="bg-fwbeige p-4 rounded shadow border-l-4 border-fworange">
                             <p class="text-sm text-gray-500" x-text="eintrag.datum + ' (' + eintrag.tag + ')' "></p>
@@ -169,7 +169,7 @@
                 <template x-for="(eintraege, jahr) in gruppiereNachJahr(vergangeneTermine)" :key="jahr">
                     <div class="mb-6">
                         <h3 class="font-bold text-fwblack mb-2" x-text="jahr"></h3>
-                        <div class="grid md:grid-cols-2 gap-6">
+                        <div class="grid md:grid-cols-3 gap-6">
                             <template x-for="(eintrag, index) in eintraege" :key="index">
                                 <div class="bg-white p-4 rounded shadow border-l-4 border-gray-300">
                                     <p class="text-sm text-gray-500"

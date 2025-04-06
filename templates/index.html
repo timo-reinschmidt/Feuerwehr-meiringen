@@ -41,7 +41,7 @@
         <h2 class="text-2xl font-semibold mb-6 text-fwrot">Schnellzugriff</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <a href="/einsaetze" class="group bg-white border-l-4 border-fwrot hover:shadow-md transition p-6 rounded">
-                <h3 class="text-lg font-bold group-hover:text-fwrot">📢 Letzte Einsätze</h3>
+                <h3 class="text-lg font-bold group-hover:text-fwrot">🚒 Letzte Einsätze</h3>
                 <p class="text-sm text-fwblack/80 mt-2">Einblicke in unsere aktuellen Einsätze und Leistungen.</p>
             </a>
             <a href="/mitmachen"
@@ -59,38 +59,55 @@
 </section>
 
 <!-- AKTUELLES / VORSCHAU EINSÄTZE -->
-<section class="py-16 bg-white">
+<section class="py-16 bg-white" x-data="startseiteApp()" x-init="loadAll()">
     <div class="max-w-7xl mx-auto px-4">
-        <h2 class="text-2xl font-semibold text-fwblack mb-8">Aktuelles & Letzte Einsätze</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-fwbeige p-5 rounded shadow flex flex-col justify-between border-l-4 border-fwrot">
-                <div>
-                    <p class="text-sm text-gray-500 mb-2">29. März 2025</p>
-                    <h3 class="font-bold text-lg text-fwblack">Kaminbrand</h3>
-                    <p class="text-sm mt-2 text-fwblack/80">Brandentwicklung im Kamin – gelöscht unter Atemschutz.</p>
-                </div>
-                <a href="/einsaetze" class="mt-4 text-sm text-fworange font-semibold hover:underline">mehr erfahren
-                    →</a>
+        <h2 class="text-3xl font-bold mb-8 text-fwblack">Aktuelles & Letzte Einsätze</h2>
+
+        <!-- GRID -->
+        <div class="grid md:grid-cols-3 gap-6">
+
+            <!-- Aktuelles -->
+            <div>
+                <h3 class="text-xl font-semibold mb-2">📢 Aktuelles</h3>
+                <template x-for="(item, index) in aktuelleNews.slice(0, 3)" :key="index">
+                    <div class="bg-fwbeige p-4 rounded shadow border-l-4 border-fworange mb-4">
+                        <p class="text-sm text-gray-500" x-text="formatDatum(item.datum)"></p>
+                        <h4 class="font-bold text-lg" x-text="item.titel"></h4>
+                        <p class="text-sm text-gray-700" x-text="item.beschreibung"></p>
+                        <a :href="item.link || '#'" class="text-fworange font-semibold text-sm mt-2 inline-block">mehr
+                            erfahren →</a>
+                    </div>
+                </template>
+                <a href="/news" class="text-fwrot font-semibold text-sm">➕ Mehr anzeigen</a>
             </div>
-            <div class="bg-fwbeige p-5 rounded shadow flex flex-col justify-between border-l-4 border-fworange">
-                <div>
-                    <p class="text-sm text-gray-500 mb-2">24. März 2025</p>
-                    <h3 class="font-bold text-lg text-fwblack">Ölunfall</h3>
-                    <p class="text-sm mt-2 text-fwblack/80">Ölspur gebunden – schnelle Reaktion verhinderte
-                        Umweltschaden.</p>
-                </div>
-                <a href="/einsaetze" class="mt-4 text-sm text-fworange font-semibold hover:underline">mehr erfahren
-                    →</a>
+
+            <!-- Letzte Einsätze -->
+            <div>
+                <h3 class="text-xl font-semibold mb-2">🚒 Letzte Einsätze</h3>
+                <template x-for="(item, index) in letzteEinsaetze.slice(0, 3)" :key="index">
+                    <div class="bg-fwbeige p-4 rounded shadow border-l-4 border-fwrot mb-4">
+                        <p class="text-sm text-gray-500" x-text="formatDatum(item.datum)"></p>
+                        <h4 class="font-bold text-lg" x-text="item.titel"></h4>
+                        <p class="text-sm text-gray-700" x-text="item.beschreibung"></p>
+                    </div>
+                </template>
+                <a href="/einsaetze" class="text-fwrot font-semibold text-sm">➕ Mehr anzeigen</a>
             </div>
-            <div class="bg-fwbeige p-5 rounded shadow flex flex-col justify-between border-l-4 border-fwneon">
-                <div>
-                    <p class="text-sm text-gray-500 mb-2">17. Mai 2025</p>
-                    <h3 class="font-bold text-lg text-fwblack">Tag der offenen Tür</h3>
-                    <p class="text-sm mt-2 text-fwblack/80">Erlebe unsere Feuerwehr hautnah – von Bränden bis
-                        Fahrzeugshow.</p>
-                </div>
-                <a href="/einsaetze#tag-der-offenen-tuer-section"
-                   class="mt-4 text-sm text-fworange font-semibold hover:underline">Details →</a>
+
+            <!-- Nächste Termine -->
+            <div>
+                <h3 class="text-xl font-semibold mb-2">📆 Nächste Termine</h3>
+                <template x-for="(item, index) in naechsteTermine.slice(0, 3)" :key="index">
+                    <div class="bg-fwbeige p-4 rounded shadow border-l-4 border-fworange mb-4">
+                        <p class="text-sm text-gray-500" x-text="formatDatum(item.datum)"></p>
+                        <h4 class="font-bold text-lg" x-text="item.thema || item.titel"></h4>
+                        <p class="text-sm text-gray-700" x-show="item.schwerpunkt"><strong>Schwerpunkt:</strong> <span
+                                x-text="item.schwerpunkt"></span></p>
+                        <p class="text-sm text-gray-700" x-show="item.ort"><strong>Ort:</strong> <span
+                                x-text="item.ort"></span></p>
+                    </div>
+                </template>
+                <a href="/mitmachen" class="text-fwrot font-semibold text-sm">➕ Mehr anzeigen</a>
             </div>
         </div>
     </div>
@@ -111,6 +128,62 @@
                 this.interval = setInterval(() => {
                     this.current = (this.current + 1) % this.slides.length;
                 }, 5000);
+            }
+        }
+    }
+</script>
+<script>
+    function startseiteApp() {
+        return {
+            aktuelleNews: [],
+            letzteEinsaetze: [],
+            naechsteTermine: [],
+
+            async loadAll() {
+                const [newsRes, einsatzRes, termineRes] = await Promise.all([
+                    fetch('/static/data/news.json'),
+                    fetch('/static/data/einsaetze.json'),
+                    fetch('/static/data/termine.json')
+                ]);
+
+                this.aktuelleNews = (await newsRes.json())
+                    .filter(e => this.istInZukunft(e.datum))
+                    .sort((a, b) => this.sortiereNachDatum(a.datum, b.datum));
+
+                const einsatzObj = await einsatzRes.json();
+                const alleEinsaetze = Object.values(einsatzObj).flat();
+
+                this.letzteEinsaetze = alleEinsaetze
+                    .sort((a, b) => this.sortiereNachDatum(b.datum, a.datum));
+
+                this.naechsteTermine = (await termineRes.json())
+                    .filter(e => this.istInZukunft(e.datum))
+                    .sort((a, b) => this.sortiereNachDatum(a.datum, b.datum));
+            },
+
+            istInZukunft(datumStr) {
+                const heute = new Date();
+                const datum = new Date(datumStr.split('.').reverse().join('-'));
+                return datum >= heute;
+            },
+
+            sortiereNachDatum(a, b) {
+                const da = new Date(a.split('.').reverse().join('-'));
+                const db = new Date(b.split('.').reverse().join('-'));
+                return da - db;
+            },
+
+            formatDatum(d) {
+                if (d.includes('.')) {
+                    const [day, month, year] = d.split('.');
+                    return new Date(`${year}-${month}-${day}`).toLocaleDateString('de-CH', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                } else {
+                    return new Date(d).toLocaleDateString('de-CH', {day: '2-digit', month: 'long', year: 'numeric'});
+                }
             }
         }
     }
