@@ -2,51 +2,74 @@
 
 {% block content %}
 <!-- Hero -->
-<section class="relative h-[50vh] min-h-[300px] flex items-center justify-center bg-cover bg-center" style="background-image: url('/static/images/downloads-header.jpg');">
-  <div class="absolute inset-0 bg-black/50"></div>
-  <div class="relative z-10 text-white text-center px-4">
-    <h1 class="text-4xl md:text-5xl font-bold drop-shadow">Formulare & Downloads</h1>
-    <p class="text-md md:text-xl mt-2 drop-shadow">Wichtige Unterlagen der Feuerwehr Meiringen.</p>
-  </div>
+<section class="relative h-[50vh] min-h-[300px] flex items-center justify-center bg-cover bg-center"
+         style="background-image: url('/static/images/downloads-header.jpg');">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative z-10 text-white text-center px-4">
+        <h1 class="text-4xl md:text-5xl font-bold drop-shadow">Formulare & Downloads</h1>
+        <p class="text-md md:text-xl mt-2 drop-shadow">Wichtige Unterlagen der Feuerwehr Meiringen.</p>
+    </div>
 </section>
 
-<!-- Inhalte -->
+<!-- Dokumente -->
 <section class="py-16 bg-fwhell">
-  <div class="max-w-4xl mx-auto px-4">
-    <h2 class="text-2xl font-semibold mb-6 text-fwrot">Verfügbare Dokumente</h2>
-    <ul class="space-y-4">
-      <li class="bg-white p-4 rounded shadow flex items-center justify-between">
-        <div>
-          <h3 class="font-bold">Entschuldigungsformular für Übungen</h3>
-          <p class="text-sm text-gray-600">Für vorgängige Abmeldungen bei Übungen oder Einsätzen</p>
-        </div>
-        <a href="/static/downloads/entschuldigungsformular.pdf" target="_blank" class="text-fworange font-semibold hover:underline">Herunterladen</a>
-      </li>
+    <div class="max-w-4xl mx-auto px-4">
+        <h2 class="text-2xl font-semibold mb-6 text-fwrot">Verfügbare Dokumente</h2>
+        <ul class="space-y-4">
+            <li class="bg-white p-4 rounded shadow flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold">Entschuldigungsformular</h3>
+                    <p class="text-sm text-gray-600">Für vorgängige Abmeldungen bei Übungen gemäss Art. 11 FWR</p>
+                </div>
+                <a href="/static/downloads/Entschuldigungsformular.pdf" target="_blank"
+                   class="text-fworange font-semibold hover:underline">Herunterladen</a>
+            </li>
 
-      <li class="bg-white p-4 rounded shadow flex items-center justify-between">
-        <div>
-          <h3 class="font-bold">Reglement Feuerwehrdienst</h3>
-          <p class="text-sm text-gray-600">Grundlagen und Vorgaben zum Feuerwehrdienst in Meiringen</p>
-        </div>
-        <a href="/static/downloads/reglement-fw-meiringen.pdf" target="_blank" class="text-fworange font-semibold hover:underline">Herunterladen</a>
-      </li>
+            <li class="bg-white p-4 rounded shadow flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold">Feuerwehrreglement</h3>
+                    <p class="text-sm text-gray-600">Reglement für den Feuerwehrdienst der Gemeinde Meiringen</p>
+                </div>
+                <a href="/static/downloads/Feuerwehrreglement_FWR_gultig_ab_01.01.2018.pdf" target="_blank"
+                   class="text-fworange font-semibold hover:underline">Herunterladen</a>
+            </li>
 
-      <li class="bg-white p-4 rounded shadow flex items-center justify-between">
-        <div>
-          <h3 class="font-bold">Informationsblatt Eintritt</h3>
-          <p class="text-sm text-gray-600">Wichtige Infos für neue Mitglieder im Überblick</p>
-        </div>
-        <a href="/static/downloads/infoblatt-eintritt.pdf" target="_blank" class="text-fworange font-semibold hover:underline">Herunterladen</a>
-      </li>
+            <li class="bg-white p-4 rounded shadow flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold">Feuerwehrverordnung</h3>
+                    <p class="text-sm text-gray-600">Rechtsgrundlage zur Organisation und Pflichten</p>
+                </div>
+                <a href="/static/downloads/Feuerwehrverordnung_(FWV).pdf" target="_blank"
+                   class="text-fworange font-semibold hover:underline">Herunterladen</a>
+            </li>
+        </ul>
+    </div>
+</section>
 
-      <li class="bg-white p-4 rounded shadow flex items-center justify-between">
-        <div>
-          <h3 class="font-bold">Checkliste Atemschutz</h3>
-          <p class="text-sm text-gray-600">Bereitstellung & Kontrolle für Atemschutzgeräteträger</p>
-        </div>
-        <a href="/static/downloads/checkliste-atemschutz.pdf" target="_blank" class="text-fworange font-semibold hover:underline">Herunterladen</a>
-      </li>
-    </ul>
-  </div>
+<!-- Entschuldigungsinformationen -->
+<section class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-4">
+        <h2 class="text-2xl font-bold text-fwrot mb-4">Entschuldigung bei Abwesenheit</h2>
+        <p class="mb-4">
+            Bei Abwesenheit an einer Übung bitten wir dich, eine Entschuldigung <strong>vor der Übung</strong> an den
+            Kommandanten zu senden.
+        </p>
+
+        <p class="mb-2 font-semibold">Bitte gib den Entschuldigungsgrund an:</p>
+        <p class="text-sm text-gray-700 mb-4">(gem. Art. 11 Abs. 3 FWR vom 17.12.2012)</p>
+
+        <ul class="list-disc list-inside text-gray-800 mb-6 space-y-1">
+            <li>a) Krankheit / Unfall <span class="text-gray-500">(Zeugnis beilegen)</span></li>
+            <li>b) Schwere Erkrankung oder Todesfall in der Familie</li>
+            <li>c) Schwangerschaft</li>
+            <li>d) Begründete Ortsabwesenheit</li>
+            <li>e) Andere Gründe</li>
+        </ul>
+
+        <a href="mailto:remo.santschi@feuerwehr-meiringen.ch"
+           class="inline-block bg-fwrot text-white px-6 py-3 rounded hover:bg-fworange transition font-semibold shadow">
+            E-Mail an Remo Santschi
+        </a>
+    </div>
 </section>
 {% endblock %}

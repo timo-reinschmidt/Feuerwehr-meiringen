@@ -1,0 +1,357 @@
+[
+  {
+    "rang": "Sdt",
+    "name": "Gasser, Silvan",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Gerig, David",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Huber, Pirmin",
+    "funktion": "Technischer User myFeuerwehr"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Fankhauser, Beat",
+    "funktion": ""
+  },
+  {
+    "rang": "Sdt",
+    "name": "Fischer, Deborah",
+    "funktion": "Fachspezialist PbU"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Füllemann, Marco",
+    "funktion": "Motorfahrer/in"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Anderegg, Jannik",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Blatter, Silvan",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Burkhalter, Lukas",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Kpl",
+    "name": "Rieder, Fabian",
+    "funktion": ""
+  },
+  {
+    "rang": "Kpl",
+    "name": "Stucki, Sven",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Anderegg, Simon",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Kpl",
+    "name": "Herzer, Beat",
+    "funktion": "Fachspezialist SSP Oel"
+  },
+  {
+    "rang": "Kpl",
+    "name": "Kiser, Hans",
+    "funktion": "Materialverantwortlicher"
+  },
+  {
+    "rang": "Kpl",
+    "name": "Moor, Thomas",
+    "funktion": "Mutationsführer FW"
+  },
+  {
+    "rang": "Wm",
+    "name": "Neiger, Lukas",
+    "funktion": ""
+  },
+  {
+    "rang": "Kpl",
+    "name": "Brügger, Roy",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Kpl",
+    "name": "Hassler, Christian",
+    "funktion": "Fachspezialist Elementarereignisse FW"
+  },
+  {
+    "rang": "Lt",
+    "name": "Maurer, Ernst",
+    "funktion": "Fachspezialist Elementarereignisse FW"
+  },
+  {
+    "rang": "Four",
+    "name": "Amatuzio, Lisa",
+    "funktion": "Fourier"
+  },
+  {
+    "rang": "Wm",
+    "name": "Banholzer, Stephan",
+    "funktion": "Gruppenführer"
+  },
+  {
+    "rang": "Oblt",
+    "name": "Riesen, Thomas",
+    "funktion": "Verantwortlicher für Sicherheit FW"
+  },
+  {
+    "rang": "Oblt",
+    "name": "Streich, Patrick",
+    "funktion": "Feuerwehr-Kommando"
+  },
+  {
+    "rang": "Lt",
+    "name": "Lüthi, Manuel",
+    "funktion": "Feuerwehr-Kommando"
+  },
+  {
+    "rang": "Oblt",
+    "name": "Amacher, Simon",
+    "funktion": "Ausbildungsverantwortlicher FW"
+  },
+  {
+    "rang": "Oblt",
+    "name": "Ming, Mathias",
+    "funktion": "Ausbildungsverantwortlicher FW"
+  },
+  {
+    "rang": "Maj",
+    "name": "Santschi, Remo",
+    "funktion": "Kommandant"
+  },
+  {
+    "rang": "Hptm",
+    "name": "Dummermuth, Stephan",
+    "funktion": "Kommandant-Stv"
+  },
+  {
+    "rang": "Hptm",
+    "name": "Lanz, Björn",
+    "funktion": "Kommandant-Stv"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Zumbrunn, Lisa",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Rekr",
+    "name": "Anderfuhren, Matthias",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Banke, Janine",
+    "funktion": "Fourier"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Winterberger, Alfred",
+    "funktion": "Fachspezialist PbU"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Wüthrich, Marco",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Zumbrunn, Andreas",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Stettler, Brigitte",
+    "funktion": "Motorfahrer/in"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Werren, Alexander",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Werren, Andreas",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Santschi, Sara",
+    "funktion": "Fourier"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Schärer, Daniel",
+    "funktion": "Materialverantwortlicher"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Schläppi, Mathias",
+    "funktion": "Motorfahrer/in"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Riesen, Michael",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Rösch, Fabian",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Roth, Jonas",
+    "funktion": ""
+  },
+  {
+    "rang": "Sdt",
+    "name": "Oberli, Marc",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Otth, Christian",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Reinschmidt, Timo",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Maurer, Roy",
+    "funktion": ""
+  },
+  {
+    "rang": "Sdt",
+    "name": "Maurer, Ivan",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Nägeli, Martin",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Kohler, Kevin",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Kohler, Daniel",
+    "funktion": "Motorfahrer/in"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Kramer, Samuel",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Huber, Sandro",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Sdt",
+    "name": "Jaggi, Sven",
+    "funktion": ""
+  },
+  {
+    "rang": "Sdt",
+    "name": "Jenni-Kirchner, Rebekka",
+    "funktion": "AS Geräteträger"
+  },
+  {
+    "rang": "Rekr",
+    "name": "Zanke, Nils",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Zobrist, Timo",
+    "funktion": ""
+  },
+  {
+    "rang": "Jfw",
+    "name": "Linder, Demian",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Sletten, Knut",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Tännler, Micah",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Winterberger, Cynthia",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Winterberger-Zehnder, Robin",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Falch, Julie",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Flück, Christian",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Jaggi, Alex",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Kohler, Linus",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Kramer, Christof",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Lansdown, Fiona",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Maurer, Gian",
+    "funktion": ""
+  },
+  {
+    "rang": "Rekr",
+    "name": "Predut, Elena",
+    "funktion": ""
+  }
+]

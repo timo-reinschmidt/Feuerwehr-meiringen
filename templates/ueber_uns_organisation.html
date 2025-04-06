@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="py-16 bg-fwbeige text-fwblack">
+    <div class="max-w-7xl mx-auto px-4 pb-16" x-data="orga()">
+        <h1 class="text-5xl font-bold text-fwrot mb-6">Organisation</h1>
+
+        <div class="text-lg leading-relaxed text-gray-700 mb-12 max-w-4xl">
+            <p class="mb-4">
+                Die Feuerwehr Meiringen verfügt über rund 65 engagierte Mitglieder.
+            </p>
+            <p class="mb-4">
+                Um das vielseitige Aufgabengebiet abzudecken, ist unsere Organisation breit aufgestellt und bestens
+                ausgebildet.
+            </p>
+            <p>
+                Unsere Eingeteilten sind während 365 Tagen 24 Stunden einsatzbereit.
+            </p>
+        </div>
+
+        <div class="bg-gray-700 text-white p-6 rounded-xl shadow mb-10 grid md:grid-cols-2 gap-6 items-center">
+            <div class="space-y-6">
+                <div>
+                    <h2 class="text-xl font-extrabold uppercase">Fragen zu unserer Organisation?</h2>
+                    <p class="mt-1 font-semibold">Kommando</p>
+                    <div class="flex items-center gap-2 mt-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M3 5h2l.4 2M7 4h10l1 2h2M6 9h12l1 11H5L6 9z"/>
+                        </svg>
+                        <a href="mailto:kommando@feuerwehr-meiringen.ch" class="underline">Mail</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-extrabold uppercase">Interessiert, mitzuwirken?</h2>
+                    <a href="/mitmachen"
+                       class="inline-flex items-center bg-fwrot text-white font-semibold px-4 py-2 rounded hover:bg-fworange transition mt-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M17 20h5v-2a3 3 0 00-3-3h-4a3 3 0 00-3 3v2h5zm-6 0h.01M7 20h.01M3 20h.01M12 14h.01M7 14h.01M3 14h.01M12 10h.01M7 10h.01M3 10h.01M3 6h18"/>
+                        </svg>
+                        STOSSE ZU UNS
+                    </a>
+                </div>
+            </div>
+            <div>
+                <!-- Optional: hier kannst du später noch ein Bild/Icon ergänzen -->
+            </div>
+        </div>
+
+        <!-- Filter & Suche -->
+        <div class="flex flex-wrap gap-4 items-center mb-10">
+            <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"/>
+                </svg>
+                <select x-model="rang" class="border px-3 py-2 rounded">
+                    <option>Alle</option>
+                    <option>Maj</option>
+                    <option>Hptm</option>
+                    <option>Oblt</option>
+                    <option>Lt</option>
+                    <option>Four</option>
+                    <option>Wm</option>
+                    <option>Kpl</option>
+                    <option>Sdt</option>
+                    <option>Rekr</option>
+                    <option>Jfw</option>
+                </select>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M14.752 11.168l-3.197-2.132A2 2 0 009 10.868v2.264a2 2 0 002.555 1.932l3.197-1.066a1 1 0 000-1.83z"/>
+                </svg>
+                <select x-model="funktion" class="border px-3 py-2 rounded">
+                    <option>Alle</option>
+                    <option>Kommandant</option>
+                    <option>Kommandant-Stv</option>
+                    <option>AS Geräteträger</option>
+                    <option>Fourier</option>
+                    <option>Mutationsführer FW</option>
+                    <option>Motorfahrer/in</option>
+                    <option>Materialverantwortlicher</option>
+                    <option>Fachspezialist PbU</option>
+                    <option>Gruppenführer</option>
+                    <option>Fahrerausbildung</option>
+                    <option>Feuerwehr-Kommando</option>
+                    <option>Ausbildungsverantwortlicher FW</option>
+                </select>
+            </div>
+
+            <input x-model="search" type="text" placeholder="Suche nach Namen..."
+                   class="border px-3 py-2 rounded flex-1 min-w-[200px]">
+        </div>
+
+        <!-- Mitglieder Cards -->
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <template x-for="person in filtered" :key="person.name">
+                <div class="bg-white rounded-xl shadow overflow-hidden">
+                    <img :src="person.bild || '/static/images/placeholder.png'" alt="" class="w-full h-56 object-cover">
+                    <div class="p-4">
+                        <p class="text-sm text-gray-500 uppercase" x-text="person.rang"></p>
+                        <h3 class="text-lg font-semibold" x-text="person.name"></h3>
+                        <p class="text-sm" x-text="person.funktion"></p>
+                        <p class="text-xs text-gray-500 mt-1" x-text="person.einteilung"></p>
+                    </div>
+                    <div class="px-4 pb-4 flex justify-end gap-2">
+                        <a :href="'mailto:' + person.email" class="text-fwblack hover:text-fworange">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M16 12H8m0 0l4-4m-4 4l4 4m8-10a2 2 0 00-2-2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V6z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</section>
+
+<script>
+    function orga() {
+        return {
+            rang: 'Alle',
+            funktion: 'Alle',
+            search: '',
+            mitglieder: [],
+            get filtered() {
+                const rangSortierung = ['Maj', 'Hptm', 'Oblt', 'Lt', 'Four', 'Wm', 'Kpl', 'Sdt', 'Rekr', 'Jfw'];
+                return this.mitglieder
+                    .filter(p =>
+                        (this.rang === 'Alle' || p.rang === this.rang) &&
+                        (this.funktion === 'Alle' || p.funktion === this.funktion) &&
+                        (p.name.toLowerCase().includes(this.search.toLowerCase()))
+                    )
+                    .sort((a, b) => {
+                        const rangA = rangSortierung.indexOf(a.rang);
+                        const rangB = rangSortierung.indexOf(b.rang);
+                        if (rangA !== rangB) return rangA - rangB;
+                        return a.name.localeCompare(b.name);
+                    });
+            },
+            async init() {
+                const res = await fetch('/static/data/mitglieder.json');
+                this.mitglieder = await res.json();
+            }
+        };
+    }
+</script>
+{% endblock %}

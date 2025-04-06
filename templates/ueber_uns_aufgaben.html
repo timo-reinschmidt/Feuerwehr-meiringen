@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="pt-32 pb-16 bg-fwbeige text-fwblack">
+    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-10">
+
+        <!-- Hauptinhalt -->
+        <div class="md:col-span-2" x-data="aufgaben()">
+            <h1 class="text-4xl font-bold text-fwrot mb-4">Aufgaben</h1>
+            <p class="mb-4">
+                Die Aufgaben der Feuerwehr Meiringen sind sehr vielseitig. Die Zeiten, in denen sich eine Feuerwehr
+                ausschliesslich um die Brandbekämpfung gekümmert hat, sind längst vorbei. Ganz im Gegenteil – die
+                Aufgaben der Feuerwehren nehmen von Jahr zu Jahr zu, und nur mit viel Wille und Engagement aller
+                Eingeteilten können diese Aufgaben bewältigt werden.
+            </p>
+            <p class="mb-8">
+                Auf den nächsten Zeilen versuchen wir, Ihnen die Aufgaben der Feuerwehr Meiringen etwas näherzubringen.
+                Diese Aufzählung ist nicht abschliessend, erwähnt aber die wesentlichen Hauptaufgaben.
+            </p>
+
+            <!-- Akkordeon -->
+            <div class="space-y-4">
+                <template x-for="(aufgabe, index) in aufgaben" :key="index">
+                    <div>
+                        <button @click="open === index ? open = -1 : open = index"
+                                class="w-full flex justify-between items-center text-left font-bold text-lg border-b border-gray-300 pb-2">
+                            <span>
+                                <span class="text-fwrot mr-2" x-text="open === index ? '✖' : '+'"></span>
+                                <span x-text="aufgabe.titel"></span>
+                            </span>
+                        </button>
+                        <div x-show="open === index"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 max-h-0"
+                             x-transition:enter-end="opacity-100 max-h-screen"
+                             x-transition:leave="transition ease-in duration-100"
+                             x-transition:leave-start="opacity-100 max-h-screen"
+                             x-transition:leave-end="opacity-0 max-h-0"
+                             class="mt-2 text-gray-700 text-sm overflow-hidden"
+                             x-html="aufgabe.text">
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Rechte Sidebar -->
+        <div class="flex flex-col gap-10">
+            <!-- Kontaktbox -->
+            <div class="bg-gray-700 text-fwbeige p-6 rounded-xl shadow">
+                <h2 class="font-bold text-lg mb-1">FRAGEN ZU UNSERER AUFGABEN?</h2>
+                <p class="text-sm font-semibold">Kommando</p>
+                <div class="flex items-center gap-2 mt-2">
+                    <span class="material-icons text-sm">mail</span>
+                    <a href="mailto:kommando@feuerwehr-meiringen.ch" class="underline">Mail</a>
+                </div>
+
+                <h2 class="font-bold text-lg mt-6 mb-1">INTERESSIERT, MITZUWIRKEN?</h2>
+                <a href="/mitmachen"
+                   class="mt-2 inline-block bg-fwrot text-white px-4 py-2 rounded hover:bg-fworange transition">
+                    <span class="inline-flex items-center gap-2">
+                        <span class="material-icons text-sm"><img src="/static/icons/groups_icon.svg"
+                                                                  class="h-8"></span>
+                        STOSSE ZU UNS
+                    </span>
+                </a>
+            </div>
+
+            <!-- Auftrag + Prioritäten -->
+            <div>
+                <h3 class="text-fwrot font-bold text-lg mb-4">DER STÄNDIGE AUFTRAG DER FEUERWEHREN LAUTET:</h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center gap-2"><img src="/static/icons/staendiger_auftrag_sichern.png"
+                                                             class="h-12 w-auto"> <strong>Sichern</strong>
+                    </li>
+                    <li class="flex items-center gap-2"><img src="/static/icons/staendiger_auftrag_retten.png"
+                                                             class="h-12 w-auto">
+                        <strong>Retten</strong></li>
+                    <li class="flex items-center gap-2"><img src="/static/icons/staendiger_auftrag_halten.png"
+                                                             class="h-12 w-auto">
+                        <strong>Halten</strong></li>
+                    <li class="flex items-center gap-2"><img src="/static/icons/staendiger_auftrag_retten.png"
+                                                             class="h-12 w-auto"> <strong>Schützen</strong>
+                    </li>
+                    <li class="flex items-center gap-2"><img
+                            src="/static/icons/staendiger_auftrag_bewaeltigen.png"
+                            class="h-12 w-auto"> <strong>Bewältigen</strong>
+                    </li>
+                </ul>
+
+                <h3 class="text-fwrot font-bold text-lg mt-8 mb-4">DABEI GELTEN FOLGENDE PRIORITÄTEN:</h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center gap-2"><img src="/static/icons/prioritaeten_menschen.png"
+                                                             class="h-12 w-auto"> <strong>Personen</strong>
+                    </li>
+                    <li class="flex items-center gap-2"><img src="/static/icons/prioritaeten_tiere.png"
+                                                             class="h-12 w-auto">
+                        <strong>Tiere</strong></li>
+                    <li class="flex items-center gap-2"><img src="/static/icons/prioritaeten_umwelt.png"
+                                                             class="h-12 w-auto">
+                        <strong>Umwelt</strong></li>
+                    <li class="flex items-center gap-2"><img src="/static/icons/prioritaeten_sachwerten.png"
+                                                             class="h-12 w-auto"> <strong>Sachwerte</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AlpineJS Daten für Aufgaben -->
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('aufgaben', () => ({
+            open: 0,
+            aufgaben: [
+                {
+                    titel: 'Bekämpfung von Bränden',
+                    text: `Die Bekämpfung von Bränden ist eine Hauptaufgabe jeder Feuerwehr. Ein grosser Teil der Ausbildungszeit wird dafür eingesetzt, die Handgriffe und Kommandos im Lösch- und Rettungsdienst zu üben, damit im Ernstfall unter Stress ein Brandfall mit einem Minimum an Zeit und Material unter Kontrolle gebracht werden kann.`
+                },
+                {
+                    titel: 'Hilfeleistung bei Elementarereignissen',
+                    text: `Auch Elementarereignisse wie Hochwasser beschäftigen die Eingeteilten der Feuerwehr Meiringen fast jedes Jahr und verlangen von jedem einzelnen Bereitschaft, andern Mitmenschen zu helfen. Nicht selten stehen Feuerwehrangehörige vor der Situation, selber betroffen zu sein und gleichzeitig als Einsatzkraft gefordert zu werden.`
+                },
+                {
+                    titel: 'Rettung von Unfallopfern',
+                    text: `Sehr häufig bewirkt ein Verkehrsunfall ein Aufgebot der Feuerwehr. Sie ist mit dem notwendigen Material wie Spreizer und Schere ausgerüstet, um Personen in misslichen und lebensbedrohlichen Situationen zu helfen. Häufig geschehen solche Einsätze unter ärztlicher Leitung oder durch Rettungssanitäter.`
+                },
+                {
+                    titel: 'Chemieunfälle',
+                    text: `Durch die Einwirkung von Feuer und Hitze können in Industriegebieten wie Brienz oder Innertkirchen gefährliche Stoffe freigesetzt werden. In solchen Situationen arbeitet die Chemiewehr eng mit Spezialisten des Kantons zusammen, um Messungen und Schutzmassnahmen zu koordinieren.`
+                },
+                {
+                    titel: 'Tierrettungen',
+                    text: `Das Spektrum reicht von Katzenrettungen ab einem Baum bis zur Rettung eines Pferdes. Feuerwehrleute bringen oft das Verständnis für Tiere mit und sind geschult, auch in schwierigen Situationen ruhig zu bleiben und angemessene Maßnahmen einzuleiten.`
+                }
+            ]
+        }));
+    });
+</script>
+{% endblock %}

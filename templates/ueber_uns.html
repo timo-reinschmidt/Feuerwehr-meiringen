@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- Hero mit rotem Overlay -->
+<!-- HERO SECTION -->
 <section class="relative h-[50vh] min-h-[300px] flex items-center justify-center bg-cover bg-center" style="background-image: url('static/images/2305-6506_by.davidbirri-1080x675.jpg');">
   <div class="absolute inset-0 bg-fwrot/80"></div>
   <div class="relative z-10 text-white text-center px-4">
@@ -10,29 +10,34 @@
   </div>
 </section>
 
-<!-- Inhalt -->
-<section class="py-16 bg-fwhell">
-  <div class="max-w-5xl mx-auto px-4 space-y-12">
+<!-- CONTENT -->
+<section class="py-20 bg-fwbeige">
+  <div class="max-w-5xl mx-auto px-4 space-y-16">
 
-    <div>
-      <h2 class="text-2xl font-semibold text-fwrot mb-4">Unsere Organisation</h2>
-      <p class="text-gray-800 leading-relaxed">
+    <!-- Organisation -->
+    <div class="scroll-fade">
+      <h2 class="text-2xl font-bold text-fwrot mb-4">Unsere Organisation</h2>
+      <p class="text-fwblack leading-relaxed">
         Die Feuerwehr Meiringen ist eine Milizfeuerwehr mit rund 65 aktiven Feuerwehrleuten. Wir decken das Gemeindegebiet von Meiringen inkl. Schattenhalb sowie angrenzende Gebiete ab. Unsere Organisation ist in verschiedene Züge und Fachgruppen gegliedert.
       </p>
     </div>
 
-    <div>
-      <h2 class="text-2xl font-semibold text-fwrot mb-4">Unsere Geschichte</h2>
-      <p class="text-gray-800 leading-relaxed">
+    <!-- Geschichte -->
+    <div class="scroll-fade">
+      <h2 class="text-2xl font-bold text-fwrot mb-4">Unsere Geschichte</h2>
+      <p class="text-fwblack leading-relaxed">
         Seit über 100 Jahren schützt die Feuerwehr Meiringen Menschen, Tiere und Sachwerte. Was mit Eimern und Handpumpen begann, ist heute eine moderne Organisation mit ausgebildeten Spezialisten und leistungsfähigen Fahrzeugen.
       </p>
     </div>
 
-    <div>
-      <h2 class="text-2xl font-semibold text-fwrot mb-4">Kommando</h2>
+    <!-- Kommando -->
+    <div class="scroll-fade">
+      <h2 class="text-2xl font-bold text-fwrot mb-6">Kommando</h2>
       <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- Linke Seite -->
         <div>
-          <ul class="text-gray-800 space-y-1">
+          <ul class="text-fwblack space-y-1">
             <li><strong>Maj Remo Santschi</strong> – Kommandant</li>
             <li><strong>Hptm Björn Lanz</strong> – Kommandant Stv.</li>
             <li><strong>Hptm Stephan Dummermuth</strong> – Kommandant Stv.</li>
@@ -47,9 +52,11 @@
             <li><strong>Sdt Daniel Schärer</strong> – Material</li>
           </ul>
         </div>
+
+        <!-- Rechte Seite -->
         <div>
-          <h3 class="font-semibold text-lg mb-2">Fachverantwortliche</h3>
-          <ul class="text-gray-800 space-y-1">
+          <h3 class="text-2xl font-bold mb-2 text-fwrot">Fachverantwortliche</h3>
+          <ul class="text-fwblack space-y-1">
             <li><strong>Four Lisa Amatuzio</strong> – Fourier</li>
             <li><strong>Wm Lukas Neiger</strong> – Fahrzeuge</li>
             <li><strong>Kpl Fabian Rieder</strong> – Motorspritzen</li>
@@ -57,8 +64,10 @@
             <li><strong>Sdt Michael Riesen</strong> – Fahrerausbildung</li>
           </ul>
         </div>
+
       </div>
     </div>
+
   </div>
 </section>
 {% endblock %}

@@ -1,100 +1,162 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>{{ title }} – Feuerwehr Meiringen</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <link rel="stylesheet" href="/static/css/styles.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            fwrot: '#D62828',
-            fworange: '#F77F00',
-            fwhell: '#F8F9FA',
-            fwdunkel: '#212529'
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} – Feuerwehr Meiringen</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- AlpineJS -->
+    <script defer src="https://unpkg.com/alpinejs@3.13.0/dist/cdn.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+
+    <!-- Tailwind Theme Erweiterung -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        fwbeige: '#f4f1ea',
+                        fwblack: '#1c1c1c',
+                        fwneon: '#e2ff00',
+                        fwrot: '#D62828',
+                        fworange: '#F77F00',
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
-  <script>
-  let lastScrollY = window.scrollY;
-  const navbar = document.getElementById("navbar");
-
-  window.addEventListener("scroll", () => {
-    const currentScrollY = window.scrollY;
-    const scrollingDown = currentScrollY > lastScrollY;
-
-    if (scrollingDown && currentScrollY > 80) {
-      navbar.classList.add("-translate-y-full");
-    } else {
-      navbar.classList.remove("-translate-y-full");
-    }
-
-    lastScrollY = currentScrollY;
-  });
-</script>
+    </script>
 </head>
-<body class="bg-fwhell text-fwdunkel">
+<body class="bg-fwbeige text-fwblack">
 
 <!-- Navigation -->
-<nav x-data="{ mobileOpen: false }" id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-gray-900 text-white shadow transition-transform duration-300">
-  <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+<nav x-data="{ mobileOpen: false }" id="navbar"
+     class="fixed top-0 left-0 right-0 z-50 bg-fwblack text-fwbeige shadow transition-transform duration-300">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2 font-bold text-lg">
+            <img src="/static/icons/feuerwehr-meiringen_logo.png" alt="Feuerwehr Meiringen Logo" class="h-8 w-auto">
+            <span class="hidden sm:inline">Feuerwehr Meiringen</span>
+        </a>
 
-    <!-- Logo -->
-    <a href="/" class="flex items-center gap-2 font-bold text-lg">
-      <img src="/static/images/feuerwehr-meiringen_logo.png" alt="Feuerwehr Meiringen Logo" class="h-8 w-auto">
-      <span class="hidden sm:inline">Feuerwehr Meiringen</span>
-    </a>
+        <!-- Desktop-Navigation -->
+        <div class="hidden md:flex gap-6 text-sm items-center">
+            <!-- DROPDOWN ÜBER UNS -->
+            <div x-data="{ open: false }" class="relative">
+                <button @click="open = !open" class="hover:text-fworange flex items-center gap-1">
+                    Über uns
+                    <svg :class="open ? 'rotate-180' : ''" class="w-4 h-4 transition-transform" fill="none"
+                         stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div x-show="open" @click.away="open = false" x-transition
+                     class="absolute mt-2 bg-white text-fwblack shadow rounded w-56 z-50 py-2">
+                    <a href="/ueber-uns/organigramm" class="block px-4 py-2 hover:bg-fwbeige">Organigramm</a>
+                    <a href="/ueber-uns/organisation" class="block px-4 py-2 hover:bg-fwbeige">Organisation</a>
+                    <a href="/ueber-uns/aufgaben" class="block px-4 py-2 hover:bg-fwbeige">Aufgaben</a>
+                    <a href="/ueber-uns/einsatzgebiete" class="block px-4 py-2 hover:bg-fwbeige">Unsere
+                        Einsatzgebiete</a>
+                    <a href="/ueber-uns/kontakt" class="block px-4 py-2 hover:bg-fwbeige">Kontakt / Lageplan</a>
+                    <a href="/ueber-uns/geschichte" class="block px-4 py-2 hover:bg-fwbeige">Geschichte</a>
+                </div>
+            </div>
 
-    <!-- Desktop-Navigation -->
-    <div class="hidden md:flex gap-6 text-sm">
-      <a href="/ueber-uns" class="hover:text-fworange">Über uns</a>
-      <a href="/einsaetze" class="hover:text-fworange">Einsätze</a>
-      <a href="/mitmachen" class="hover:text-fworange">Mitmachen</a>
-      <a href="/fahrzeuge" class="hover:text-fworange">Fahrzeuge</a>
-      <a href="/buergerinfos" class="hover:text-fworange">Bürgerinfos</a>
-      <a href="/downloads" class="hover:text-fworange">Downloads</a>
-      <a href="/galerie" class="hover:text-fworange">Galerie</a>
-      <a href="/kontakt" class="hover:text-fworange">Kontakt</a>
+            <!-- Weitere Menüpunkte -->
+            <a href="/einsaetze" class="hover:text-fworange">Einsätze</a>
+            <a href="/mitmachen" class="hover:text-fworange">Mitmachen</a>
+            <a href="/fahrzeuge" class="hover:text-fworange">Fahrzeuge</a>
+            <a href="/buergerinfos" class="hover:text-fworange">Bürgerinfos</a>
+            <a href="/downloads" class="hover:text-fworange">Downloads</a>
+            <a href="/galerie" class="hover:text-fworange">Galerie</a>
+        </div>
+
+        <!-- Notruf-Button -->
+        <a href="tel:188"
+           class="bg-fwrot hover:bg-fworange hover:text-white transition px-4 py-2 md:px-3 md:py-1 md:text-sm rounded font-semibold text-sm whitespace-nowrap">
+            🚨 Notruf 188
+        </a>
+
+        <!-- Mobile Toggle Button -->
+        <button @click="mobileOpen = !mobileOpen" class="md:hidden focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path :class="mobileOpen ? 'hidden' : 'inline'" stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                <path :class="mobileOpen ? 'inline' : 'hidden'" stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
     </div>
 
-    <!-- Notruf-Button (Desktop) -->
-    <div class="hidden md:block">
-      <a href="tel:188" class="bg-black hover:bg-white hover:text-fwrot transition px-4 py-2 rounded font-semibold text-sm">🚨 Notruf 188</a>
+    <!-- Mobile Navigation -->
+    <div x-show="mobileOpen" x-transition class="md:hidden bg-fwblack px-4 py-4 space-y-2 text-sm">
+        <!-- Dropdown "Über uns" Mobile -->
+        <div x-data="{ subOpen: false }" class="text-center">
+            <button @click="subOpen = !subOpen"
+                    class="w-full flex items-center justify-center gap-1 hover:text-fworange">
+                Über uns
+                <span :class="subOpen ? 'rotate-180' : ''" class="transition-transform">▼</span>
+            </button>
+            <div x-show="subOpen" x-transition
+                 class="space-y-1 mt-2 text-sm text-fwbeige/80 border-l-2 border-fwrot pl-4 ml-2">
+                <a href="/ueber-uns/organigramm" class="block hover:text-fworange">Organigramm</a>
+                <a href="/ueber-uns/organisation" class="block hover:text-fworange">Organisation</a>
+                <a href="/ueber-uns/aufgaben" class="block hover:text-fworange">Aufgaben</a>
+                <a href="/ueber-uns/einsatzgebiete" class="block px-4 py-2 hover:bg-fwbeige">Unsere Einsatzgebiete</a>
+                <a href="/ueber-uns/kontakt" class="block hover:text-fworange">Kontakt / Lageplan</a>
+                <a href="/ueber-uns/geschichte" class="block hover:text-fworange">Geschichte</a>
+            </div>
+        </div>
+        <!-- Weitere Links Mobile -->
+        <a href="/einsaetze" class="block text-center hover:text-fworange">Einsätze</a>
+        <a href="/mitmachen" class="block text-center hover:text-fworange">Mitmachen</a>
+        <a href="/fahrzeuge" class="block text-center hover:text-fworange">Fahrzeuge</a>
+        <a href="/buergerinfos" class="block text-center hover:text-fworange">Bürgerinfos</a>
+        <a href="/downloads" class="block text-center hover:text-fworange">Downloads</a>
+        <a href="/galerie" class="block text-center hover:text-fworange">Galerie</a>
     </div>
-
-    <!-- Mobile Toggle Button -->
-    <button @click="mobileOpen = !mobileOpen" class="md:hidden focus:outline-none">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path :class="mobileOpen ? 'hidden' : 'inline'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        <path :class="mobileOpen ? 'inline' : 'hidden'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-  </div>
-
-  <!-- Mobile-Menü -->
-  <div x-show="mobileOpen" x-transition class="md:hidden bg-gray-800 px-4 py-4 space-y-2 text-sm">
-    <a href="/ueber-uns" class="block hover:text-fworange">Über uns</a>
-    <a href="/einsaetze" class="block hover:text-fworange">Einsätze</a>
-    <a href="/mitmachen" class="block hover:text-fworange">Mitmachen</a>
-    <a href="/fahrzeuge" class="block hover:text-fworange">Fahrzeuge</a>
-    <a href="/buergerinfos" class="block hover:text-fworange">Bürgerinfos</a>
-    <a href="/downloads" class="block hover:text-fworange">Downloads</a>
-    <a href="/galerie" class="block hover:text-fworange">Galerie</a>
-    <a href="/kontakt" class="block hover:text-fworange">Kontakt</a>
-    <a href="tel:188" class="block text-center mt-4 bg-fwrot text-white font-semibold py-2 rounded">🚨 Notruf 188</a>
-  </div>
 </nav>
 
-
-<!-- Page Content -->
+<!-- Hauptinhalt -->
 <main class="max-w-7xl mx-auto pt-32 pb-12 px-4">
-  {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 </main>
+
+<!-- JS: Navbar und Intersection Observer -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let lastScrollY = window.scrollY;
+        const navbar = document.getElementById("navbar");
+
+        window.addEventListener("scroll", () => {
+            const currentScrollY = window.scrollY;
+            const scrollingDown = currentScrollY > lastScrollY;
+            if (scrollingDown && currentScrollY > 80) {
+                navbar.classList.add("-translate-y-full");
+            } else {
+                navbar.classList.remove("-translate-y-full");
+            }
+            lastScrollY = currentScrollY;
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {threshold: 0.1});
+
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
+        });
+    });
+</script>
 
 </body>
 </html>

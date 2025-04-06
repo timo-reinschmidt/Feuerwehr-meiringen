@@ -1,0 +1,510 @@
+{
+  "2024": [
+    {
+      "nr": "69/24",
+      "datum": "2024-12-31",
+      "titel": "Brand Brienz / ADL-Einsatz",
+      "beschreibung": ""
+    },
+    {
+      "nr": "68/24",
+      "datum": "2024-12-29",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "67/24",
+      "datum": "2024-12-28",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "66/24",
+      "datum": "2024-12-26",
+      "titel": "Wasser",
+      "beschreibung": ""
+    },
+    {
+      "nr": "65/24",
+      "datum": "2024-12-24",
+      "titel": "Brand Brienz / ADL-Einsatz",
+      "beschreibung": ""
+    },
+    {
+      "nr": "64/24",
+      "datum": "2024-12-19",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "63/24",
+      "datum": "2024-12-18",
+      "titel": "Fahrzeugbrand",
+      "beschreibung": ""
+    },
+    {
+      "nr": "62/24",
+      "datum": "2024-12-17",
+      "titel": "Arbeitsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "61/24",
+      "datum": "2024-12-16",
+      "titel": "Fehlalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "60/24",
+      "datum": "2024-12-04",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "59/24",
+      "datum": "2024-11-28",
+      "titel": "Brand Oberried / ADL-Einsatz",
+      "beschreibung": ""
+    },
+    {
+      "nr": "58/24",
+      "datum": "2024-10-23",
+      "titel": "Hilfeleistung Sanität",
+      "beschreibung": ""
+    },
+    {
+      "nr": "57/24",
+      "datum": "2024-10-18",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "56/24",
+      "datum": "2024-10-12",
+      "titel": "Rauchentwicklung PW",
+      "beschreibung": ""
+    },
+    {
+      "nr": "55/24",
+      "datum": "2024-10-11",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "54/24",
+      "datum": "2024-10-10",
+      "titel": "Unwetter",
+      "beschreibung": ""
+    },
+    {
+      "nr": "53/24",
+      "datum": "2024-10-09",
+      "titel": "Unwetter",
+      "beschreibung": ""
+    },
+    {
+      "nr": "52/24",
+      "datum": "2024-10-08",
+      "titel": "Unwetter",
+      "beschreibung": ""
+    },
+    {
+      "nr": "51/24",
+      "datum": "2024-09-29",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "50/24",
+      "datum": "2024-09-20",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "49/24",
+      "datum": "2024-09-07",
+      "titel": "Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "48/24",
+      "datum": "2024-09-07",
+      "titel": "Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "47/24",
+      "datum": "2024-09-05",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "46/24",
+      "datum": "2024-08-26",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "45/24",
+      "datum": "2024-08-22",
+      "titel": "Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "44/24",
+      "datum": "2024-08-17",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "43/24",
+      "datum": "2024-08-12",
+      "titel": "Elementarereignis",
+      "beschreibung": ""
+    },
+    {
+      "nr": "42/24",
+      "datum": "2024-08-05",
+      "titel": "Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "41/24",
+      "datum": "2024-07-31",
+      "titel": "Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "40/24",
+      "datum": "2024-07-27",
+      "titel": "Technische Hilfeleistung",
+      "beschreibung": ""
+    },
+    {
+      "nr": "39/24",
+      "datum": "2024-07-12",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "38/24",
+      "datum": "2024-07-10",
+      "titel": "Grossbrand",
+      "beschreibung": ""
+    },
+    {
+      "nr": "37/24",
+      "datum": "2024-07-10",
+      "titel": "Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "36/24",
+      "datum": "2024-07-07",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "35/24",
+      "datum": "2024-07-05",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "34/24",
+      "datum": "2024-07-05",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "33/24",
+      "datum": "2024-07-05",
+      "titel": "Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "32/24",
+      "datum": "2024-07-05",
+      "titel": "Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "31/24",
+      "datum": "2024-06-19",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "30/24",
+      "datum": "2024-06-18",
+      "titel": "Aarerettung",
+      "beschreibung": ""
+    },
+    {
+      "nr": "29/24",
+      "datum": "2024-06-16",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "28/24",
+      "datum": "2024-06-13",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "27/24",
+      "datum": "2024-06-10",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "26/24",
+      "datum": "2024-06-09",
+      "titel": "Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "25/24",
+      "datum": "2024-06-04",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "24/24",
+      "datum": "2024-05-28",
+      "titel": "Brand",
+      "beschreibung": ""
+    },
+    {
+      "nr": "23/24",
+      "datum": "2024-05-18",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "22/24",
+      "datum": "2024-05-17",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "21/24",
+      "datum": "2024-05-14",
+      "titel": "Brand",
+      "beschreibung": ""
+    },
+    {
+      "nr": "20/24",
+      "datum": "2024-04-30",
+      "titel": "Elementar",
+      "beschreibung": ""
+    },
+    {
+      "nr": "19/24",
+      "datum": "2024-04-30",
+      "titel": "Elementar",
+      "beschreibung": ""
+    },
+    {
+      "nr": "18/24",
+      "datum": "2024-04-29",
+      "titel": "Elementar",
+      "beschreibung": ""
+    },
+    {
+      "nr": "17/24",
+      "datum": "2024-04-19",
+      "titel": "Brand",
+      "beschreibung": ""
+    },
+    {
+      "nr": "16/24",
+      "datum": "2024-04-11",
+      "titel": "Brand",
+      "beschreibung": ""
+    },
+    {
+      "nr": "15/24",
+      "datum": "2024-04-11",
+      "titel": "Technische Hilfeleistung",
+      "beschreibung": ""
+    },
+    {
+      "nr": "14/24",
+      "datum": "2024-03-31",
+      "titel": "Elementar / Unwetter ",
+      "beschreibung": ""
+    },
+    {
+      "nr": "13/24",
+      "datum": "2024-03-29",
+      "titel": "Elementar / Unwetter",
+      "beschreibung": ""
+    },
+    {
+      "nr": "12/24",
+      "datum": "2024-03-12",
+      "titel": "Brand Wohnhaus",
+      "beschreibung": ""
+    },
+    {
+      "nr": "11/24",
+      "datum": "2024-03-11",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "10/24",
+      "datum": "2024-03-10",
+      "titel": "Elementar / Unwetter",
+      "beschreibung": ""
+    },
+    {
+      "nr": "09/24",
+      "datum": "2024-03-03",
+      "titel": "Hilfeleistung Sanität",
+      "beschreibung": ""
+    },
+    {
+      "nr": "08/24",
+      "datum": "2024-02-25",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "07/24",
+      "datum": "2024-02-24",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "06/24",
+      "datum": "2024-02-19",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "05/24",
+      "datum": "2024-02-11",
+      "titel": "Automatischer Brandalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "04/24",
+      "datum": "2024-02-03",
+      "titel": "Wasserschaden",
+      "beschreibung": ""
+    },
+    {
+      "nr": "03/24",
+      "datum": "2024-01-22",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "02/24",
+      "datum": "2024-01-10",
+      "titel": "Kleinbrand",
+      "beschreibung": ""
+    },
+    {
+      "nr": "01/24",
+      "datum": "2024-01-02",
+      "titel": "Hilfeleistung Sanität",
+      "beschreibung": ""
+    }
+  ],
+  "2025": [
+    {
+      "nr": "15/25",
+      "datum": "2025-03-29",
+      "titel": "Kaminbrand",
+      "beschreibung": ""
+    },
+    {
+      "nr": "14/25",
+      "datum": "2025-03-24",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "13/25",
+      "datum": "2025-03-23",
+      "titel": "Rauchentwicklung Brätelstelle",
+      "beschreibung": ""
+    },
+    {
+      "nr": "12/25",
+      "datum": "2025-03-20",
+      "titel": "Fehlalarm",
+      "beschreibung": ""
+    },
+    {
+      "nr": "11/25",
+      "datum": "2025-03-19",
+      "titel": "Verkehrsunfall mit Verletzten",
+      "beschreibung": ""
+    },
+    {
+      "nr": "10/25",
+      "datum": "2025-03-09",
+      "titel": "Hilfeleistung Sanität",
+      "beschreibung": ""
+    },
+    {
+      "nr": "09/25",
+      "datum": "2025-03-06",
+      "titel": "Oelunfall Brienz",
+      "beschreibung": ""
+    },
+    {
+      "nr": "08/25",
+      "datum": "2025-02-22",
+      "titel": "Rauchentwicklung",
+      "beschreibung": ""
+    },
+    {
+      "nr": "07/25",
+      "datum": "2025-02-19",
+      "titel": "Rauchentwicklung",
+      "beschreibung": ""
+    },
+    {
+      "nr": "06/25",
+      "datum": "2025-02-10",
+      "titel": "Oelunfall Brienz",
+      "beschreibung": ""
+    },
+    {
+      "nr": "05/25",
+      "datum": "2025-01-19",
+      "titel": "Wasserschaden",
+      "beschreibung": ""
+    },
+    {
+      "nr": "04/25",
+      "datum": "2025-01-11",
+      "titel": "Fahrzeugsicherung nach Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "03/25",
+      "datum": "2025-01-05",
+      "titel": "Verkehrsunfall",
+      "beschreibung": ""
+    },
+    {
+      "nr": "02/25",
+      "datum": "2025-01-04",
+      "titel": "Brand Brienz / ADL-Einsatz",
+      "beschreibung": ""
+    },
+    {
+      "nr": "01/25",
+      "datum": "2025-01-04",
+      "titel": "Oelunfall",
+      "beschreibung": ""
+    }
+  ]
+}

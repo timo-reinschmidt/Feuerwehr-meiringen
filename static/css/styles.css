@@ -2,3 +2,84 @@
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
+
+/* FADING IN */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+/* SLIDE IN FROM LEFT */
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.8s ease-out forwards;
+}
+
+/* SLIDE IN FROM RIGHT */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.8s ease-out forwards;
+}
+
+/* ZOOM-IN */
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-zoom-in {
+  animation: zoom-in 0.6s ease-out forwards;
+}
+
+/* FADE IN DELAYED (für gestaffelte Elemente) */
+.animate-fade-in-delay {
+  animation: fade-in 1s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s ease;
+}
+
+.scroll-fade.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

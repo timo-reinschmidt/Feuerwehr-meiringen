@@ -2,93 +2,140 @@
 
 {% block content %}
 <!-- Hero -->
-<section class="relative h-[50vh] min-h-[300px] flex items-center justify-center bg-cover bg-center" style="background-image: url('/static/images/mitmachen-header.jpg');">
-  <div class="absolute inset-0 bg-black/50"></div>
-  <div class="relative z-10 text-white text-center px-4">
-    <h1 class="text-4xl md:text-5xl font-bold drop-shadow">Mitmachen & Ausbildung</h1>
-    <p class="text-md md:text-xl mt-2 drop-shadow">Dein Weg ins Feuerwehr-Team Meiringen.</p>
-  </div>
+<section class="relative h-[50vh] min-h-[300px] flex items-center justify-center bg-cover bg-center"
+         style="background-image: url('/static/images/mitmachen-header.jpg');">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative z-10 text-white text-center px-4">
+        <h1 class="text-4xl md:text-5xl font-bold drop-shadow">Mitmachen & Ausbildung</h1>
+        <p class="text-md md:text-xl mt-2 drop-shadow">Dein Weg ins Feuerwehr-Team Meiringen.</p>
+    </div>
 </section>
 
 <!-- Einstieg mit Fragen & Akkordeon -->
 <section class="py-16 bg-fwhell">
-  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-start">
-    <div>
-      <h2 class="text-xl font-bold text-fwrot mb-4">Bist du ein <span class="italic">Retter</span> oder eine <span class="italic">Retterin</span>?</h2>
-      <ul class="list-disc list-inside text-gray-800 space-y-4">
-        <li>Faszinierst du dich für die Welt der Feuerwehr und möchtest aktiv zur Sicherheit unserer Gesellschaft beitragen?</li>
-        <li>Suchst du ein kameradschaftliches Umfeld mit klarer Struktur und wichtiger Mission?</li>
-      </ul>
-      <p class="mt-6 text-gray-900">Wir suchen laufend top motivierte Feuerwehrfrauen und Feuerwehrmänner, die unser eingespieltes Korps ergänzen.</p>
-      <p class="text-2xl font-semibold mt-4 text-fworange">Wir suchen DICH!</p>
-    </div>
-
-    <div x-data="{ open: 0 }" class="space-y-4">
-      <!-- Schritt 1: Kontaktformular -->
-      <div class="border border-gray-300 rounded overflow-hidden">
-        <button @click="open === 0 ? open = null : open = 0" class="w-full text-left px-4 py-3 font-semibold bg-white hover:bg-gray-100">
-          1. Interesse? Kontaktiere uns jetzt!
-        </button>
-        <div x-show="open === 0" x-collapse class="bg-black text-white px-4 py-6 text-sm">
-          <p class="mb-4">Fülle als erstes bitte das Formular vollständig aus.</p>
-          <h3 class="text-xl font-bold uppercase mb-2">Anforderungen</h3>
-          <p class="mb-4">Bist du bereit pro Jahr mindestens 8 Ausbildungsübungen à 2 Stunden zu bestreiten?</p>
-          <div class="flex gap-6 mb-6">
-            <label class="flex items-center gap-2">
-              <input type="radio" name="verpflichtung" value="ja" class="accent-fworange">
-              Ja
-            </label>
-            <label class="flex items-center gap-2">
-              <input type="radio" name="verpflichtung" value="nein" class="accent-fworange">
-              Nein
-            </label>
-          </div>
-
-          <form class="grid md:grid-cols-2 gap-4 text-black">
-            <input type="text" placeholder="Name *" required class="p-2 rounded border">
-            <input type="text" placeholder="Vorname *" required class="p-2 rounded border">
-            <input type="text" placeholder="Strasse / Nr. *" required class="p-2 rounded border">
-            <input type="text" placeholder="PLZ / Ort *" required class="p-2 rounded border">
-            <input type="text" placeholder="Geburtsdatum *" required class="p-2 rounded border">
-            <input type="text" placeholder="Telefon Privat Mobile *" required class="p-2 rounded border">
-            <input type="email" placeholder="E-Mail *" required class="p-2 rounded border">
-            <input type="text" placeholder="Beruf *" required class="p-2 rounded border">
-            <input type="text" placeholder="Arbeitsort *" required class="p-2 rounded border">
-            <textarea placeholder="Bemerkung *" required class="md:col-span-2 p-2 rounded border h-24"></textarea>
-            <button type="submit" class="md:col-span-2 mt-2 bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded">
-              ▶ Senden
-            </button>
-          </form>
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-start">
+        <div>
+            <h2 class="text-xl font-bold text-fwrot mb-4">Bist du ein <span class="italic">Retter</span> oder eine <span
+                    class="italic">Retterin</span>?</h2>
+            <ul class="list-disc list-inside text-gray-800 space-y-4">
+                <li>Faszinierst du dich für die Welt der Feuerwehr und möchtest aktiv zur Sicherheit unserer
+                    Gesellschaft beitragen?
+                </li>
+                <li>Suchst du ein kameradschaftliches Umfeld mit klarer Struktur und wichtiger Mission?</li>
+            </ul>
+            <p class="mt-6 text-gray-900">Wir suchen laufend top motivierte Feuerwehrfrauen und Feuerwehrmänner, die
+                unser eingespieltes Korps ergänzen.</p>
+            <p class="text-2xl font-semibold mt-4 text-fworange">Wir suchen DICH!</p>
         </div>
-      </div>
 
-      <!-- Schritt 2–4 Placeholder -->
-      <template x-for="(item, index) in [
+        <div x-data="{ open: 0 }" class="space-y-4">
+            <!-- Schritt 1: Kontaktformular -->
+            <div class="border border-gray-300 rounded overflow-hidden">
+                <button @click="open === 0 ? open = null : open = 0"
+                        class="w-full text-left px-4 py-3 font-semibold bg-white hover:bg-gray-100">
+                    1. Interesse? Kontaktiere uns jetzt!
+                </button>
+                <div x-show="open === 0" x-collapse class="bg-black text-white px-4 py-6 text-sm">
+                    <p class="mb-4">Fülle als erstes bitte das Formular vollständig aus.</p>
+                    <h3 class="text-xl font-bold uppercase mb-2">Anforderungen</h3>
+                    <p class="mb-4">Bist du bereit pro Jahr mindestens 8 Ausbildungsübungen à 2 Stunden zu
+                        bestreiten?</p>
+                    <div class="flex gap-6 mb-6">
+                        <label class="flex items-center gap-2">
+                            <input type="radio" name="verpflichtung" value="ja" class="accent-fworange">
+                            Ja
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="radio" name="verpflichtung" value="nein" class="accent-fworange">
+                            Nein
+                        </label>
+                    </div>
+
+                    <form class="grid md:grid-cols-2 gap-4 text-black">
+                        <!-- Grunddaten -->
+                        <input type="text" placeholder="Name *" required class="p-2 rounded border">
+                        <input type="text" placeholder="Vorname *" required class="p-2 rounded border">
+                        <input type="text" placeholder="Strasse / Nr. *" required class="p-2 rounded border">
+                        <input type="text" placeholder="PLZ / Ort *" required class="p-2 rounded border">
+                        <input type="text" placeholder="Geburtsdatum *" required class="p-2 rounded border">
+                        <input type="text" placeholder="Telefon Privat / Mobile *" required class="p-2 rounded border">
+                        <input type="email" placeholder="E-Mail *" required class="p-2 rounded border">
+                        <input type="text" placeholder="Beruf *" required class="p-2 rounded border">
+                        <input type="text" placeholder="Arbeitsort *" required class="p-2 rounded border">
+
+                        <!-- Optionen -->
+                        <div class="md:col-span-2 space-y-2 mt-4">
+                            <label class="flex items-center gap-2 text-white">
+                                <input type="checkbox" class="h-4 w-4"> Ich interessiere mich für das Rekrutenjahr
+                            </label>
+                            <label class="flex items-center gap-2 text-white">
+                                <input type="checkbox" class="h-4 w-4"> Ich habe bereits Feuerwehrdienst geleistet
+                            </label>
+
+                            <h3 class="font-semibold mt-4 text-white text-xl">Absolvierte Ausbildungen</h3>
+                            <label class="flex items-center gap-2 text-white">
+                                <input type="checkbox" class="h-4 w-4"> Basiskurs
+                            </label>
+                            <label class="flex items-center gap-2 text-white">
+                                <input type="checkbox" class="h-4 w-4"> Atemschutz / KG
+                            </label>
+                            <label class="flex items-center gap-2 text-white">
+                                <input type="checkbox" class="h-4 w-4"> TLF-Fahrer resp. C Ausweis
+                            </label>
+                            <label class="flex items-center gap-2 text-white">
+                                <input type="checkbox" class="h-4 w-4"> Gruppenführer
+                            </label>
+                            <label class="flex items-center gap-2 text-white">
+                                <input type="checkbox" class="h-4 w-4"> Einsatzleiter
+                            </label>
+
+                            <label class="block mt-4 font-semibold text-white">Weitere Kurse</label>
+                            <textarea placeholder="Weitere relevante Kurse oder Erfahrungen"
+                                      class="w-full p-2 rounded border h-24"></textarea>
+                        </div>
+
+                        <!-- Bemerkung -->
+                        <textarea placeholder="Bemerkung"
+                                  class="md:col-span-2 p-2 rounded border h-24 mt-4"></textarea>
+
+                        <!-- Button -->
+                        <button type="submit"
+                                class="md:col-span-2 mt-2 bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded">
+                            ▶ Senden
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Schritt 2–4 Placeholder -->
+            <template x-for="(item, index) in [
         { title: '2. Besuche unseren nächsten Info-Abend', content: 'Du erhältst einen Einblick in unsere Aufgaben, Organisation und Einsatzabläufe.' },
         { title: '3. Lernen wir uns bei einem Gespräch kennen', content: 'Wir klären gemeinsam deine Motivation, Eignung und Möglichkeiten.' },
         { title: '4. Du erhältst Bescheid der Feuerwehrkommission', content: 'Nach dem Entscheid startest du deine Grundausbildung bei uns.' }
       ]" :key="index">
-        <div class="border border-gray-300 rounded overflow-hidden">
-          <button @click="open === index + 1 ? open = null : open = index + 1"
-            class="w-full text-left px-4 py-3 font-semibold bg-white hover:bg-gray-100">
-            <span x-text="item.title"></span>
-          </button>
-          <div x-show="open === index + 1" x-collapse class="px-4 py-3 text-sm text-gray-800 bg-gray-50">
-            <span x-text="item.content"></span>
-          </div>
+                <div class="border border-gray-300 rounded overflow-hidden">
+                    <button @click="open === index + 1 ? open = null : open = index + 1"
+                            class="w-full text-left px-4 py-3 font-semibold bg-white hover:bg-gray-100">
+                        <span x-text="item.title"></span>
+                    </button>
+                    <div x-show="open === index + 1" x-collapse class="px-4 py-3 text-sm text-gray-800 bg-gray-50">
+                        <span x-text="item.content"></span>
+                    </div>
+                </div>
+            </template>
         </div>
-      </template>
     </div>
-  </div>
 </section>
 
 <!-- Ausbildungsteil -->
 <section class="py-16">
-  <div class="max-w-4xl mx-auto px-4">
-    <h2 class="text-2xl font-semibold mb-4">Ausbildung & Einstieg</h2>
-    <p class="text-gray-800 leading-relaxed">
-      Jede neue Feuerwehrfrau und jeder neue Feuerwehrmann wird umfassend ausgebildet: Von der Grundausbildung über den Atemschutzkurs bis hin zu spezialisierten Modulen – angepasst an deine Rolle. Die Ausbildung ist praxisnah, abwechslungsreich und kameradschaftlich.
-    </p>
-  </div>
+    <div class="max-w-4xl mx-auto px-4">
+        <h2 class="text-2xl font-semibold mb-4">Ausbildung & Einstieg</h2>
+        <p class="text-gray-800 leading-relaxed">
+            Jede neue Feuerwehrfrau und jeder neue Feuerwehrmann wird umfassend ausgebildet: Von der Grundausbildung
+            über den Atemschutzkurs bis hin zu spezialisierten Modulen – angepasst an deine Rolle. Die Ausbildung ist
+            praxisnah, abwechslungsreich und kameradschaftlich.
+        </p>
+    </div>
 </section>
 {% endblock %}

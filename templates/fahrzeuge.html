@@ -2,61 +2,130 @@
 
 {% block content %}
 <!-- Hero -->
-<section class="relative h-[50vh] min-h-[300px] flex items-center justify-center bg-cover bg-center" style="background-image: url('/static/images/fahrzeuge-header.jpg');">
-  <div class="absolute inset-0 bg-black/50"></div>
-  <div class="relative z-10 text-white text-center px-4">
-    <h1 class="text-4xl md:text-5xl font-bold drop-shadow">Ausrüstung & Fahrzeuge</h1>
-    <p class="text-md md:text-xl mt-2 drop-shadow">Ein Blick auf unsere moderne Technik im Einsatz.</p>
-  </div>
+<section class="relative h-[50vh] min-h-[300px] flex items-center justify-center bg-cover bg-center"
+         style="background-image: url('/static/images/fahrzeuge-header.jpg');">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative z-10 text-white text-center px-4">
+        <h1 class="text-4xl md:text-5xl font-bold drop-shadow">Ausrüstung & Fahrzeuge</h1>
+        <p class="text-md md:text-xl mt-2 drop-shadow">Ein Blick auf unsere moderne Technik im Einsatz.</p>
+    </div>
 </section>
 
 <!-- Fahrzeugübersicht -->
 <section class="py-16 bg-fwhell">
-  <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-2xl font-semibold mb-10 text-fwrot">Unsere Einsatzfahrzeuge</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <!-- Fahrzeug 1 -->
-      <div class="bg-white rounded shadow p-4 flex flex-col">
-        <div class="aspect-video bg-gray-200 rounded mb-4"></div>
-        <h3 class="font-bold text-lg mb-2">Tanklöschfahrzeug TLF</h3>
-        <p class="text-sm text-gray-700">Unser TLF verfügt über 2400 Liter Wasser und ist das erste Fahrzeug im Brandeinsatz. Es ist mit Atemschutzgeräten, Schnellangriffseinrichtung, Stromerzeuger und weiteren Geräten zur Brandbekämpfung ausgerüstet.</p>
-      </div>
+    <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-2xl font-semibold mb-10 text-fwrot">Unsere Einsatzfahrzeuge</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Fahrzeug 1 -->
+            <div class="bg-white rounded shadow p-4 flex flex-col">
+                <div class="aspect-video bg-gray-200 rounded mb-4"></div>
+                <h3 class="font-bold text-lg mb-2">Tanklöschfahrzeug TLF</h3>
+                <p class="text-sm text-gray-700">Unser TLF verfügt über 2400 Liter Wasser und ist das erste Fahrzeug im
+                    Brandeinsatz. Es ist mit Atemschutzgeräten, Schnellangriffseinrichtung, Stromerzeuger und weiteren
+                    Geräten zur Brandbekämpfung ausgerüstet.</p>
+            </div>
 
-      <!-- Fahrzeug 2 -->
-      <div class="bg-white rounded shadow p-4 flex flex-col">
-        <div class="aspect-video bg-gray-200 rounded mb-4"></div>
-        <h3 class="font-bold text-lg mb-2">Autodrehleiter ADL</h3>
-        <p class="text-sm text-gray-700">Die Drehleiter ermöglicht Rettungen aus großer Höhe, z. B. aus Gebäuden oder bei Bränden. Sie erreicht bis zu 30 Meter Höhe und dient auch zur Belüftung und Ausleuchtung.</p>
-      </div>
+            <!-- Fahrzeug 2 -->
+            <div class="bg-white rounded shadow p-4 flex flex-col">
+                <div class="aspect-video bg-gray-200 rounded mb-4"></div>
+                <h3 class="font-bold text-lg mb-2">Autodrehleiter ADL</h3>
+                <p class="text-sm text-gray-700">Die Drehleiter ermöglicht Rettungen aus großer Höhe, z. B. aus Gebäuden
+                    oder bei Bränden. Sie erreicht bis zu 30 Meter Höhe und dient auch zur Belüftung und
+                    Ausleuchtung.</p>
+            </div>
 
-      <!-- Fahrzeug 3 -->
-      <div class="bg-white rounded shadow p-4 flex flex-col">
-        <div class="aspect-video bg-gray-200 rounded mb-4"></div>
-        <h3 class="font-bold text-lg mb-2">Pikett-Fahrzeug</h3>
-        <p class="text-sm text-gray-700">Für kleinere Einsätze und Erkundungen – z. B. Ölspuren, Wasserschäden oder Unterstützung des Kommandanten. Enthält Ersteinsatzmaterial und Kommunikationsmittel.</p>
-      </div>
+            <!-- Fahrzeug 3 -->
+            <div class="bg-white rounded shadow p-4 flex flex-col">
+                <div class="aspect-video bg-gray-200 rounded mb-4"></div>
+                <h3 class="font-bold text-lg mb-2">Pikett-Fahrzeug</h3>
+                <p class="text-sm text-gray-700">Für kleinere Einsätze und Erkundungen – z. B. Ölspuren, Wasserschäden
+                    oder Unterstützung des Kommandanten. Enthält Ersteinsatzmaterial und Kommunikationsmittel.</p>
+            </div>
 
-      <!-- Fahrzeug 4 -->
-      <div class="bg-white rounded shadow p-4 flex flex-col">
-        <div class="aspect-video bg-gray-200 rounded mb-4"></div>
-        <h3 class="font-bold text-lg mb-2">Atemschutzfahrzeug</h3>
-        <p class="text-sm text-gray-700">Ausgestattet mit Atemschutzmasken, Ersatzflaschen, Dekontaminationsmaterial und Lüftern. Wichtig für Innenangriffe und Gefahrstoffeinsätze.</p>
-      </div>
+            <!-- Fahrzeug 4 -->
+            <div class="bg-white rounded shadow p-4 flex flex-col">
+                <div class="aspect-video bg-gray-200 rounded mb-4"></div>
+                <h3 class="font-bold text-lg mb-2">Atemschutzfahrzeug</h3>
+                <p class="text-sm text-gray-700">Ausgestattet mit Atemschutzmasken, Ersatzflaschen,
+                    Dekontaminationsmaterial und Lüftern. Wichtig für Innenangriffe und Gefahrstoffeinsätze.</p>
+            </div>
 
-      <!-- Fahrzeug 5 -->
-      <div class="bg-white rounded shadow p-4 flex flex-col">
-        <div class="aspect-video bg-gray-200 rounded mb-4"></div>
-        <h3 class="font-bold text-lg mb-2">Anhänger Schlauchmaterial</h3>
-        <p class="text-sm text-gray-700">Wird eingesetzt zur Verlegung von längeren Schlauchleitungen über mehrere hundert Meter – vor allem bei Wasserentnahmen aus entfernten Quellen.</p>
-      </div>
+            <!-- Fahrzeug 5 -->
+            <div class="bg-white rounded shadow p-4 flex flex-col">
+                <div class="aspect-video bg-gray-200 rounded mb-4"></div>
+                <h3 class="font-bold text-lg mb-2">Anhänger Schlauchmaterial</h3>
+                <p class="text-sm text-gray-700">Wird eingesetzt zur Verlegung von längeren Schlauchleitungen über
+                    mehrere hundert Meter – vor allem bei Wasserentnahmen aus entfernten Quellen.</p>
+            </div>
 
-      <!-- Fahrzeug 6 -->
-      <div class="bg-white rounded shadow p-4 flex flex-col">
-        <div class="aspect-video bg-gray-200 rounded mb-4"></div>
-        <h3 class="font-bold text-lg mb-2">Transportfahrzeug (MTF)</h3>
-        <p class="text-sm text-gray-700">Dient dem Mannschaftstransport und zur Logistikunterstützung. Flexibel einsetzbar bei Übungen, Weiterbildungen oder für Materialtransporte.</p>
-      </div>
+            <!-- Fahrzeug 6 -->
+            <div class="bg-white rounded shadow p-4 flex flex-col">
+                <div class="aspect-video bg-gray-200 rounded mb-4"></div>
+                <h3 class="font-bold text-lg mb-2">Transportfahrzeug (MTF)</h3>
+                <p class="text-sm text-gray-700">Dient dem Mannschaftstransport und zur Logistikunterstützung. Flexibel
+                    einsetzbar bei Übungen, Weiterbildungen oder für Materialtransporte.</p>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
+
+<section class="py-16 bg-fwbeige" x-data="{ selected: 'ortsfeuerwehr' }">
+    <h2 class="text-3xl font-bold text-center text-fwrot mb-8">Unsere Einsatzgebiete</h2>
+
+    <!-- Buttons -->
+    <div class="flex flex-wrap justify-center gap-4 mb-8">
+        <template x-for="(label, key) in {
+      ortsfeuerwehr: 'Ortsfeuerwehr',
+      gaswehr: 'Gaswehr',
+      oelwehr: 'Ölwehr',
+      hubretter: 'Hubretter',
+      pbu: 'PbU'
+    }" :key="key">
+            <button
+                    type="button"
+                    @click="selected = key"
+                    :class="selected === key ? 'bg-fwrot text-white' : 'bg-gray-200 text-fwblack'"
+                    class="px-4 py-2 rounded font-semibold shadow hover:shadow-md transition"
+                    x-text="label">
+            </button>
+        </template>
+    </div>
+
+    <!-- Kartenanzeige -->
+    <div class="max-w-4xl mx-auto shadow-lg rounded overflow-hidden bg-white p-4 text-center">
+        <img x-show="selected === 'ortsfeuerwehr'" src="/static/maps/Einsatzgebiet_Ortsfeuerwehr.avif"
+             alt="Ortsfeuerwehr" class="w-full rounded" x-transition>
+        <img x-show="selected === 'gaswehr'" src="/static/maps/Einsatzgebiet_Sonderstuetzpunkt_Gaswehr.avif"
+             alt="Gaswehr" class="w-full rounded" x-transition>
+        <img x-show="selected === 'oelwehr'" src="/static/maps/Einsatzgebiet_Sonderstuetzpunkt_Oelwehr.avif"
+             alt="Ölwehr" class="w-full rounded" x-transition>
+        <img x-show="selected === 'hubretter'"
+             src="/static/maps/Einsatzgebiet_Sonderstuetzpunkt_Hubrettungsfahrzeuge.avif" alt="Hubretter"
+             class="w-full rounded" x-transition>
+        <img x-show="selected === 'pbu'" src="/static/maps/Einsatzgebiet_PbU.avif" alt="PbU" class="w-full rounded"
+             x-transition>
+
+        <p class="mt-4 text-fwblack font-semibold text-lg"
+           x-text="'Einsatzgebiet: ' + selected.charAt(0).toUpperCase() + selected.slice(1)"></p>
+    </div>
+</section>
+
+<script>
+    const mapPaths = {
+        ortsfeuerwehr: "/static/maps/Einsatzgebiet_Ortsfeuerwehr.avif",
+        gaswehr: "/static/maps/Einsatzgebiet_Sonderstuetzpunkt_Gaswehr.avif",
+        oelwehr: "/static/maps/Einsatzgebiet_Sonderstuetzpunkt_Oelwehr.avif",
+        hubretter: "/static/maps/Einsatzgebiet_Sonderstuetzpunkt_Hubrettungsfahrzeuge.avif",
+        pbu: "/static/maps/Einsatzgebiet_PbU.avif"
+    };
+
+    function showMap(key) {
+        const image = document.getElementById("map-image");
+        image.style.opacity = 0;
+        setTimeout(() => {
+            image.src = mapPaths[key];
+            image.style.opacity = 1;
+        }, 200);
+    }
+</script>
 {% endblock %}
