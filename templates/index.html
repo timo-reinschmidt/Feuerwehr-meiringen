@@ -1,66 +1,117 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- HERO SECTION -->
-<section class="relative h-[80vh] min-h-[400px] flex items-center justify-center bg-cover bg-center" style="background-image: url('static/images/2305-6506_by.davidbirri-1080x675.jpg');">
-  <div class="absolute inset-0 bg-fwblack/70"></div>
-  <div class="relative z-10 text-center text-fwbeige px-4">
-    <h1 class="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow">Feuerwehr Meiringen</h1>
-    <p class="text-lg md:text-2xl font-medium mb-6 max-w-2xl mx-auto drop-shadow">Retten. Löschen. Bergen. Schützen. – 24/7 für Ihre Sicherheit im Einsatz.</p>
-    <a href="/mitmachen" class="bg-fworange hover:bg-fwrot text-white text-sm md:text-base font-semibold px-6 py-3 rounded shadow-md transition">Jetzt mitmachen</a>
-  </div>
+<section x-data="slideshow()" x-init="start()" class="relative h-[75vh] bg-black text-white overflow-hidden">
+    x-data="slideshow()"
+    x-init="init()"
+    class="relative h-[85vh] bg-black text-white overflow-hidden">
+
+    <!-- Slides -->
+    <template x-for="(slide, index) in slides" :key="index">
+        <div
+                x-show="current === index"
+                x-transition.opacity.duration.700ms
+                class="absolute inset-0 bg-cover bg-center flex items-center justify-center flex-col text-center px-4"
+                :style="`background-image: url('${slide.image}')`">
+            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="relative z-10 max-w-2xl">
+                <h1 class="text-4xl md:text-5xl font-bold drop-shadow mb-4" x-text="slide.title"></h1>
+                <p class="text-lg drop-shadow mb-6" x-text="slide.subtitle"></p>
+                <template x-if="slide.button">
+                    <a :href="slide.button.link"
+                       class="bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded transition"
+                       x-text="slide.button.text"></a>
+                </template>
+            </div>
+        </div>
+    </template>
+
+    <!-- Controls -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        <template x-for="(slide, i) in slides" :key="i">
+            <button @click="goTo(i)" class="w-3 h-3 rounded-full"
+                    :class="current === i ? 'bg-white' : 'bg-white/40'"></button>
+        </template>
+    </div>
 </section>
 
 <!-- SCHNELLZUGRIFFE -->
 <section class="py-16 bg-fwbeige">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <a href="/einsaetze" class="group bg-white border-l-4 border-fwrot hover:shadow-md transition p-6 rounded">
-        <h3 class="text-lg font-bold group-hover:text-fwrot">📢 Letzte Einsätze</h3>
-        <p class="text-sm text-fwblack/80 mt-2">Einblicke in unsere aktuellen Einsätze und Leistungen.</p>
-      </a>
-      <a href="/mitmachen" class="group bg-white border-l-4 border-fworange hover:shadow-md transition p-6 rounded">
-        <h3 class="text-lg font-bold group-hover:text-fworange">👥 Mitmachen</h3>
-        <p class="text-sm text-fwblack/80 mt-2">Entdecke die Vorteile und werde Teil unseres Teams.</p>
-      </a>
-      <a href="/kontakt" class="group bg-white border-l-4 border-fwneon hover:shadow-md transition p-6 rounded">
-        <h3 class="text-lg font-bold group-hover:text-fwneon">📞 Kontakt</h3>
-        <p class="text-sm text-fwblack/80 mt-2">Fragen oder Anliegen? Melde dich gerne bei uns.</p>
-      </a>
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-2xl font-semibold mb-6 text-fwrot">Schnellzugriff</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <a href="/einsaetze" class="group bg-white border-l-4 border-fwrot hover:shadow-md transition p-6 rounded">
+                <h3 class="text-lg font-bold group-hover:text-fwrot">📢 Letzte Einsätze</h3>
+                <p class="text-sm text-fwblack/80 mt-2">Einblicke in unsere aktuellen Einsätze und Leistungen.</p>
+            </a>
+            <a href="/mitmachen"
+               class="group bg-white border-l-4 border-fworange hover:shadow-md transition p-6 rounded">
+                <h3 class="text-lg font-bold group-hover:text-fworange">👥 Mitmachen</h3>
+                <p class="text-sm text-fwblack/80 mt-2">Entdecke die Vorteile und werde Teil unseres Teams.</p>
+            </a>
+            <a href="/kontakt" class="group bg-white border-l-4 border-fwneon hover:shadow-md transition p-6 rounded">
+                <h3 class="text-lg font-bold group-hover:text-fwneon">📞 Kontakt</h3>
+                <p class="text-sm text-fwblack/80 mt-2">Fragen oder Anliegen? Melde dich gerne bei uns.</p>
+            </a>
+        </div>
     </div>
-  </div>
 </section>
 
 <!-- AKTUELLES / VORSCHAU EINSÄTZE -->
 <section class="py-16 bg-white">
-  <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-2xl font-semibold text-fwblack mb-8">Aktuelles & Letzte Einsätze</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="bg-fwbeige p-5 rounded shadow flex flex-col justify-between border-l-4 border-fwrot">
-        <div>
-          <p class="text-sm text-gray-500 mb-2">29. März 2025</p>
-          <h3 class="font-bold text-lg text-fwblack">Kaminbrand</h3>
-          <p class="text-sm mt-2 text-fwblack/80">Brandentwicklung im Kamin – gelöscht unter Atemschutz.</p>
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-2xl font-semibold text-fwblack mb-8">Aktuelles & Letzte Einsätze</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-fwbeige p-5 rounded shadow flex flex-col justify-between border-l-4 border-fwrot">
+                <div>
+                    <p class="text-sm text-gray-500 mb-2">29. März 2025</p>
+                    <h3 class="font-bold text-lg text-fwblack">Kaminbrand</h3>
+                    <p class="text-sm mt-2 text-fwblack/80">Brandentwicklung im Kamin – gelöscht unter Atemschutz.</p>
+                </div>
+                <a href="/einsaetze" class="mt-4 text-sm text-fworange font-semibold hover:underline">mehr erfahren
+                    →</a>
+            </div>
+            <div class="bg-fwbeige p-5 rounded shadow flex flex-col justify-between border-l-4 border-fworange">
+                <div>
+                    <p class="text-sm text-gray-500 mb-2">24. März 2025</p>
+                    <h3 class="font-bold text-lg text-fwblack">Ölunfall</h3>
+                    <p class="text-sm mt-2 text-fwblack/80">Ölspur gebunden – schnelle Reaktion verhinderte
+                        Umweltschaden.</p>
+                </div>
+                <a href="/einsaetze" class="mt-4 text-sm text-fworange font-semibold hover:underline">mehr erfahren
+                    →</a>
+            </div>
+            <div class="bg-fwbeige p-5 rounded shadow flex flex-col justify-between border-l-4 border-fwneon">
+                <div>
+                    <p class="text-sm text-gray-500 mb-2">17. Mai 2025</p>
+                    <h3 class="font-bold text-lg text-fwblack">Tag der offenen Tür</h3>
+                    <p class="text-sm mt-2 text-fwblack/80">Erlebe unsere Feuerwehr hautnah – von Bränden bis
+                        Fahrzeugshow.</p>
+                </div>
+                <a href="/einsaetze#tag-der-offenen-tuer-section"
+                   class="mt-4 text-sm text-fworange font-semibold hover:underline">Details →</a>
+            </div>
         </div>
-        <a href="/einsaetze" class="mt-4 text-sm text-fworange font-semibold hover:underline">mehr erfahren →</a>
-      </div>
-      <div class="bg-fwbeige p-5 rounded shadow flex flex-col justify-between border-l-4 border-fworange">
-        <div>
-          <p class="text-sm text-gray-500 mb-2">24. März 2025</p>
-          <h3 class="font-bold text-lg text-fwblack">Ölunfall</h3>
-          <p class="text-sm mt-2 text-fwblack/80">Ölspur gebunden – schnelle Reaktion verhinderte Umweltschaden.</p>
-        </div>
-        <a href="/einsaetze" class="mt-4 text-sm text-fworange font-semibold hover:underline">mehr erfahren →</a>
-      </div>
-      <div class="bg-fwbeige p-5 rounded shadow flex flex-col justify-between border-l-4 border-fwneon">
-        <div>
-          <p class="text-sm text-gray-500 mb-2">17. Mai 2025</p>
-          <h3 class="font-bold text-lg text-fwblack">Tag der offenen Tür</h3>
-          <p class="text-sm mt-2 text-fwblack/80">Erlebe unsere Feuerwehr hautnah – von Bränden bis Fahrzeugshow.</p>
-        </div>
-        <a href="/einsaetze#tag-der-offenen-tuer-section" class="mt-4 text-sm text-fworange font-semibold hover:underline">Details →</a>
-      </div>
     </div>
-  </div>
 </section>
+
+<script>
+    function slideshow() {
+        return {
+            slides: [],
+            current: 0,
+            interval: null,
+            async init() {
+                const res = await fetch('/static/data/slides.json');
+                this.slides = await res.json();
+                this.start();
+            },
+            start() {
+                this.interval = setInterval(() => {
+                    this.current = (this.current + 1) % this.slides.length;
+                }, 5000);
+            }
+        }
+    }
+</script>
 {% endblock %}
