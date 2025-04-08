@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>News Editor Demo</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+            background: #f9f5f0;
+        }
+
+        .card {
+            background: white;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .button {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+
+        .orange {
+            background: orange;
+            color: white;
+        }
+
+        .black {
+            background: black;
+            color: white;
+        }
+
+        .red {
+            background: crimson;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<section x-data="newsEditor()" x-init="initNews([
+  { datum: '01.01.2025', titel: 'Neujahr', beschreibung: '🎉 Neues Jahr!', ort: 'Meiringen', zeit: '00:00', link: '/news/neujahr' }
+])">
+    <h1 class="text-2xl font-bold text-red-700 mb-4">📝 News bearbeiten (Demo)</h1>
+
+    <template x-for="(item, index) in news" :key="index">
+        <div class="card">
+            <input x-model="item.datum" class="w-full border p-2 mb-2" placeholder="Datum">
+            <input x-model="item.titel" class="w-full border p-2 mb-2" placeholder="Titel">
+            <textarea x-model="item.beschreibung" class="w-full border p-2 mb-2" rows="2"
+                      placeholder="Beschreibung"></textarea>
+            <input x-model="item.ort" class="w-full border p-2 mb-2" placeholder="Ort">
+            <input x-model="item.zeit" class="w-full border p-2 mb-2" placeholder="Zeit">
+            <input x-model="item.link" class="w-full border p-2 mb-2" placeholder="Link">
+            <button class="button red" @click="remove(index)">🗑️ Entfernen</button>
+        </div>
+    </template>
+
+    <div class="mt-4">
+        <button class="button orange" @click="addNew()">➕ Neue News hinzufügen</button>
+        <button class="button black" @click="save()">💾 Speichern</button>
+        <span class="ml-4 text-green-600" x-text="message"></span>
+    </div>
+</section>
+
+<script>
+    function newsEditor() {
+        console.log("🧠 Alpine-Komponente newsEditor() wurde geladen");
+        return {
+            news: [],
+            message: "",
+
+            initNews(initialNews) {
+                console.log("✅ Initialisierte News:", initialNews);
+                this.news = initialNews;
+            },
+
+            addNew() {
+                console.log("➕ Neue News wird hinzugefügt");
+                this.news.push({
+                    datum: "",
+                    titel: "",
+                    beschreibung: "",
+                    ort: "",
+                    zeit: "",
+                    link: ""
+                });
+            },
+
+            remove(index) {
+                console.log("🗑️ Entferne Eintrag an Index:", index);
+                this.news.splice(index, 1);
+            },
+
+            async save() {
+                console.log("💾 Daten speichern:", this.news);
+                // Hier würdest du normalerweise fetch() nutzen
+                this.message = "✅ Gespeichert (Demo)";
+                setTimeout(() => this.message = "", 2000);
+            }
+        };
+    }
+</script>
+
+</body>
+</html>

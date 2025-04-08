@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="py-16 bg-fwbeige">
+    <div class="max-w-4xl mx-auto px-4">
+        <h1 class="text-3xl font-bold mb-6 text-fwblack">🔧 Admin-Dashboard</h1>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <a href="/admin/news"
+               class="group bg-white p-6 rounded shadow hover:shadow-lg border-l-4 border-fworange transition">
+                <h2 class="text-xl font-bold group-hover:text-fworange">📰 News verwalten</h2>
+                <p class="text-sm text-fwblack/80 mt-1">Erstelle, bearbeite oder lösche aktuelle Mitteilungen.</p>
+            </a>
+
+            <a href="/admin/einsaetze"
+               class="group bg-white p-6 rounded shadow hover:shadow-lg border-l-4 border-fwrot transition">
+                <h2 class="text-xl font-bold group-hover:text-fwrot">🚒 Einsätze verwalten</h2>
+                <p class="text-sm text-fwblack/80 mt-1">Pflege vergangene und neue Einsatzdaten.</p>
+            </a>
+
+            <a href="/admin/termine"
+               class="group bg-white p-6 rounded shadow hover:shadow-lg border-l-4 border-fworange transition">
+                <h2 class="text-xl font-bold group-hover:text-fworange">📅 Termine verwalten</h2>
+                <p class="text-sm text-fwblack/80 mt-1">Übungen und wichtige Termine bearbeiten.</p>
+            </a>
+
+            <a href="/admin/mitglieder"
+               class="group bg-white p-6 rounded shadow hover:shadow-lg border-l-4 border-fwneon transition">
+                <h2 class="text-xl font-bold group-hover:text-fwneon">👥 Mitglieder verwalten</h2>
+                <p class="text-sm text-fwblack/80 mt-1">Organisation und Mitgliederliste aktualisieren.</p>
+            </a>
+
+            <a href="/admin/slides"
+               class="group bg-white p-6 rounded shadow hover:shadow-lg border-l-4 border-fworange transition">
+                <h2 class="text-xl font-bold group-hover:text-fworange">🎞️ Slideshow verwalten</h2>
+                <p class="text-sm text-fwblack/80 mt-1">Startseiten-Slides anpassen.</p>
+            </a>
+
+            <a href="/admin/logout"
+               class="group bg-gray-100 p-6 rounded shadow hover:bg-red-100 transition">
+                <h2 class="text-xl font-bold text-fwrot group-hover:text-red-700">🚪 Logout</h2>
+                <p class="text-sm text-gray-700 mt-1">Admin-Session beenden.</p>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

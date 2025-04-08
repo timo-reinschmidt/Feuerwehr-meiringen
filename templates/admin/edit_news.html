@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="py-16 bg-fwbeige" x-data="newsEditor()" x-init="initNews({{ news | tojson | safe }})">
+    <div class="max-w-4xl mx-auto px-4">
+        <h1 class="text-3xl font-bold mb-6 text-fwrot">📝 News bearbeiten</h1>
+
+        <!-- NEWS LIST -->
+        <template x-for="(item, index) in news" :key="index">
+            <div class="bg-white rounded shadow p-4 mb-4">
+                <label class="block text-sm font-semibold text-fwblack">Datum</label>
+                <input type="text" x-model="item.datum" class="w-full p-2 border rounded mb-2">
+
+                <label class="block text-sm font-semibold text-fwblack">Titel</label>
+                <input type="text" x-model="item.titel" class="w-full p-2 border rounded mb-2">
+
+                <label class="block text-sm font-semibold text-fwblack">Beschreibung</label>
+                <textarea x-model="item.beschreibung" class="w-full p-2 border rounded mb-2" rows="2"></textarea>
+
+                <label class="block text-sm font-semibold text-fwblack">Ort</label>
+                <input type="text" x-model="item.ort" class="w-full p-2 border rounded mb-2">
+
+                <label class="block text-sm font-semibold text-fwblack">Zeit</label>
+                <input type="text" x-model="item.zeit" class="w-full p-2 border rounded mb-2">
+
+                <label class="block text-sm font-semibold text-fwblack">Link</label>
+                <input type="text" x-model="item.link" class="w-full p-2 border rounded mb-4">
+
+                <button @click="remove(index)" class="text-sm bg-fwrot hover:bg-red-600 text-white px-3 py-1 rounded">
+                    🗑️ Entfernen
+                </button>
+            </div>
+        </template>
+
+        <div class="flex gap-4 mt-8">
+            <button @click="addNew()" class="bg-fworange text-white px-4 py-2 rounded hover:bg-orange-600">
+                ➕ Neue News hinzufügen
+            </button>
+            <button @click="save()" class="bg-fwblack text-white px-4 py-2 rounded hover:bg-gray-900">
+                💾 Änderungen speichern
+            </button>
+        </div>
+
+        <template x-if="message">
+            <p class="mt-4 text-green-600" x-text="message"></p>
+        </template>
+    </div>
+</section>
+
+<script>
+    function newsEditor() {
+        console.log("🧠 Alpine-Komponente newsEditor() wurde geladen");
+        return {
+            news: [],
+            message: "",
+
+            initNews(initialNews) {
+                console.log("✅ News initialisiert:", initialNews);
+                this.news = initialNews;
+            },
+
+            addNew() {
+                console.log("➕ addNew triggered");
+                this.news.push({
+                    datum: "",
+                    titel: "",
+                    beschreibung: "",
+                    ort: "",
+                    zeit: "",
+                    link: ""
+                });
+            },
+
+            remove(index) {
+                console.log("🗑️ remove index", index);
+                this.news.splice(index, 1);
+            },
+
+            async save() {
+                console.log("💾 Saving news:", this.news);
+                const res = await fetch("/admin/news", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(this.news)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    this.message = "✅ News wurden gespeichert!";
+                    setTimeout(() => this.message = "", 3000);
+                }
+            }
+        };
+    }
+</script>
+{% endblock %}

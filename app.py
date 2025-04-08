@@ -1,8 +1,83 @@
+import json
 import os
+from functools import wraps
 
-from flask import Flask, render_template
+from dotenv import load_dotenv
+from flask import Flask, render_template, session, redirect, url_for, request
 
+load_dotenv()
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY")
+
+
+DATA_PATH = "static/data/news.json"
+USERNAME = "admin"
+PASSWORD = "feuerwehr"
+
+
+def login_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if not session.get("logged_in"):
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+
+    return wrapper
+
+
+@app.route("/admin/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        if (
+            request.form["username"] == USERNAME
+            and request.form["password"] == PASSWORD
+        ):
+            session["logged_in"] = True
+            return redirect("/admin")
+    return render_template("admin/login.html")
+
+
+@app.route("/admin/logout")
+def logout():
+    session.pop("logged_in", None)
+    return redirect(url_for("admin/login"))
+
+
+@app.route("/admin")
+@login_required
+def dashboard():
+    return render_template("admin/dashboard.html")
+
+
+@app.route("/admin/news", methods=["GET", "POST"])
+@login_required
+def edit_news():
+    with open("static/data/news.json", encoding="utf-8") as f:
+        news = json.load(f)
+
+    if request.method == "POST":
+        data = request.get_json()
+        with open("static/data/news.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        return {"success": True}
+
+    return render_template("admin/edit_news.html", news=news)
+
+
+@app.route("/admin/einsaetze", methods=["GET", "POST"])
+@login_required
+def edit_einsaetze():
+    einsatz_path = "static/data/einsaetze.json"
+    with open(einsatz_path, encoding="utf-8") as f:
+        einsaetze = json.load(f)
+
+    if request.method == "POST":
+        data = request.get_json()
+        with open(einsatz_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        return {"success": True}
+
+    return render_template("admin/edit_einsaetze.html", einsaetze=einsaetze)
 
 
 @app.route("/")
