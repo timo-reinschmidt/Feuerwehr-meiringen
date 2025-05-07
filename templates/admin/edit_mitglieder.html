@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+<section class="py-16 bg-fwbeige" x-data="mitgliederEditor()" x-init="init()">
+    <div class="max-w-4xl mx-auto px-4">
+        <h1 class="text-3xl font-bold mb-6 text-fwrot">👥 Mitglieder verwalten</h1>
 
-</body>
-</html>
+        <template x-for="(person, index) in mitglieder" :key="index">
+            <div class="bg-white rounded shadow p-4 mb-4">
+                <input type="text" x-model="person.name" class="w-full p-2 mb-2 border rounded" placeholder="Name">
+                <input type="text" x-model="person.funktion" class="w-full p-2 mb-2 border rounded" placeholder="Funktion">
+                <input type="text" x-model="person.rang" class="w-full p-2 mb-2 border rounded" placeholder="Rang">
+                <input type="text" x-model="person.gruppe" class="w-full p-2 mb-2 border rounded" placeholder="Gruppe">
+                <button @click="remove(index)" class="text-sm bg-fwrot text-white px-3 py-1 rounded mt-2">🗑️ Entfernen</button>
+            </div>
+        </template>
+
+        <div class="flex gap-4 mt-8">
+            <button @click="addNew()" class="bg-fworange text-white px-4 py-2 rounded">➕ Mitglied hinzufügen</button>
+            <button @click="save()" class="bg-fwblack text-white px-4 py-2 rounded">💾 Änderungen speichern</button>
+        </div>
+
+        <p class="mt-4 text-green-600" x-text="message"></p>
+    </div>
+</section>
+
+<script>
+function mitgliederEditor() {
+    return {
+        mitglieder: [],
+        message: "",
+
+        init() {
+            this.mitglieder = {{ mitglieder | tojson | safe }};
+        },
+
+        addNew() {
+            this.mitglieder.push({ name: "", funktion: "", rang: "", gruppe: "" });
+        },
+
+        remove(index) {
+            this.mitglieder.splice(index, 1);
+        },
+
+        async save() {
+            const res = await fetch("/admin/mitglieder", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(this.mitglieder)
+            });
+            const result = await res.json();
+            if (result.success) {
+                this.message = "✅ Gespeichert!";
+                setTimeout(() => this.message = "", 3000);
+            }
+        }
+    };
+}
+</script>
+{% endblock %}
