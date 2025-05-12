@@ -51,16 +51,20 @@
                         </label>
                     </div>
 
-                    <form class="grid md:grid-cols-2 gap-4 text-black">
-                        <input type="text" placeholder="Name *" required class="p-2 rounded border">
-                        <input type="text" placeholder="Vorname *" required class="p-2 rounded border">
-                        <input type="text" placeholder="Strasse / Nr. *" required class="p-2 rounded border">
-                        <input type="text" placeholder="PLZ / Ort *" required class="p-2 rounded border">
-                        <input type="text" placeholder="Geburtsdatum *" required class="p-2 rounded border">
-                        <input type="text" placeholder="Telefon Privat / Mobile *" required class="p-2 rounded border">
-                        <input type="email" placeholder="E-Mail *" required class="p-2 rounded border">
-                        <input type="text" placeholder="Beruf *" required class="p-2 rounded border">
-                        <input type="text" placeholder="Arbeitsort *" required class="p-2 rounded border">
+                    <form action="/mitmachen" method="POST" class="grid md:grid-cols-2 gap-4 text-black">
+                        <input type="text" name="name" placeholder="Name *" required class="p-2 rounded border">
+                        <input type="text" name="vorname" placeholder="Vorname *" required class="p-2 rounded border">
+                        <input type="text" name="address" placeholder="Strasse / Nr. *" required
+                               class="p-2 rounded border">
+                        <input type="text" name="plz" placeholder="PLZ / Ort *" required class="p-2 rounded border">
+                        <input type="text" name="geburtstag" placeholder="Geburtsdatum *" required
+                               class="p-2 rounded border">
+                        <input type="text" name="handy" placeholder="Telefon Privat / Mobile *" required
+                               class="p-2 rounded border">
+                        <input type="email" name="email" placeholder="E-Mail *" required class="p-2 rounded border">
+                        <input type="text" name="beruf" placeholder="Beruf *" required class="p-2 rounded border">
+                        <input type="text" name="arbeitsort" placeholder="Arbeitsort *" required
+                               class="p-2 rounded border">
 
                         <div class="md:col-span-2 space-y-2 mt-4">
                             <label class="flex items-center gap-2 text-white">
@@ -92,7 +96,7 @@
                                       class="w-full p-2 rounded border h-24"></textarea>
                         </div>
 
-                        <textarea placeholder="Bemerkung"
+                        <textarea name="bemerkung" placeholder="Bemerkung"
                                   class="md:col-span-2 p-2 rounded border h-24 mt-4"></textarea>
 
                         <button type="submit"
