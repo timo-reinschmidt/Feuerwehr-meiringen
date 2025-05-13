@@ -1,59 +1,203 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="py-16 bg-fwbeige" x-data="mitgliederEditor()" x-init="init()">
+
     <div class="max-w-4xl mx-auto px-4">
+        <div class="flex justify-between items-center mb-4">
+            <a href="/admin" class="bg-gray-100 hover:bg-gray-200 text-sm px-3 py-1 rounded">
+                ← Zurück zum Dashboard
+            </a>
+
+            <a href="/" class="bg-fwrot text-white text-sm px-3 py-1 rounded hover:bg-red-600">
+                🔒 Logout
+            </a>
+        </div>
         <h1 class="text-3xl font-bold mb-6 text-fwrot">👥 Mitglieder verwalten</h1>
 
-        <template x-for="(person, index) in mitglieder" :key="index">
-            <div class="bg-white rounded shadow p-4 mb-4">
-                <input type="text" x-model="person.name" class="w-full p-2 mb-2 border rounded" placeholder="Name">
-                <input type="text" x-model="person.funktion" class="w-full p-2 mb-2 border rounded" placeholder="Funktion">
-                <input type="text" x-model="person.rang" class="w-full p-2 mb-2 border rounded" placeholder="Rang">
-                <input type="text" x-model="person.gruppe" class="w-full p-2 mb-2 border rounded" placeholder="Gruppe">
-                <button @click="remove(index)" class="text-sm bg-fwrot text-white px-3 py-1 rounded mt-2">🗑️ Entfernen</button>
-            </div>
-        </template>
+        <input type="text" x-model="search" placeholder="🔍 Nach Name filtern..."
+               class="w-full p-2 mb-6 border border-gray-300 rounded">
 
         <div class="flex gap-4 mt-8">
             <button @click="addNew()" class="bg-fworange text-white px-4 py-2 rounded">➕ Mitglied hinzufügen</button>
-            <button @click="save()" class="bg-fwblack text-white px-4 py-2 rounded">💾 Änderungen speichern</button>
+            <button @click="save()" class="bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded">💾
+                Änderungen speichern
+            </button>
         </div>
+
+        <template x-for="(person, index) in filteredMitglieder" :key="person.id || index">
+            <div class="bg-white rounded shadow p-4 mb-4 space-y-2">
+                <input type="text" x-model="person.name" class="w-full p-2 border rounded" placeholder="Name">
+                <select x-model="person.funktion" class="w-full p-2 mb-2 border rounded">
+                    <option value="">Funktion wählen</option>
+                    <option>Kommandant</option>
+                    <option>Kommandant-Stv</option>
+                    <option>AS Geräteträger</option>
+                    <option>Fourier</option>
+                    <option>Mutationsführer FW</option>
+                    <option>Motorfahrer/in</option>
+                    <option>Materialverantwortlicher</option>
+                    <option>Fachspezialist PbU</option>
+                    <option>Gruppenführer</option>
+                    <option>Fahrerausbildung</option>
+                    <option>Feuerwehr-Kommando</option>
+                    <option>Ausbildungsverantwortlicher FW</option>
+                </select>
+                <select x-model="person.rang" class="w-full p-2 mb-2 border rounded">
+                    <option value="">Rang wählen</option>
+                    <option>Maj</option>
+                    <option>Hptm</option>
+                    <option>Oblt</option>
+                    <option>Lt</option>
+                    <option>Four</option>
+                    <option>Wm</option>
+                    <option>Kpl</option>
+                    <option>Sdt</option>
+                    <option>Rekr</option>
+                    <option>Jfw</option>
+                </select>
+                <input type="text" x-model="person.gruppe" class="w-full p-2 border rounded" placeholder="Gruppe">
+                <input type="email" x-model="person.email" class="w-full p-2 border rounded" placeholder="E-Mail">
+
+                <!-- Bild-Upload -->
+                <div class="flex items-center gap-4">
+                    <img :src="person.bild || '/static/images/placeholder.png'" alt=""
+                         class="h-16 w-16 object-cover rounded border">
+                    <input type="file" @change="uploadBild($event, person)">
+                </div>
+
+                <div class="flex gap-2 mt-2">
+                    <button @click="remove(index)" class="text-sm bg-fwrot text-white px-3 py-1 rounded">
+                        🗑️ Entfernen
+                    </button>
+                    <button @click="saveOne(person)" class="text-sm bg-fwblack text-white px-3 py-1 rounded">
+                        💾 Speichern
+                    </button>
+                </div>
+            </div>
+        </template>
+
 
         <p class="mt-4 text-green-600" x-text="message"></p>
     </div>
 </section>
 
 <script>
-function mitgliederEditor() {
-    return {
-        mitglieder: [],
-        message: "",
+    function mitgliederEditor() {
+        return {
+            mitglieder: [],
+            message: "",
+            search: "",
 
-        init() {
-            this.mitglieder = {{ mitglieder | tojson | safe }};
-        },
+            get filteredMitglieder() {
+                if (!this.search) return this.mitglieder;
+                return this.mitglieder.filter(p =>
+                    p.name?.toLowerCase().includes(this.search.toLowerCase())
+                );
+            },
 
-        addNew() {
-            this.mitglieder.push({ name: "", funktion: "", rang: "", gruppe: "" });
-        },
+            init() {
+                this.mitglieder = JSON.parse('{{ mitglieder | tojson | safe }}');
+            },
 
-        remove(index) {
-            this.mitglieder.splice(index, 1);
-        },
+            addNew() {
+                this.mitglieder.unshift({name: "", funktion: "", rang: "", gruppe: "", email: "", bild: ""});
+            },
 
-        async save() {
-            const res = await fetch("/admin/mitglieder", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(this.mitglieder)
-            });
-            const result = await res.json();
-            if (result.success) {
-                this.message = "✅ Gespeichert!";
-                setTimeout(() => this.message = "", 3000);
+            async remove(index) {
+                const person = this.filteredMitglieder[index]; // ← korrekt aus der Filterliste holen
+                console.log("🗑️ Mitglied löschen:", person);
+
+                if (person.id) {
+                    const confirmed = confirm(`Wirklich löschen? (${person.id})`);
+                    if (confirmed) {
+                        try {
+                            const res = await fetch(`/admin/mitglieder/${person.id}`, {
+                                method: "DELETE"
+                            });
+
+                            console.log("📡 Response Status:", res.status);
+                            const result = await res.json();
+                            console.log("📦 Serverantwort:", result);
+
+                            if (result.success) {
+                                // ❗ hier nicht mit index, sondern mit ID filtern:
+                                this.mitglieder = this.mitglieder.filter(p => p.id !== person.id);
+                                console.log("✅ Mitglied gelöscht:", person.id);
+                            } else {
+                                alert("Fehler beim Löschen: " + (result.error || "Unbekannter Fehler"));
+                            }
+                        } catch (err) {
+                            console.error("❌ Netz-/Serverfehler beim DELETE:", err);
+                            alert("Netzwerkfehler beim Löschen.");
+                        }
+                    }
+                } else {
+                    // Noch nicht gespeichert: über Filter entfernen
+                    this.mitglieder = this.mitglieder.filter(p => p !== person);
+                    console.log("🧹 Temporäres Mitglied gelöscht.");
+                }
+            },
+
+            async uploadBild(event, person) {
+                const file = event.target.files[0];
+                const formData = new FormData();
+                formData.append('bild', file);
+
+                const res = await fetch('/admin/mitglieder/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    person.bild = data.path;
+                }
+            },
+
+            async saveOne(person) {
+                try {
+                    const res = await fetch("/admin/mitglieder", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify([person])  // ← Nur diese Person!
+                    });
+                    const result = await res.json();
+                    if (result.success) {
+                        // ID aktualisieren, falls neu erstellt wurde
+                        const updated = result.mitglieder[0];
+                        person.id = updated.id;
+                        this.message = `✅ ${person.name} gespeichert`;
+                        setTimeout(() => this.message = "", 3000);
+                    } else {
+                        alert("Fehler beim Speichern.");
+                    }
+                } catch (err) {
+                    console.error("Speichern fehlgeschlagen:", err);
+                    alert("Netzwerk- oder Serverfehler beim Speichern.");
+                }
+            },
+
+            async save() {
+                try {
+                    const res = await fetch("/admin/mitglieder", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(this.mitglieder)
+                    });
+                    const result = await res.json();
+                    if (result.success) {
+                        this.mitglieder = result.mitglieder; // ← IDs werden jetzt übernommen!
+                        this.message = "✅ Gespeichert!";
+                        setTimeout(() => this.message = "", 3000);
+                    } else {
+                        this.message = "❌ Fehler beim Speichern.";
+                    }
+                } catch (err) {
+                    console.error("Speichern fehlgeschlagen:", err);
+                    this.message = "❌ Netzwerk- oder Serverfehler.";
+                }
             }
-        }
-    };
-}
+        };
+    }
 </script>
 {% endblock %}

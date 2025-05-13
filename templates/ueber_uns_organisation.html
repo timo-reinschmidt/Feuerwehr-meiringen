@@ -2,7 +2,7 @@
 
 {% block content %}
 <section class="py-16 bg-fwbeige text-fwblack">
-    <div class="max-w-7xl mx-auto px-4 pb-16" x-data="orga()">
+    <div class="max-w-7xl mx-auto px-4 pb-16" x-data="orga()" x-init="init()">
         <h1 class="text-5xl font-bold text-fwrot mb-6">Organisation</h1>
 
         <div class="text-lg leading-relaxed text-gray-700 mb-12 max-w-4xl">
@@ -149,8 +149,9 @@
                     });
             },
             async init() {
-                const res = await fetch('/static/data/mitglieder.json');
+                const res = await fetch('/api/mitglieder');
                 this.mitglieder = await res.json();
+                console.log("Geladene Mitglieder:", this.mitglieder);
             }
         };
     }

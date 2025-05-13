@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, session, redirect, url_for, request
 
 from routes.einsaetze_api import einsaetze_api
+from routes.mitglieder_api import mitglieder_api
 from routes.termine_api import termine_api
 
 load_dotenv()
@@ -13,6 +14,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 app.register_blueprint(einsaetze_api)
 app.register_blueprint(termine_api)
+app.register_blueprint(mitglieder_api)
 
 DATA_PATH = "static/data/news.json"
 USERNAME = "admin"
@@ -79,20 +81,20 @@ def einsaetze_edit():
     return render_template("admin/edit_einsaetze.html")
 
 
-@app.route("/admin/mitglieder", methods=["GET", "POST"])
-@login_required
-def edit_mitglieder():
-    path = "static/data/mitglieder.json"
-    with open(path, encoding="utf-8") as f:
-        mitglieder = json.load(f)
-
-    if request.method == "POST":
-        data = request.get_json()
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-        return {"success": True}
-
-    return render_template("admin/edit_mitglieder.html", mitglieder=mitglieder)
+# @app.route("/admin/mitglieder", methods=["GET", "POST"])
+# @login_required
+# def edit_mitglieder():
+#     path = "static/data/mitglieder.json"
+#     with open(path, encoding="utf-8") as f:
+#         mitglieder = json.load(f)
+#
+#     if request.method == "POST":
+#         data = request.get_json()
+#         with open(path, "w", encoding="utf-8") as f:
+#             json.dump(data, f, indent=2, ensure_ascii=False)
+#         return {"success": True}
+#
+#     return render_template("admin/edit_mitglieder.html", mitglieder=mitglieder)
 
 
 @app.route("/admin/termine/edit")

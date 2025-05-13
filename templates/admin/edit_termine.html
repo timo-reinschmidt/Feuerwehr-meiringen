@@ -2,6 +2,15 @@
 
 {% block content %}
 <section class="max-w-5xl mx-auto py-12 px-4 bg-fwbeige" x-data="termineAdminApp()" x-init="load()">
+    <div class="flex justify-between items-center mb-4">
+        <a href="/admin" class="bg-gray-100 hover:bg-gray-200 text-sm px-3 py-1 rounded">
+            ← Zurück zum Dashboard
+        </a>
+
+        <a href="/" class="bg-fwrot text-white text-sm px-3 py-1 rounded hover:bg-red-600">
+            🔒 Logout
+        </a>
+    </div>
     <h1 class="text-3xl font-bold mb-6 text-fwrot">📆 Termine verwalten</h1>
 
     <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
