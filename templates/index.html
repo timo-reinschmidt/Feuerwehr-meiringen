@@ -143,20 +143,21 @@
             async loadAll() {
                 const [newsRes, einsatzRes, termineRes] = await Promise.all([
                     fetch('/static/data/news.json'),
-                    fetch('/static/data/einsaetze.json'),
+                    fetch('/api/einsaetze'),
                     fetch('/static/data/termine.json')
                 ]);
 
+                // NEWS
                 this.aktuelleNews = (await newsRes.json())
                     .filter(e => this.istInZukunft(e.datum))
                     .sort((a, b) => this.sortiereNachDatum(a.datum, b.datum));
 
-                const einsatzObj = await einsatzRes.json();
-                const alleEinsaetze = Object.values(einsatzObj).flat();
-
+                // EINSÄTZE aus API (flache Liste, keine JSON-Jahresstruktur mehr!)
+                const alleEinsaetze = await einsatzRes.json();
                 this.letzteEinsaetze = alleEinsaetze
-                    .sort((a, b) => this.sortiereNachDatum(b.datum, a.datum));
+                    .sort((a, b) => new Date(b.datum) - new Date(a.datum));
 
+                // TERMINE
                 this.naechsteTermine = (await termineRes.json())
                     .filter(e => this.istInZukunft(e.datum))
                     .sort((a, b) => this.sortiereNachDatum(a.datum, b.datum));
@@ -164,27 +165,25 @@
 
             istInZukunft(datumStr) {
                 const heute = new Date();
-                const datum = new Date(datumStr.split('.').reverse().join('-'));
+                const datum = datumStr.includes('.')
+                    ? new Date(datumStr.split('.').reverse().join('-'))
+                    : new Date(datumStr);
                 return datum >= heute;
             },
 
             sortiereNachDatum(a, b) {
-                const da = new Date(a.split('.').reverse().join('-'));
-                const db = new Date(b.split('.').reverse().join('-'));
+                const da = a.includes('.') ? new Date(a.split('.').reverse().join('-')) : new Date(a);
+                const db = b.includes('.') ? new Date(b.split('.').reverse().join('-')) : new Date(b);
                 return da - db;
             },
 
             formatDatum(d) {
-                if (d.includes('.')) {
-                    const [day, month, year] = d.split('.');
-                    return new Date(`${year}-${month}-${day}`).toLocaleDateString('de-CH', {
-                        day: '2-digit',
-                        month: 'long',
-                        year: 'numeric'
-                    });
-                } else {
-                    return new Date(d).toLocaleDateString('de-CH', {day: '2-digit', month: 'long', year: 'numeric'});
-                }
+                const datum = new Date(d);
+                return datum.toLocaleDateString('de-CH', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                });
             }
         }
     }

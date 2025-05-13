@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="max-w-5xl mx-auto py-12 px-4 bg-fwbeige" x-data="einsaetzeApp()" x-init="init()">
+<section class="max-w-5xl mx-auto py-12 px-4 bg-fwbeige" x-data="einsaetzeApp()" x-init="load()">
     <h1 class="text-3xl font-bold mb-6 text-fwrot">🧯 Einsätze verwalten</h1>
 
     <div class="flex flex-wrap gap-4 mb-6">
@@ -12,72 +12,62 @@
         </template>
     </div>
 
-  <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
-    <div class="flex gap-2">
-        <input type="text" x-model="neuesJahr" class="border p-1 rounded" placeholder="Neues Jahr (z. B. 2026)">
-        <button @click="addJahr" class="bg-fwrot text-white px-3 py-1 rounded">📅 Neues Jahr anlegen</button>
+    <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
+        <div class="flex gap-2">
+            <input type="text" x-model="neuesJahr" class="border p-1 rounded" placeholder="Neues Jahr (z. B. 2026)">
+            <button @click="addJahr" class="bg-fwrot text-white px-3 py-1 rounded">📅 Neues Jahr anlegen</button>
+        </div>
+        <div>
+            <button @click="save()" class="bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded">
+                💾 Änderungen speichern
+            </button>
+            <span class="ml-4 text-green-600" x-text="message"></span>
+        </div>
     </div>
-    <div>
-        <button @click="save()" class="bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded">
-            💾 Änderungen speichern
-        </button>
-        <span class="ml-4 text-green-600" x-text="message"></span>
-    </div>
-</div>
 
-    <!-- JAHRE 2025 UND SPÄTER -->
-<template x-for="jahr in sortierteJahre.filter(j => parseInt(j) >= 2025)" :key="jahr">
-    <div class="mb-10">
-        <h2 class="text-xl font-semibold mb-4" x-text="'Einsätze ' + jahr"></h2>
+    <!-- Aktuelles Jahr direkt anzeigen -->
+    <template x-if="sortierteJahre.includes(new Date().getFullYear().toString())">
+        <div class="mb-10">
+            <h2 class="text-xl font-semibold mb-4" x-text="'Einsätze ' + new Date().getFullYear()"></h2>
+            <template x-for="(e, index) in einsaetze[new Date().getFullYear().toString()]" :key="e.id || index">
+                <div class="bg-fwbeige p-4 mb-2 rounded shadow border-l-4 border-fwrot space-y-1">
+                    <p class="text-sm font-mono text-gray-600"
+                       x-text="'Einsatznummer: ' + e.nr"></p>
+                    <input type="date" class="w-full p-1 rounded border" x-model="e.datum">
+                    <input type="text" class="w-full p-1 rounded border" x-model="e.titel" placeholder="Titel">
+                    <textarea class="w-full p-1 rounded border" x-model="e.beschreibung"
+                              placeholder="Beschreibung (optional)"></textarea>
+                    <button @click="deleteEinsatz(e.datum.split('-')[0], index, e.id)"
+                            class="text-sm text-red-600 mt-2">🗑️ Löschen
+                    </button>
+                </div>
+            </template>
+        </div>
+    </template>
 
-        <template x-for="(e, index) in einsaetze[jahr]" :key="jahr + '-' + e.nr">
-            <div class="bg-fwbeige p-4 mb-2 rounded shadow border-l-4 border-fwrot space-y-1">
-              <p class="text-sm font-mono text-gray-600" x-text="'Einsatznummer: ' + e.nr"></p>
-              <input type="text" class="w-full p-1 rounded border" x-model="e.datum" placeholder="Datum">
-                <input type="text" class="w-full p-1 rounded border" x-model="e.titel" placeholder="Titel">
-                <textarea class="w-full p-1 rounded border" x-model="e.beschreibung"
-                          placeholder="Beschreibung (optional)"></textarea>
-                <button @click="deleteEinsatz(jahr, index)" class="text-sm text-red-600 mt-2">🗑️ Löschen</button>
-            </div>
-        </template>
-
-        <button @click="addEinsatz(jahr)" class="mt-2 px-3 py-1 bg-fworange text-white rounded">
-            ➕ Einsatz hinzufügen für <span x-text="jahr"></span>
-        </button>
-    </div>
-</template>
-
-<!-- ARCHIV -->
-<div x-data="{ archivOpen: false }">
-    <button @click="archivOpen = !archivOpen" class="text-fwrot font-semibold mb-4">
-        📂 Archiv anzeigen / ausblenden
-    </button>
-    <div x-show="archivOpen" x-collapse>
-        <template x-for="jahr in sortierteJahre.filter(j => parseInt(j) < 2025)" :key="jahr">
-            <div class="mb-10">
-                <h2 class="text-xl font-semibold mb-4" x-text="'Einsätze ' + jahr"></h2>
-                <template x-for="(e, index) in sortiereNachDatum(einsaetze[jahr])" :key="index">
-                    <div class="bg-fwbeige p-4 mb-2 rounded shadow border-l-4 border-gray-300 space-y-1">
-                      <p class="text-sm font-mono text-gray-600" x-text="'Einsatznummer: ' + e.nr"></p>
-                      <input type="text" class="w-full p-1 rounded border" x-model="e.datum" placeholder="Datum">
+    <!-- Archiv: alle früheren Jahre einklappbar -->
+    <h2 class="text-xl font-semibold mb-4 text-fwrot mt-10">📁 Archiv</h2>
+    <template x-for="jahr in sortierteJahre.filter(j => j !== new Date().getFullYear().toString())" :key="jahr">
+        <details class="mb-6">
+            <summary class="cursor-pointer font-semibold bg-white p-2 rounded shadow border text-fwrot">
+                Archiv: <span x-text="jahr"></span>
+            </summary>
+            <div class="mt-4">
+                <template x-for="(e, index) in einsaetze[jahr]" :key="e.id || index">
+                    <div class="bg-fwbeige p-4 mb-2 rounded shadow border-l-4 border-fwrot space-y-1">
+                        <p class="text-sm font-mono text-gray-600"
+                           x-text="'Einsatznummer: ' + e.nr"></p>
+                        <input type="text" class="w-full p-1 rounded border" x-model="e.datum" placeholder="Datum">
                         <input type="text" class="w-full p-1 rounded border" x-model="e.titel" placeholder="Titel">
                         <textarea class="w-full p-1 rounded border" x-model="e.beschreibung"
                                   placeholder="Beschreibung (optional)"></textarea>
-                        <button @click="deleteEinsatz(jahr, index)" class="text-sm text-red-600 mt-2">🗑️ Löschen</button>
+                        <button @click="deleteEinsatz(jahr, index, e.id)" class="text-sm text-red-600 mt-2">🗑️ Löschen
+                        </button>
                     </div>
                 </template>
-                <button @click="addEinsatz(jahr)" class="mt-2 px-3 py-1 bg-fworange text-white rounded">
-                    ➕ Einsatz hinzufügen für <span x-text="jahr"></span>
-                </button>
             </div>
-        </template>
-    </div>
-</div>
-
-    <div class="my-6 bg-fwbeige">
-        <input type="text" x-model="neuesJahr" class="border p-1 rounded mr-2" placeholder="Neues Jahr (z. B. 2026)">
-        <button @click="addJahr" class="bg-fwrot text-white px-3 py-1 rounded">📅 Neues Jahr anlegen</button>
-    </div>
+        </details>
+    </template>
 
     <div class="mt-6 bg-fwbeige">
         <button @click="save()" class="bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded">
@@ -93,49 +83,98 @@
             einsaetze: {},
             neuesJahr: '',
             message: '',
-            init() {
-                this.einsaetze = {{ einsaetze | tojson | safe }};
+
+            async load() {
+                const res = await fetch('/api/einsaetze');
+                const data = await res.json();
+                const grouped = {};
+                data.forEach(e => {
+                    const jahr = e.datum.split('-')[0];
+                    if (!grouped[jahr]) grouped[jahr] = [];
+                    grouped[jahr].push(e);
+                });
+                // Alle Listen absteigend sortieren
+                for (const jahr in grouped) {
+                    grouped[jahr].sort((a, b) => b.datum.localeCompare(a.datum));
+                }
+                this.einsaetze = grouped;
             },
+
             get sortierteJahre() {
                 return Object.keys(this.einsaetze).sort((a, b) => b - a);
             },
-            sortiereNachDatum(liste) {
-                return liste.slice().sort((a, b) => new Date(b.datum) - new Date(a.datum));
-            },
-            addEinsatz(jahr) {
-                const jahrKurz = jahr.slice(-2); // z. B. "2025" -> "25"
-                const vorhandene = this.einsaetze[jahr].map(e => parseInt(e.nr?.split("/")?.[0])).filter(n => !isNaN(n));
-                const maxNr = vorhandene.length ? Math.max(...vorhandene) : 0;
-                const neueNr = `${maxNr + 1}/${jahrKurz}`;
 
-                this.einsaetze[jahr].unshift({
+            async addEinsatz(jahr) {
+                const jahrKurz = jahr.slice(-2);
+                const vorhandene = this.einsaetze[jahr]
+                    .map(e => parseInt(e.nr?.split('/')?.[0]))
+                    .filter(n => !isNaN(n));
+                const maxNr = vorhandene.length ? Math.max(...vorhandene) : 0;
+                const neueNr = String(maxNr + 1).padStart(2, '0') + '/' + jahrKurz;
+
+                const dummy = {
+                    datum: new Date().toISOString().slice(0, 10),
                     nr: neueNr,
-                    datum: "",
-                    titel: "",
-                    beschreibung: ""
+                    titel: '',
+                    beschreibung: ''
+                };
+
+                const res = await fetch('/api/einsaetze', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(dummy)
                 });
+
+                const result = await res.json();
+                dummy.id = result.id;
+
+                if (!this.einsaetze[jahr]) this.einsaetze[jahr] = [];
+                // ← direkt lokal einfügen
             },
-            deleteEinsatz(jahr, index) {
+
+            async deleteEinsatz(jahr, index, id) {
+                if (id) {
+                    await fetch(`/api/einsaetze/${id}`, {method: 'DELETE'});
+                }
                 this.einsaetze[jahr].splice(index, 1);
             },
+
             addJahr() {
                 if (this.neuesJahr && !this.einsaetze[this.neuesJahr]) {
                     this.einsaetze[this.neuesJahr] = [];
                     this.neuesJahr = '';
                 }
             },
+
             async save() {
-                const res = await fetch("/admin/einsaetze", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(this.einsaetze)
-                });
-                if (res.ok) {
-                    this.message = "✅ Gespeichert!";
-                    setTimeout(() => this.message = "", 2000);
+                for (const jahr of this.sortierteJahre) {
+                    // Alle Einsätze dieses Jahres nach Datum sortieren
+                    const sortiert = [...this.einsaetze[jahr]].sort((a, b) => a.datum.localeCompare(b.datum));
+                    const jahrKurz = jahr.slice(-2);
+
+                    // Neu durchnummerieren
+                    sortiert.forEach((e, i) => {
+                        e.nr = String(i + 1).padStart(2, '0') + '/' + jahrKurz;
+                    });
+
+                    // Zurückschreiben in das Hauptobjekt
+                    this.einsaetze[jahr] = sortiert;
+
+                    // Speichern in die Datenbank
+                    for (const einsatz of sortiert) {
+                        if (!einsatz.id) continue;
+                        await fetch(`/api/einsaetze/${einsatz.id}`, {
+                            method: 'PUT',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(einsatz)
+                        });
+                    }
                 }
+
+                this.message = '✅ Nummerierung aktualisiert & gespeichert!';
+                setTimeout(() => this.message = '', 3000);
             }
-        };
+        }
     }
 </script>
 {% endblock %}

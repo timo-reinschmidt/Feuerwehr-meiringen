@@ -16,29 +16,47 @@
 <section class="py-16 bg-fwbeige" x-data="einsaetze()" x-init="load()">
     <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-2xl font-semibold mb-8 text-fwrot">Letzte Einsätze (2025)</h2>
-        <div class="grid md:grid-cols-2 gap-6 mb-12">
-            <template x-for="einsatz in einsatzdaten['2025']" :key="einsatz.nr">
-                <div class="bg-white p-5 rounded shadow border-l-4 border-fwrot">
-                    <p class="text-sm text-gray-500" x-text="einsatz.datum"></p>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <template x-for="einsatz in einsatzdaten['2025']" :key="einsatz.id">
+                <div class="bg-white p-5 rounded shadow border-l-4 border-fwrot"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 translate-y-2"
+                     x-transition:enter-end="opacity-100 translate-y-0">
+                    <div class="flex justify-between items-center mb-1">
+                        <p class="text-sm text-gray-500" x-text="einsatz.datum"></p>
+                        <p class="text-sm font-semibold text-fwrot"
+                           x-text="einsatz.nr"></p>
+                    </div>
                     <h3 class="font-bold text-lg mb-2" x-text="einsatz.titel"></h3>
-                    <p class="text-sm text-gray-800" x-text="einsatz.text"></p>
+                    <p class="text-sm text-gray-800" x-show="einsatz.beschreibung" x-text="einsatz.beschreibung"></p>
                 </div>
             </template>
         </div>
 
         <!-- Einsätze Archiv -->
         <h2 class="text-2xl font-semibold mb-4 text-fwrot">Einsätze Archiv</h2>
-        <template x-for="(liste, jahr) in archiv" :key="jahr">
+        <template x-for="[jahr, liste] in Object.entries(archiv)" :key="jahr">
             <div class="mb-4">
                 <details class="bg-white rounded shadow">
-                    <summary class="cursor-pointer px-4 py-3 font-bold bg-fwhell border-b text-fwrot">Einsätze <span
-                            x-text="jahr"></span></summary>
+                    <summary class="cursor-pointer px-4 py-3 font-bold bg-fwhell border-b text-fwrot">
+                        Einsätze <span x-text="jahr"></span>
+                    </summary>
                     <div class="divide-y">
-                        <template x-for="einsatz in liste" :key="einsatz.nr">
-                            <div class="p-4">
-                                <p class="text-sm text-gray-500" x-text="einsatz.datum"></p>
+                        <template x-for="einsatz in liste" :key="einsatz.id">
+                            <div class="p-4"
+                                 x-transition:enter="transition ease-out duration-300"
+                                 x-transition:enter-start="opacity-0 translate-y-2"
+                                 x-transition:enter-end="opacity-100 translate-y-0">
+                                <div class="flex justify-between items-center mb-1">
+                                    <p class="text-sm text-gray-500" x-text="einsatz.datum"></p>
+                                    <p class="text-sm font-semibold text-fwrot"
+                                       x-text="einsatz.nr">
+                                    </p>
+                                </div>
                                 <h4 class="font-bold" x-text="einsatz.titel"></h4>
-                                <p class="text-sm text-gray-800" x-text="einsatz.text"></p>
+                                <p class="text-sm text-gray-800" x-show="einsatz.beschreibung"
+                                   x-text="einsatz.beschreibung"></p>
                             </div>
                         </template>
                     </div>
@@ -87,6 +105,36 @@
     function einsaetze() {
         return {
             einsatzdaten: {},
+            isLoading: true,
+            error: null,
+
+            async load() {
+                this.isLoading = true;
+                this.error = null;
+
+                try {
+                    const res = await fetch('/api/einsaetze');
+                    if (!res.ok) throw new Error("Fehler beim Abrufen der Einsätze");
+
+                    const daten = await res.json();
+
+                    const gruppiert = {};
+                    daten.forEach(e => {
+                        const jahr = e.datum.split('-')[0];
+                        if (!gruppiert[jahr]) gruppiert[jahr] = [];
+                        gruppiert[jahr].push(e);
+                    });
+
+                    this.einsatzdaten = Object.fromEntries(
+                        Object.entries(gruppiert).sort((a, b) => b[0] - a[0])
+                    );
+                } catch (e) {
+                    this.error = e.message;
+                } finally {
+                    this.isLoading = false;
+                }
+            },
+
             get archiv() {
                 const result = {};
                 for (const jahr in this.einsatzdaten) {
@@ -95,18 +143,6 @@
                     }
                 }
                 return result;
-            },
-            get einsaetze() {
-                return this.einsatzdaten;
-            },
-            async load() {
-                try {
-                    const res = await fetch('/static/data/einsaetze.json');
-                    const daten = await res.json();
-                    this.einsatzdaten = daten;
-                } catch (e) {
-                    console.error('Fehler beim Laden:', e);
-                }
             }
         }
     }

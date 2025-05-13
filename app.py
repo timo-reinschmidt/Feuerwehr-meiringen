@@ -3,39 +3,14 @@ import os
 from functools import wraps
 
 from dotenv import load_dotenv
-from flask import Flask, render_template, session, redirect, url_for, request, jsonify
+from flask import Flask, render_template, session, redirect, url_for, request
 
-from models import db, Einsatz
+from routes.einsaetze_api import einsaetze_api
 
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
-
-app.config["SQLALCHEMY_DATABASE_URI"] = (
-    os.environ.get("DATABASE_URL") or "sqlite:///data.db"
-)
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db.init_app(app)
-
-# Tabellen beim Start erstellen
-with app.app_context():
-    db.create_all()
-
-with app.app_context():
-    with open("static/data/einsaetze.json", encoding="utf-8") as f:
-        daten = json.load(f)
-
-        for jahr, eintraege in daten.items():
-            for eintrag in eintraege:
-                e = Einsatz(
-                    datum=eintrag["datum"],
-                    titel=eintrag["titel"],
-                    beschreibung=eintrag["beschreibung"],
-                    jahr=int(jahr),
-                )
-                db.session.add(e)
-
-        db.session.commit()
+app.register_blueprint(einsaetze_api)
 
 DATA_PATH = "static/data/news.json"
 USERNAME = "admin"
@@ -50,6 +25,11 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return wrapper
+
+
+@app.route("/ping")
+def ping():
+    return "pong"
 
 
 @app.route("/admin/login", methods=["GET", "POST"])
@@ -91,43 +71,10 @@ def edit_news():
     return render_template("admin/edit_news.html", news=news)
 
 
-@app.route("/admin/einsaetze", methods=["POST"])
-@login_required
-def einsaetze_speichern():
-    daten = request.get_json()
-
-    # Alles löschen (hard reset) – oder smarter: existierende vergleichen
-    Einsatz.query.delete()
-
-    for jahr, eintraege in daten.items():
-        for e in eintraege:
-            neuer = Einsatz(
-                datum=e["datum"],
-                titel=e["titel"],
-                beschreibung=e.get("beschreibung", ""),
-                jahr=int(jahr),
-            )
-            db.session.add(neuer)
-
-    db.session.commit()
-    return jsonify({"status": "ok"})
-
-
 @app.route("/admin/einsaetze/edit")
 @login_required
 def einsaetze_edit():
-    daten = {}
-    eintraege = Einsatz.query.order_by(Einsatz.jahr.desc(), Einsatz.datum.desc()).all()
-    for e in eintraege:
-        daten.setdefault(str(e.jahr), []).append(
-            {
-                "nr": "-",  # kann generiert oder leer bleiben
-                "datum": e.datum,
-                "titel": e.titel,
-                "beschreibung": e.beschreibung,
-            }
-        )
-    return render_template("admin/edit_einsaetze.html", einsaetze=daten)
+    return render_template("admin/edit_einsaetze.html")
 
 
 @app.route("/admin/mitglieder", methods=["GET", "POST"])
