@@ -1,10 +1,145 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+<section class="max-w-5xl mx-auto py-12 px-4 bg-fwbeige" x-data="termineAdminApp()" x-init="load()">
+    <h1 class="text-3xl font-bold mb-6 text-fwrot">📆 Termine verwalten</h1>
+
+    <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
+        <button @click="addTermin" class="bg-fworange hover:bg-fwrot text-white px-3 py-1 rounded">
+            ➕ Neuen Termin hinzufügen
+        </button>
+        <button @click="save()" class="bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded">
+            💾 Änderungen speichern
+        </button>
+        <span class="ml-4 text-green-600" x-text="message"></span>
+    </div>
+
+    <template x-for="(t, index) in termine" :key="t.id || index">
+        <div class="bg-white p-4 mb-4 rounded shadow border-l-4 border-fworange">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-800">
+                <div>
+                    <label class="block mb-1 font-medium">Datum</label>
+                    <input type="date" x-model="t.datum" @change="updateWochentag(index)"
+                           class="w-full p-1 rounded border">
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Wochentag</label>
+                    <input type="text" x-model="t.tag" class="w-full p-1 rounded border bg-gray-100" readonly>
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Gruppe</label>
+                    <input type="text" x-model="t.gruppe" class="w-full p-1 rounded border">
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Bezeichnung</label>
+                    <input type="text" x-model="t.bezeichnung" class="w-full p-1 rounded border">
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Thema</label>
+                    <input type="text" x-model="t.thema" class="w-full p-1 rounded border">
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Schwerpunkt</label>
+                    <input type="text" x-model="t.schwerpunkt" class="w-full p-1 rounded border">
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Verantwortlich</label>
+                    <input type="text" x-model="t.verantwortlich" class="w-full p-1 rounded border">
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Ort</label>
+                    <input type="text" x-model="t.ort" class="w-full p-1 rounded border">
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Zeit</label>
+                    <input type="text" x-model="t.zeit" class="w-full p-1 rounded border">
+                </div>
+            </div>
+            <button @click="deleteTermin(index, t.id)" class="text-sm text-red-600 mt-2">🗑️ Löschen</button>
+        </div>
+    </template>
+</section>
+<section class="max-w-3xl mx-auto py-12 px-4">
+    <h1 class="text-3xl font-bold text-fwrot mb-8">📥 Termine via Excel importieren</h1>
+
+    <form action="/admin/termine/import" method="POST" enctype="multipart/form-data"
+          class="bg-white p-6 rounded shadow border border-gray-300">
+        <label class="block mb-4">
+            <span class="block font-semibold mb-2">Excel-Datei hochladen (.xlsx)</span>
+            <input type="file" name="excel" accept=".xlsx" required
+                   class="block w-full text-sm border p-2 rounded">
+        </label>
+        <button type="submit"
+                class="bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded">
+            📤 Datei importieren
+        </button>
+    </form>
+
+    <div class="mt-6 text-sm text-gray-600">
+        <p><strong>Hinweis:</strong> Die Datei muss die Spalten <code>datum</code>, <code>tag</code>,
+            <code>gruppe</code>, <code>bezeichnung</code>, <code>thema</code>, <code>schwerpunkt</code>, <code>verantwortlich</code>,
+            <code>ort</code>, <code>zeit</code> enthalten.</p>
+    </div>
+</section>
+<script>
+    function termineAdminApp() {
+        return {
+            termine: [],
+            message: '',
+
+            async load() {
+                const res = await fetch('/api/termine');
+                this.termine = await res.json();
+            },
+
+            updateWochentag(index) {
+                const d = new Date(this.termine[index].datum);
+                const tage = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+                this.termine[index].tag = tage[d.getDay()];
+            },
+
+            async save() {
+                for (const t of this.termine) {
+                    if (!t.id) continue;
+                    await fetch(`/api/termine/${t.id}`, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(t)
+                    });
+                }
+                this.message = '✅ Gespeichert!';
+                setTimeout(() => this.message = '', 2000);
+            },
+
+            async deleteTermin(index, id) {
+                if (id) {
+                    await fetch(`/api/termine/${id}`, {method: 'DELETE'});
+                }
+                this.termine.splice(index, 1);
+            },
+
+            async addTermin() {
+                const dummy = {
+                    datum: new Date().toISOString().slice(0, 10),
+                    tag: '',
+                    gruppe: '',
+                    bezeichnung: '',
+                    thema: '',
+                    schwerpunkt: '',
+                    verantwortlich: '',
+                    ort: '',
+                    zeit: ''
+                };
+                const res = await fetch('/api/termine', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(dummy)
+                });
+                const result = await res.json();
+                dummy.id = result.id;
+                this.termine.unshift(dummy);
+            }
+        }
+    }
+</script>
+{% endblock %}

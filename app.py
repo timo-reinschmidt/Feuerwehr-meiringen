@@ -6,11 +6,13 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, session, redirect, url_for, request
 
 from routes.einsaetze_api import einsaetze_api
+from routes.termine_api import termine_api
 
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 app.register_blueprint(einsaetze_api)
+app.register_blueprint(termine_api)
 
 DATA_PATH = "static/data/news.json"
 USERNAME = "admin"
@@ -91,6 +93,12 @@ def edit_mitglieder():
         return {"success": True}
 
     return render_template("admin/edit_mitglieder.html", mitglieder=mitglieder)
+
+
+@app.route("/admin/termine/edit")
+@login_required
+def termine_edit():
+    return render_template("admin/edit_termine.html")
 
 
 @app.route("/")
