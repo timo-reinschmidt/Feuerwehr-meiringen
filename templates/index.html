@@ -144,7 +144,7 @@
                 const [newsRes, einsatzRes, termineRes] = await Promise.all([
                     fetch('/static/data/news.json'),
                     fetch('/api/einsaetze'),
-                    fetch('/static/data/termine.json')
+                    fetch('/api/termine')
                 ]);
 
                 // NEWS

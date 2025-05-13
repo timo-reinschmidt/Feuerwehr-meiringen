@@ -12,7 +12,7 @@
 </section>
 
 <!-- Einstieg mit Fragen & Akkordeon -->
-<section class="py-16 py-16 bg-fwbeige">
+<section class="py-16 bg-fwbeige">
     <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-start">
         <div>
             <h2 class="text-xl font-bold text-fwrot mb-4">Bist du ein <span class="italic">Retter</span> oder eine <span
@@ -42,12 +42,10 @@
                         bestreiten?</p>
                     <div class="flex gap-6 mb-6">
                         <label class="flex items-center gap-2">
-                            <input type="radio" name="verpflichtung" value="ja" class="accent-fworange">
-                            Ja
+                            <input type="radio" name="verpflichtung" value="ja" class="accent-fworange"> Ja
                         </label>
                         <label class="flex items-center gap-2">
-                            <input type="radio" name="verpflichtung" value="nein" class="accent-fworange">
-                            Nein
+                            <input type="radio" name="verpflichtung" value="nein" class="accent-fworange"> Nein
                         </label>
                     </div>
 
@@ -66,32 +64,32 @@
                         <input type="text" name="arbeitsort" placeholder="Arbeitsort *" required
                                class="p-2 rounded border">
 
-                        <div class="md:col-span-2 space-y-2 mt-4">
-                            <label class="flex items-center gap-2 text-white">
+                        <div class="md:col-span-2 space-y-2 mt-4 text-white">
+                            <label class="flex items-center gap-2">
                                 <input type="checkbox" class="h-4 w-4"> Ich interessiere mich für das Rekrutenjahr
                             </label>
-                            <label class="flex items-center gap-2 text-white">
+                            <label class="flex items-center gap-2">
                                 <input type="checkbox" class="h-4 w-4"> Ich habe bereits Feuerwehrdienst geleistet
                             </label>
 
-                            <h3 class="font-semibold mt-4 text-white text-xl">Absolvierte Ausbildungen</h3>
-                            <label class="flex items-center gap-2 text-white">
+                            <h3 class="font-semibold mt-4 text-xl">Absolvierte Ausbildungen</h3>
+                            <label class="flex items-center gap-2">
                                 <input type="checkbox" class="h-4 w-4"> Basiskurs
                             </label>
-                            <label class="flex items-center gap-2 text-white">
+                            <label class="flex items-center gap-2">
                                 <input type="checkbox" class="h-4 w-4"> Atemschutz / KG
                             </label>
-                            <label class="flex items-center gap-2 text-white">
+                            <label class="flex items-center gap-2">
                                 <input type="checkbox" class="h-4 w-4"> TLF-Fahrer resp. C Ausweis
                             </label>
-                            <label class="flex items-center gap-2 text-white">
+                            <label class="flex items-center gap-2">
                                 <input type="checkbox" class="h-4 w-4"> Gruppenführer
                             </label>
-                            <label class="flex items-center gap-2 text-white">
+                            <label class="flex items-center gap-2">
                                 <input type="checkbox" class="h-4 w-4"> Einsatzleiter
                             </label>
 
-                            <label class="block mt-4 font-semibold text-white">Weitere Kurse</label>
+                            <label class="block mt-4 font-semibold">Weitere Kurse</label>
                             <textarea placeholder="Weitere relevante Kurse oder Erfahrungen"
                                       class="w-full p-2 rounded border h-24"></textarea>
                         </div>
@@ -107,11 +105,12 @@
                 </div>
             </div>
 
+            <!-- Schritte 2–4 -->
             <template x-for="(item, index) in [
-        { title: '2. Besuche unseren nächsten Info-Abend', content: 'Du erhältst einen Einblick in unsere Aufgaben, Organisation und Einsatzabläufe.' },
-        { title: '3. Lernen wir uns bei einem Gespräch kennen', content: 'Wir klären gemeinsam deine Motivation, Eignung und Möglichkeiten.' },
-        { title: '4. Du erhältst Bescheid der Feuerwehrkommission', content: 'Nach dem Entscheid startest du deine Grundausbildung bei uns.' }
-      ]" :key="index">
+                { title: '2. Besuche unseren nächsten Info-Abend', content: 'Du erhältst einen Einblick in unsere Aufgaben, Organisation und Einsatzabläufe.' },
+                { title: '3. Lernen wir uns bei einem Gespräch kennen', content: 'Wir klären gemeinsam deine Motivation, Eignung und Möglichkeiten.' },
+                { title: '4. Du erhältst Bescheid der Feuerwehrkommission', content: 'Nach dem Entscheid startest du deine Grundausbildung bei uns.' }
+            ]" :key="index">
                 <div class="border border-gray-300 rounded overflow-hidden">
                     <button @click="open === index + 1 ? open = null : open = index + 1"
                             class="w-full text-left px-4 py-3 font-semibold bg-white hover:bg-gray-100">
@@ -126,7 +125,8 @@
     </div>
 </section>
 
-<section class="py-16 py-16 bg-white" x-data="termineApp()" x-init="load()">
+<!-- EINZIGE Termine-Komponente -->
+<section class="py-16 bg-white" x-data="termineApp()" x-init="init()">
     <div class="max-w-6xl mx-auto px-4">
         <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
             <h2 class="text-2xl font-semibold text-fwrot">Terminkalender 2025</h2>
@@ -138,17 +138,19 @@
             </select>
         </div>
 
+        <!-- Zukünftige Termine -->
         <template x-for="(eintraege, monat) in gruppiereNachMonat(zukunftsTermine)" :key="monat">
             <div class="mb-10">
                 <h3 class="text-xl font-bold mb-4 text-fwblack" x-text="monat"></h3>
                 <div class="grid md:grid-cols-3 gap-6">
-                    <template x-for="(eintrag, index) in eintraege" :key="index">
+                    <template x-for="eintrag in eintraege" :key="eintrag.id">
                         <div class="bg-fwbeige p-4 rounded shadow border-l-4 border-fworange">
                             <p class="text-sm text-gray-500" x-text="eintrag.datum + ' (' + eintrag.tag + ')' "></p>
-                            <h4 class="font-bold text-lg mb-1" x-text="eintrag.thema"><strong>Thema:</strong></h4>
+                            <h4 class="font-bold text-lg mb-1">
+                                Thema: <span x-text="eintrag.thema"></span>
+                            </h4>
                             <p class="text-sm text-gray-700" x-show="eintrag.bezeichnung"><strong>Bezeichnung:</strong>
-                                <span
-                                        x-text="eintrag.bezeichnung"></span></p>
+                                <span x-text="eintrag.bezeichnung"></span></p>
                             <p class="text-sm text-gray-700" x-show="eintrag.schwerpunkt"><strong>Schwerpunkt:</strong>
                                 <span x-text="eintrag.schwerpunkt"></span></p>
                             <p class="text-sm text-gray-700" x-show="eintrag.verantwortlich">
@@ -165,7 +167,7 @@
         </template>
 
         <!-- Archiv -->
-        <div class="mt-12 border-t pt-10" x-data="{ openArchiv: false }">
+        <div class="mt-12 border-t pt-10">
             <button @click="openArchiv = !openArchiv" class="text-fwrot font-semibold text-lg mb-4">
                 📂 Archiv ein-/ausklappen
             </button>
@@ -200,11 +202,14 @@
     </div>
 </section>
 
+<!-- Alpine-Komponente -->
 <script>
     function termineApp() {
         return {
             termine: [],
             filter: '',
+            openArchiv: false,
+            loaded: false,
             gruppenLabels: {
                 AS: 'Atemschutz',
                 OW: 'Ölwehr',
@@ -215,10 +220,17 @@
                 FDV: 'Fahrdienst',
                 Alle: 'Alle'
             },
-            async load() {
-                const res = await fetch('/static/data/termine.json');
+            async init() {
+                if (this.loaded) return;
+                this.loaded = true;
+                const res = await fetch('/api/termine');
                 const data = await res.json();
-                this.termine = data.map(eintrag => {
+                const seen = new Set();
+                this.termine = data.filter(entry => {
+                    if (seen.has(entry.id)) return false;
+                    seen.add(entry.id);
+                    return true;
+                }).map(eintrag => {
                     const raw = eintrag.gruppe || "";
                     const basisgruppe = raw.split(".")[0].split("/")[0];
                     return {...eintrag, basisgruppe};
@@ -230,17 +242,11 @@
             },
             get zukunftsTermine() {
                 const heute = new Date();
-                return this.termine.filter(e => {
-                    const datum = new Date(e.datum.split('.').reverse().join('-'));
-                    return datum >= heute;
-                });
+                return this.termine.filter(e => new Date(e.datum) >= heute);
             },
             get vergangeneTermine() {
                 const heute = new Date();
-                return this.termine.filter(e => {
-                    const datum = new Date(e.datum.split('.').reverse().join('-'));
-                    return datum < heute;
-                });
+                return this.termine.filter(e => new Date(e.datum) < heute);
             },
             gruppiereNachMonat(eintraege) {
                 const filtered = this.filter
@@ -248,8 +254,7 @@
                     : eintraege;
                 const gruppiert = {};
                 for (const eintrag of filtered) {
-                    const monat = new Date(eintrag.datum.split('.').reverse().join('-'))
-                        .toLocaleString('de-CH', {month: 'long', year: 'numeric'});
+                    const monat = new Date(eintrag.datum).toLocaleString('de-CH', {month: 'long', year: 'numeric'});
                     if (!gruppiert[monat]) gruppiert[monat] = [];
                     gruppiert[monat].push(eintrag);
                 }
@@ -261,7 +266,7 @@
                     : eintraege;
                 const gruppiert = {};
                 for (const eintrag of filtered) {
-                    const jahr = new Date(eintrag.datum.split('.').reverse().join('-')).getFullYear();
+                    const jahr = new Date(eintrag.datum).getFullYear();
                     if (!gruppiert[jahr]) gruppiert[jahr] = [];
                     gruppiert[jahr].push(eintrag);
                 }
