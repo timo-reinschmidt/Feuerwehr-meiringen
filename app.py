@@ -7,6 +7,7 @@ from flask import Flask, render_template, session, redirect, url_for, request
 
 from routes.einsaetze_api import einsaetze_api
 from routes.mitglieder_api import mitglieder_api
+from routes.slides_api import slides_api
 from routes.termine_api import termine_api
 
 load_dotenv()
@@ -15,6 +16,7 @@ app.secret_key = os.getenv("SECRET_KEY")
 app.register_blueprint(einsaetze_api)
 app.register_blueprint(termine_api)
 app.register_blueprint(mitglieder_api)
+app.register_blueprint(slides_api)
 
 DATA_PATH = "static/data/news.json"
 USERNAME = "admin"
@@ -29,11 +31,6 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return wrapper
-
-
-@app.route("/ping")
-def ping():
-    return "pong"
 
 
 @app.route("/admin/login", methods=["GET", "POST"])
@@ -101,6 +98,11 @@ def einsaetze_edit():
 @login_required
 def termine_edit():
     return render_template("admin/edit_termine.html")
+
+
+@app.route("/admin/slides")
+def edit_slides():
+    return render_template("admin/edit_slides.html")
 
 
 @app.route("/")

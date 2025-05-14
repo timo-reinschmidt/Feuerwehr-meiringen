@@ -1,10 +1,340 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+<section class="py-16 bg-fwbeige">
+    <div id="slideEditor" class="max-w-5xl mx-auto px-4">
+        <div class="flex justify-between items-center mb-4">
+            <a href="/admin" class="bg-gray-100 hover:bg-gray-200 text-sm px-3 py-1 rounded">← Zurück zum Dashboard</a>
+            <a href="/admin/logout" class="bg-fwrot text-white text-sm px-3 py-1 rounded hover:bg-red-600">🔒 Logout</a>
+        </div>
 
-</body>
-</html>
+        <h1 class="text-3xl font-bold mb-6 text-fwrot">🖼️ Slides verwalten</h1>
+
+        <div class="flex gap-4 mb-6">
+            <button @click="addSlide" class="bg-fworange text-white px-4 py-2 rounded">➕ Slide hinzufügen</button>
+        </div>
+
+        <h2 class="text-xl font-semibold mb-2 text-fwblack">Aktive Slides</h2>
+        <div v-for="(slide, index) in activeSlides" :key="slide.id || index"
+             class="bg-white rounded shadow p-4 mb-4 space-y-2">
+            <div class="flex items-center gap-2">
+                <input type="checkbox" v-model="slide._temp_active" :id="'active-inact-' + index" class="accent-fwrot">
+                <label :for="'active-inact-' + index" class="text-sm text-gray-700">Aktiv</label>
+            </div>
+            <input v-model="slide.title" type="text" placeholder="Titel" class="w-full p-2 border rounded">
+            <input v-model="slide.subtitle" type="text" placeholder="Untertitel" class="w-full p-2 border rounded">
+
+            <div class="flex items-center gap-4">
+                <img :src="slide.image || '/static/images/placeholder.png'"
+                     class="h-32 w-auto object-cover rounded border">
+                <input type="file" @change="uploadImage($event, slide)">
+            </div>
+
+            <input v-model.number="slide.sort_order" type="number" placeholder="Sortierung"
+                   class="w-full p-2 border rounded">
+
+            <div class="flex gap-2">
+                <select v-model="slide.internal_link" class="w-1/2 p-2 border rounded">
+                    <option disabled value="">Interne Seite auswählen</option>
+                    <option value="/">Startseite</option>
+                    <option value="/mitmachen">Mitmachen</option>
+                    <option value="/einsaetze">Einsätze</option>
+                    <option value="/ueber-uns">Über uns</option>
+                </select>
+                <input v-model="slide.external_link" type="text"
+                       placeholder="Oder externe URL" class="w-1/2 p-2 border rounded">
+                <input v-model="slide.button_label" type="text" placeholder="Button-Text (z. B. 'Mehr erfahren')"
+                       class="w-full p-2 border rounded">
+            </div>
+
+            <div class="flex gap-2">
+                <input v-model="slide.start_at" type="datetime-local" class="w-1/2 p-2 border rounded"
+                       placeholder="Anzeigen ab">
+                <input v-model="slide.end_at" type="datetime-local" class="w-1/2 p-2 border rounded"
+                       placeholder="Anzeigen bis">
+            </div>
+
+            <div class="text-sm text-gray-500">
+                <span v-if="slide.start_at || slide.end_at">
+                    Gültig
+                    <span v-if="slide.start_at">ab [[ slide.start_at.replace('T', ' ') ]]</span>
+                    <span v-if="slide.start_at && slide.end_at"> – </span>
+                    <span v-if="slide.end_at">bis [[ slide.end_at.replace('T', ' ') ]]</span>
+                </span>
+                <span v-else class="italic text-gray-400">Ohne zeitliche Begrenzung</span>
+            </div>
+
+            <div class="flex gap-2 mt-2">
+                <button @click="saveSlide(slide)" class="text-sm bg-fwblack text-white px-3 py-1 rounded">💾 Speichern
+                </button>
+                <button @click="removeSlide(slide, index)" class="text-sm bg-fwrot text-white px-3 py-1 rounded">🗑️
+                    Entfernen
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <button @click="showExpired = !showExpired"
+                    class="text-sm bg-gray-200 px-3 py-1 rounded mb-2"
+                    v-text="showExpired ? '▼ Abgelaufene Slides ausblenden' : '▶ Abgelaufene Slides anzeigen'">
+            </button>
+
+            <div v-show="showExpired">
+                <h2 class="text-xl font-semibold mb-2 text-gray-600">Abgelaufene Slides</h2>
+                <div v-for="(slide, index) in expiredSlides" :key="'expired-' + (slide.id || index)"
+                     class="bg-gray-100 border border-gray-300 rounded shadow p-4 mb-4 space-y-2 opacity-70">
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" v-model="slide._temp_active" :id="'active-inact-' + index"
+                               class="accent-fwrot">
+                        <label :for="'active-inact-' + index" class="text-sm text-gray-700">Aktiv</label>
+                    </div>
+                    <input v-model="slide.title" type="text" placeholder="Titel" class="w-full p-2 border rounded">
+                    <input v-model="slide.subtitle" type="text" placeholder="Untertitel"
+                           class="w-full p-2 border rounded">
+
+                    <div class="flex items-center gap-4">
+                        <img :src="slide.image || '/static/images/placeholder.png'"
+                             class="h-32 w-auto object-cover rounded border">
+                        <input type="file" @change="uploadImage($event, slide)">
+                    </div>
+
+                    <input v-model.number="slide.sort_order" type="number" placeholder="Sortierung"
+                           class="w-full p-2 border rounded">
+
+                    <div class="flex gap-2">
+                        <select v-model="slide.internal_link" class="w-1/2 p-2 border rounded">
+                            <option disabled value="">Interne Seite auswählen</option>
+                            <option value="/">Startseite</option>
+                            <option value="/mitmachen">Mitmachen</option>
+                            <option value="/einsaetze">Einsätze</option>
+                            <option value="/ueber-uns">Über uns</option>
+                        </select>
+                        <input v-model="slide.external_link" type="text"
+                               placeholder="Oder externe URL" class="w-1/2 p-2 border rounded">
+                        <input v-model="slide.button_label" type="text"
+                               placeholder="Button-Text (z. B. 'Mehr erfahren')" class="w-full p-2 border rounded">
+                    </div>
+
+                    <div class="flex gap-2">
+                        <input v-model="slide.start_at" type="datetime-local" class="w-1/2 p-2 border rounded"
+                               placeholder="Anzeigen ab">
+                        <input v-model="slide.end_at" type="datetime-local" class="w-1/2 p-2 border rounded"
+                               placeholder="Anzeigen bis">
+                    </div>
+
+                    <div class="text-sm text-gray-500">
+                <span v-if="slide.start_at || slide.end_at">
+                    Gültig
+                    <span v-if="slide.start_at">ab [[ slide.start_at.replace('T', ' ') ]]</span>
+                    <span v-if="slide.start_at && slide.end_at"> – </span>
+                    <span v-if="slide.end_at">bis [[ slide.end_at.replace('T', ' ') ]]</span>
+                </span>
+                        <span v-else class="italic text-gray-400">Ohne zeitliche Begrenzung</span>
+                    </div>
+
+                    <div class="flex gap-2 mt-2">
+                        <button @click="saveSlide(slide)" class="text-sm bg-fwblack text-white px-3 py-1 rounded">💾
+                            Speichern
+                        </button>
+                        <button @click="removeSlide(slide, index)"
+                                class="text-sm bg-fwrot text-white px-3 py-1 rounded">🗑️
+                            Entfernen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <button @click="showInactive = !showInactive"
+                    class="text-sm bg-gray-200 px-3 py-1 rounded mb-2"
+                    v-text="showInactive ? '▼ Inaktive Slides ausblenden' : '▶ Inaktive Slides anzeigen'">
+            </button>
+
+            <div v-show="showInactive">
+                <h2 class="text-xl font-semibold mb-2 text-gray-600">Inaktive Slides</h2>
+                <div v-for="(slide, index) in inactiveSlides" :key="'inactive-' + (slide.id || index)"
+                     class="bg-yellow-100 border border-yellow-300 rounded shadow p-4 mb-4 space-y-2 opacity-60">
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" v-model="slide._temp_active" :id="'active-inact-' + index"
+                               class="accent-fwrot">
+                        <label :for="'active-inact-' + index" class="text-sm text-gray-700">Aktiv</label>
+                    </div>
+                    <input v-model="slide.title" type="text" placeholder="Titel" class="w-full p-2 border rounded">
+                    <input v-model="slide.subtitle" type="text" placeholder="Untertitel"
+                           class="w-full p-2 border rounded">
+                    <div class="flex items-center gap-4">
+                        <img :src="slide.image || '/static/images/placeholder.png'"
+                             class="h-32 w-auto object-cover rounded border">
+                        <input type="file" @change="uploadImage($event, slide)">
+                    </div>
+                    <input v-model.number="slide.sort_order" type="number" placeholder="Sortierung"
+                           class="w-full p-2 border rounded">
+                    <div class="flex gap-2">
+                        <select v-model="slide.internal_link" class="w-1/2 p-2 border rounded">
+                            <option disabled value="">Interne Seite auswählen</option>
+                            <option value="/">Startseite</option>
+                            <option value="/mitmachen">Mitmachen</option>
+                            <option value="/einsaetze">Einsätze</option>
+                            <option value="/ueber-uns">Über uns</option>
+                        </select>
+                        <input v-model="slide.external_link" type="text"
+                               placeholder="Oder externe URL" class="w-1/2 p-2 border rounded">
+                        <input v-model="slide.button_label" type="text"
+                               placeholder="Button-Text (z. B. 'Mehr erfahren')" class="w-full p-2 border rounded">
+                    </div>
+
+                    <div class="flex gap-2">
+                        <input v-model="slide.start_at" type="datetime-local" class="w-1/2 p-2 border rounded"
+                               placeholder="Anzeigen ab">
+                        <input v-model="slide.end_at" type="datetime-local" class="w-1/2 p-2 border rounded"
+                               placeholder="Anzeigen bis">
+                    </div>
+
+                    <div class="text-sm text-gray-500">
+                <span v-if="slide.start_at || slide.end_at">
+                    Gültig
+                    <span v-if="slide.start_at">ab [[ slide.start_at.replace('T', ' ') ]]</span>
+                    <span v-if="slide.start_at && slide.end_at"> – </span>
+                    <span v-if="slide.end_at">bis [[ slide.end_at.replace('T', ' ') ]]</span>
+                </span>
+                        <span v-else class="italic text-gray-400">Ohne zeitliche Begrenzung</span>
+                    </div>
+
+                    <div class="flex gap-2 mt-2">
+                        <button @click="saveSlide(slide)" class="text-sm bg-fwblack text-white px-3 py-1 rounded">💾
+                            Speichern
+                        </button>
+                        <button @click="removeSlide(slide, index)"
+                                class="text-sm bg-fwrot text-white px-3 py-1 rounded">🗑️ Entfernen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="mt-4 text-green-600">[[ message ]]</p>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+<script>
+    const {createApp} = Vue;
+    const app = createApp({
+        data() {
+            return {
+                slides: [],
+                message: "",
+                showExpired: false,
+                showInactive: false
+            };
+        },
+        computed: {
+            activeSlides() {
+                const now = new Date();
+                return this.slides.filter(s => {
+                    const start = s.start_at ? new Date(s.start_at) : null;
+                    const end = s.end_at ? new Date(s.end_at) : null;
+                    return s.is_active !== false &&
+                        (!start || start <= now) &&
+                        (!end || end >= now);
+                });
+            },
+            expiredSlides() {
+                const now = new Date();
+                return this.slides.filter(s => {
+                    const end = s.end_at ? new Date(s.end_at) : null;
+                    return s.is_active !== false && end && end < now;
+                });
+            },
+            inactiveSlides() {
+                return this.slides.filter(s => s.is_active === false);
+            }
+        },
+        methods: {
+            async fetchSlides() {
+                const res = await fetch("/admin/api/slides");
+                const rawSlides = await res.json();
+
+                this.slides = rawSlides.map(s => ({
+                    ...s,
+                    start_at: s.start_at ? new Date(s.start_at).toISOString().slice(0, 16) : '',
+                    end_at: s.end_at ? new Date(s.end_at).toISOString().slice(0, 16) : '',
+                    _temp_active: s.is_active ?? true,
+                    button_label: s.button_label || 'Mehr erfahren'
+                }));
+            },
+            addSlide() {
+                this.slides.push({
+                    title: "",
+                    subtitle: "",
+                    image: "",
+                    sort_order: 0,
+                    internal_link: "",
+                    external_link: "",
+                    start_at: "",
+                    end_at: "",
+                    is_active: true
+                });
+            },
+            async saveSlide(slide) {
+                if (slide.start_at && slide.end_at && new Date(slide.end_at) <= new Date(slide.start_at)) {
+                    alert("❌ Endzeit muss nach Startzeit liegen.");
+                    return;
+                }
+
+                const payload = {
+                    ...slide,
+                    is_active: slide._temp_active,
+                    start_at: slide.start_at ? new Date(slide.start_at).toISOString() : null,
+                    end_at: slide.end_at ? new Date(slide.end_at).toISOString() : null
+                };
+
+                const res = await fetch("/admin/slides", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify([payload])
+                });
+
+                const result = await res.json();
+                if (result.success) {
+                    slide.id = result.slides[0].id;
+                    this.message = "✅ Slide gespeichert!";
+                    setTimeout(() => this.message = "", 3000);
+                }
+            },
+            async removeSlide(slide, index) {
+                if (!slide.id) return this.slides.splice(index, 1);
+                const confirmed = confirm("Wirklich löschen?");
+                if (!confirmed) return;
+                const res = await fetch(`/admin/slides/${slide.id}`, {method: "DELETE"});
+                const result = await res.json();
+                if (result.success) this.slides.splice(index, 1);
+            },
+            async uploadImage(event, slide) {
+                const file = event.target.files[0];
+                const formData = new FormData();
+                formData.append("image", file);
+                formData.append("old_path", slide.image || "");  // 🆕 alten Pfad mitschicken
+
+                const res = await fetch("/admin/slides/upload", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await res.json();
+                if (data.success) slide.image = data.path;
+                else alert("Fehler beim Hochladen");
+            }
+        },
+        mounted() {
+            this.fetchSlides().then(() => {
+                console.log("DEBUG: Slides geladen:", this.slides);
+                console.log("NOW:", new Date());
+            });
+        }
+    });
+
+    app.config.compilerOptions.delimiters = ['[[', ']]'];
+    app.mount("#slideEditor");
+</script>
+{% endblock %}
