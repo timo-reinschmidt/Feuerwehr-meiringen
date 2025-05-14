@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section id="slideshow" class="relative h-[60vh] min-h-[350px] overflow-hidden text-white">
+<section id="slideshow" class="relative h-[60vh] min-h-[350px] overflow-hidden text-white w-full">
     <div v-if="slides.length > 0"
          class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
          :style="{ backgroundImage: 'url(' + slides[current].image + ')' }">
