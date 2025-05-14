@@ -1,40 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section x-data="slideshow()" x-init="start()"
-         class="relative h-[85vh] bg-black text-white overflow-hidden rounded-xl shadow-lg">
-    x-data="slideshow()"
-    x-init="init()"
-    class="relative h-[85vh] bg-black text-white overflow-hidden">
+<section id="slideshow" class="relative h-[60vh] min-h-[350px] overflow-hidden text-white">
+    <div v-if="slides.length > 0"
+         class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
+         :style="{ backgroundImage: 'url(' + slides[current].image + ')' }">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+            <h1 class="text-4xl md:text-5xl font-bold drop-shadow" v-text="slides[current].title"></h1>
+            <p class="text-md md:text-xl mt-2 drop-shadow" v-text="slides[current].subtitle"></p>
 
-    <!-- Slides -->
-    <template x-for="(slide, index) in slides" :key="index">
-        <div
-                x-show="current === index"
-                x-transition.opacity.duration.700ms
-                class="absolute inset-0 bg-cover bg-center flex items-center justify-center flex-col text-center px-4"
-                :style="`background-image: url('${slide.image}')`">
-            <div class="absolute inset-0 bg-black/50"></div>
-            <div class="relative z-10 max-w-2xl">
-                <h1 class="text-4xl md:text-5xl font-bold drop-shadow mb-4" x-text="slide.title"></h1>
-                <p class="text-lg drop-shadow mb-6" x-text="slide.subtitle"></p>
-                <template x-if="slide.button">
-                    <a :href="slide.button.link"
-                       class="bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded transition"
-                       x-text="slide.button.text"></a>
-                </template>
-            </div>
+            <a v-if="slides[current].internal_link || slides[current].external_link"
+               :href="slides[current].internal_link || slides[current].external_link"
+               :target="slides[current].external_link ? '_blank' : null"
+               class="mt-4 bg-fworange hover:bg-fwrot text-white font-bold py-2 px-4 rounded transition"
+               v-text="slides[current].button_label && slides[current].button_label.trim() ? slides[current].button_label : 'Mehr erfahren'">
+            </a>
         </div>
-    </template>
+    </div>
 
-    <!-- Controls -->
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        <template x-for="(slide, i) in slides" :key="i">
-            <button @click="goTo(i)" class="w-3 h-3 rounded-full"
-                    :class="current === i ? 'bg-white' : 'bg-white/40'"></button>
-        </template>
+    <!-- Steuerungspfeile -->
+    <button @click="prev" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20">&#10094;</button>
+    <button @click="next" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-20">&#10095;</button>
+
+    <!-- Punkte -->
+    <div class="absolute bottom-4 w-full flex justify-center gap-2 z-20">
+        <button v-for="(slide, i) in slides" :key="i"
+                @click="goTo(i)"
+                class="w-3 h-3 rounded-full"
+                :class="current === i ? 'bg-white' : 'bg-white/40'">
+        </button>
     </div>
 </section>
+
 
 <!-- SCHNELLZUGRIFFE -->
 <section class="py-16 bg-fwbeige">
@@ -114,24 +112,52 @@
     </div>
 </section>
 
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 <script>
-    function slideshow() {
-        return {
-            slides: [],
-            current: 0,
-            interval: null,
-            async init() {
-                const res = await fetch('/static/data/slides.json');
-                this.slides = await res.json();
-                this.start();
+    const {createApp} = Vue;
+
+    createApp({
+        data() {
+            return {
+                slides: [],
+                current: 0,
+                interval: null,
+                autoRotate: true
+            };
+        },
+        async mounted() {
+            const res = await fetch("/api/slides");
+            this.slides = (await res.json()).filter(s => {
+                const now = new Date();
+                const start = s.start_at ? new Date(s.start_at) : null;
+                const end = s.end_at ? new Date(s.end_at) : null;
+                return (!start || start <= now) && (!end || end >= now);
+            });
+            if (this.slides.length > 1 && this.autoRotate) this.startRotation();
+        },
+        methods: {
+            next() {
+                this.current = (this.current + 1) % this.slides.length;
             },
-            start() {
-                this.interval = setInterval(() => {
-                    this.current = (this.current + 1) % this.slides.length;
-                }, 5000);
+            prev() {
+                this.current = (this.current - 1 + this.slides.length) % this.slides.length;
+            },
+            goTo(index) {
+                this.current = index;
+            },
+            toggleAuto() {
+                this.autoRotate = !this.autoRotate;
+                if (this.autoRotate) this.startRotation();
+                else this.stopRotation();
+            },
+            startRotation() {
+                this.interval = setInterval(() => this.next(), 7000);
+            },
+            stopRotation() {
+                if (this.interval) clearInterval(this.interval);
             }
         }
-    }
+    }).mount("#slideshow");
 </script>
 <script>
     function startseiteApp() {
