@@ -4,9 +4,12 @@ from functools import wraps
 
 from dotenv import load_dotenv
 from flask import Flask, render_template, session, redirect, url_for, request
+from psycopg2.extras import RealDictCursor
 
+from db import get_connection
 from routes.einsaetze_api import einsaetze_api
 from routes.mitglieder_api import mitglieder_api
+from routes.news_api import news_api
 from routes.slides_api import slides_api
 from routes.termine_api import termine_api
 
@@ -17,6 +20,7 @@ app.register_blueprint(einsaetze_api)
 app.register_blueprint(termine_api)
 app.register_blueprint(mitglieder_api)
 app.register_blueprint(slides_api)
+app.register_blueprint(news_api)
 
 DATA_PATH = "static/data/news.json"
 USERNAME = "admin"
@@ -183,6 +187,22 @@ def ueber_uns_kontakt():
 @app.route("/ueber-uns/geschichte")
 def ueber_uns_geschichte():
     return render_template("ueber_uns_geschichte.html", title="Geschichte")
+
+
+@app.route("/news")
+def news():
+    return render_template("news.html", title="News")
+
+
+@app.route("/news/<slug>")
+def show_news_detail(slug):
+    db = get_connection()
+    cur = db.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT * FROM news WHERE slug = %s", (slug,))
+    result = cur.fetchone()
+    if not result:
+        os.abort(404)
+    return render_template("news_detail.html", news=result)
 
 
 if __name__ == "__main__":

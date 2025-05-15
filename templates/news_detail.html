@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="py-16 bg-fwbeige">
+    <div class="max-w-4xl mx-auto px-4">
+        <a href="/news" class="text-sm text-fwrot hover:underline">← Zurück zur Übersicht</a>
+
+        <h1 class="text-3xl font-bold text-fwrot mb-2 mt-4">{{ news.titel }}</h1>
+        {% if news.datum %}
+        <p class="text-sm text-gray-600 mb-4">
+            {{ news.datum.strftime('%d. %B %Y') }}
+        </p>
+        {% endif %}
+
+        {% if news.beschreibung %}
+        <p class="text-gray-800 mb-4">{{ news.beschreibung }}</p>
+        {% endif %}
+
+        {% if news.ort or news.zeit %}
+        <p class="text-sm text-gray-500 italic mb-2">
+            {% if news.ort %}Ort: {{ news.ort }}{% endif %}
+            {% if news.ort and news.zeit %} | {% endif %}
+            {% if news.zeit %}Zeit: {{ news.zeit }}{% endif %}
+        </p>
+        {% endif %}
+
+        {% if news.internal_link or news.external_link %}
+        <a href="{{ news.internal_link or news.external_link }}" target="_blank"
+           class="inline-block mt-6 bg-fworange hover:bg-fwrot text-white px-4 py-2 rounded">
+            {{ news.button_label or 'Mehr erfahren' }}
+        </a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

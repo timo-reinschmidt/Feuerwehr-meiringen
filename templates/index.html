@@ -73,8 +73,10 @@
                         <p class="text-sm text-gray-500" x-text="formatDatum(item.datum)"></p>
                         <h4 class="font-bold text-lg" x-text="item.titel"></h4>
                         <p class="text-sm text-gray-700" x-text="item.beschreibung"></p>
-                        <a :href="item.link || '#'" class="text-fworange font-semibold text-sm mt-2 inline-block">mehr
-                            erfahren →</a>
+                        <a :href="item.slug ? ('/news/' + item.slug) : (item.internal_link || item.external_link || '#')"
+                           class="text-fworange">
+                            mehr erfahren →
+                        </a>
                     </div>
                 </template>
                 <a href="/news" class="text-fwrot font-semibold text-sm">➕ Mehr anzeigen</a>
@@ -168,7 +170,7 @@
 
             async loadAll() {
                 const [newsRes, einsatzRes, termineRes] = await Promise.all([
-                    fetch('/static/data/news.json'),
+                    fetch('/api/news/preview'),
                     fetch('/api/einsaetze'),
                     fetch('/api/termine')
                 ]);

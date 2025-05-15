@@ -1,104 +1,197 @@
 {% extends "base.html" %}
-
 {% block content %}
-<section class="py-16 bg-fwbeige" x-data="newsEditor()" x-init="initNews({{ news | tojson | safe }})">
-    <div class="max-w-4xl mx-auto px-4">
+<section class="py-16 bg-fwbeige">
+    <div id="newsEditor" class="max-w-5xl mx-auto px-4">
         <div class="flex justify-between items-center mb-4">
-            <a href="/admin" class="bg-gray-100 hover:bg-gray-200 text-sm px-3 py-1 rounded">
-                ← Zurück zum Dashboard
-            </a>
-
-            <a href="/" class="bg-fwrot text-white text-sm px-3 py-1 rounded hover:bg-red-600">
-                🔒 Logout
-            </a>
+            <a href="/admin" class="bg-gray-100 hover:bg-gray-200 text-sm px-3 py-1 rounded">← Zurück zum Dashboard</a>
+            <a href="/logout" class="bg-fwrot text-white text-sm px-3 py-1 rounded hover:bg-red-600">🔒 Logout</a>
         </div>
-        <h1 class="text-3xl font-bold mb-6 text-fwrot">📝 News bearbeiten</h1>
 
-        <!-- NEWS LIST -->
-        <template x-for="(item, index) in news" :key="index">
-            <div class="bg-white rounded shadow p-4 mb-4">
-                <label class="block text-sm font-semibold text-fwblack">Datum</label>
-                <input type="text" x-model="item.datum" class="w-full p-2 border rounded mb-2">
+        <h1 class="text-3xl font-bold mb-6 text-fwrot">🗞️ News verwalten</h1>
 
-                <label class="block text-sm font-semibold text-fwblack">Titel</label>
-                <input type="text" x-model="item.titel" class="w-full p-2 border rounded mb-2">
+        <div class="flex gap-4 mb-6">
+            <button @click="addNews" class="bg-fworange text-white px-4 py-2 rounded">➕ News-Eintrag</button>
+        </div>
 
-                <label class="block text-sm font-semibold text-fwblack">Beschreibung</label>
-                <textarea x-model="item.beschreibung" class="w-full p-2 border rounded mb-2" rows="2"></textarea>
+        <div v-for="(item, index) in news" :key="item.id || index"
+             class="bg-white rounded shadow p-4 mb-4 space-y-2">
+            <input v-model="item.datum" type="date" class="w-full p-2 border rounded" placeholder="dd.mm.yyyy">
+            <input v-model="item.titel" @input="item.slug = generateSlug(item.titel, item.datum)" type="text"
+                   class="w-full p-2 border rounded" placeholder="Titel">
+            <input v-model="item.slug" type="text" class="w-full p-2 border rounded"
+                   placeholder="Slug (z. B. tag-der-offenen-tuer-2025)">
+            <textarea v-model="item.beschreibung" class="w-full p-2 border rounded"
+                      placeholder="Beschreibung"></textarea>
+            <input v-model="item.ort" type="text" class="w-full p-2 border rounded" placeholder="Ort">
+            <input v-model="item.zeit" type="text" class="w-full p-2 border rounded" placeholder="Zeit">
+            <input v-model="item.button_label" type="text" class="w-full p-2 border rounded"
+                   placeholder="Button-Text (z. B. 'Mehr erfahren')">
 
-                <label class="block text-sm font-semibold text-fwblack">Ort</label>
-                <input type="text" x-model="item.ort" class="w-full p-2 border rounded mb-2">
+            <div class="flex gap-2">
+                <select v-model="item.internal_link" class="w-1/2 p-2 border rounded">
+                    <option disabled value="">Interne Seite auswählen</option>
+                    <option value="/">Startseite</option>
+                    <option value="/mitmachen">Mitmachen</option>
+                    <option value="/einsaetze">Einsätze</option>
+                    <option value="/ueber-uns">Über uns</option>
+                </select>
+                <input v-model="item.external_link" type="text" class="w-1/2 p-2 border rounded"
+                       placeholder="Externer Link">
+            </div>
 
-                <label class="block text-sm font-semibold text-fwblack">Zeit</label>
-                <input type="text" x-model="item.zeit" class="w-full p-2 border rounded mb-2">
+            <div class="flex gap-2">
+                <input v-model="item.start_at" type="datetime-local" class="w-1/2 p-2 border rounded"
+                       placeholder="Startzeit">
+                <input v-model="item.end_at" type="datetime-local" class="w-1/2 p-2 border rounded"
+                       placeholder="Endzeit">
+            </div>
 
-                <label class="block text-sm font-semibold text-fwblack">Link</label>
-                <input type="text" x-model="item.link" class="w-full p-2 border rounded mb-4">
-
-                <button @click="remove(index)" class="text-sm bg-fwrot hover:bg-red-600 text-white px-3 py-1 rounded">
-                    🗑️ Entfernen
+            <div class="flex gap-2 mt-2">
+                <button @click="saveNews(item)" class="text-sm bg-fwblack text-white px-3 py-1 rounded">💾 Speichern
+                </button>
+                <button @click="removeNews(item, index)" class="text-sm bg-fwrot text-white px-3 py-1 rounded">🗑️
+                    Löschen
                 </button>
             </div>
-        </template>
-
-        <div class="flex gap-4 mt-8">
-            <button @click="addNew()" class="bg-fworange text-white px-4 py-2 rounded hover:bg-orange-600">
-                ➕ Neue News hinzufügen
-            </button>
-            <button @click="save()" class="bg-fwblack text-white px-4 py-2 rounded hover:bg-gray-900">
-                💾 Änderungen speichern
-            </button>
         </div>
 
-        <template x-if="message">
-            <p class="mt-4 text-green-600" x-text="message"></p>
-        </template>
+        <p class="mt-4 text-green-600">[[ message ]]</p>
     </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
 <script>
-    function newsEditor() {
-        console.log("🧠 Alpine-Komponente newsEditor() wurde geladen");
-        return {
-            news: [],
-            message: "",
+    const {createApp} = Vue;
 
-            initNews(initialNews) {
-                console.log("✅ News initialisiert:", initialNews);
-                this.news = initialNews;
-            },
+    const formatToInputDate = (datumStr) => {
+        if (!datumStr) return '';
 
-            addNew() {
-                console.log("➕ addNew triggered");
-                this.news.push({
-                    datum: "",
-                    titel: "",
-                    beschreibung: "",
-                    ort: "",
-                    zeit: "",
-                    link: ""
+        if (datumStr instanceof Date) {
+            return datumStr.toISOString().slice(0, 10); // korrektes Format für <input type="date">
+        }
+
+        if (typeof datumStr === 'string') {
+            if (datumStr.includes(".")) {
+                const [day, month, year] = datumStr.split(".");
+                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+            }
+
+            if (datumStr.includes("-") && datumStr.length >= 10) {
+                return datumStr.slice(0, 10); // schneidet evtl. Zeit weg
+            }
+        }
+
+        return '';
+    };
+
+    const formatToDotDate = (isoStr) => {
+        if (!isoStr || typeof isoStr !== 'string') return '';
+        const [year, month, day] = isoStr.slice(0, 10).split("-");
+        return `${day}.${month}.${year}`;
+    };
+
+    const app = createApp({
+        data() {
+            return {
+                news: [],
+                message: ""
+            };
+        },
+        methods: {
+            async fetchNews() {
+                const res = await fetch("/admin/api/news");
+                const rawNews = await res.json();
+                this.news = rawNews.map(n => {
+                    const convertedDate = formatToInputDate(n.datum);
+                    console.log(`📅 ${n.datum} → ${convertedDate}`);
+                    return {
+                        ...n,
+                        datum: n.datum ? new Date(n.datum).toISOString().slice(0, 10) : '',
+                        slug: n.slug || this.generateSlug(n.titel, convertedDate),
+                        start_at: n.start_at ? new Date(n.start_at).toISOString().slice(0, 16) : '',
+                        end_at: n.end_at ? new Date(n.end_at).toISOString().slice(0, 16) : '',
+                        button_label: n.button_label || 'Mehr erfahren'
+                    };
                 });
             },
+            generateSlug(title, date) {
+                if (!title) return "";
 
-            remove(index) {
-                console.log("🗑️ remove index", index);
-                this.news.splice(index, 1);
+                // Umlaute ersetzen
+                const umlautMap = {
+                    'ä': 'ae',
+                    'ö': 'oe',
+                    'ü': 'ue',
+                    'ß': 'ss'
+                };
+
+                const replaced = title.toLowerCase().split('').map(c => umlautMap[c] || c).join('');
+
+                const base = replaced
+                    .normalize("NFKD").replace(/[\u0300-\u036f]/g, "")  // Diakritika entfernen
+                    .replace(/[^a-z0-9\s-]/g, "")  // Sonderzeichen entfernen
+                    .trim()
+                    .replace(/[\s-]+/g, "-");  // Leerzeichen zu Bindestrich
+
+                if (date) {
+                    return `${base}-${date.slice(0, 10)}`;
+                }
+                return base;
+
             },
-
-            async save() {
-                console.log("💾 Saving news:", this.news);
+            addNews() {
+                this.news.push({
+                    datum: '',
+                    titel: '',
+                    slug: '',
+                    beschreibung: '',
+                    ort: '',
+                    zeit: '',
+                    internal_link: '',
+                    external_link: '',
+                    button_label: 'Mehr erfahren',
+                    start_at: '',
+                    end_at: ''
+                });
+            },
+            async saveNews(item) {
+                if (item.start_at && item.end_at && new Date(item.end_at) <= new Date(item.start_at)) {
+                    alert("❌ Endzeit muss nach Startzeit liegen.");
+                    return;
+                }
+                const payload = {
+                    ...item,
+                    datum: item.datum,
+                    slug: item.slug,
+                    start_at: item.start_at ? new Date(item.start_at).toISOString() : null,
+                    end_at: item.end_at ? new Date(item.end_at).toISOString() : null
+                };
                 const res = await fetch("/admin/news", {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(this.news)
+                    body: JSON.stringify([payload])
                 });
                 const result = await res.json();
                 if (result.success) {
-                    this.message = "✅ News wurden gespeichert!";
+                    item.id = result.news[0].id;
+                    this.message = "✅ News gespeichert!";
                     setTimeout(() => this.message = "", 3000);
                 }
+            },
+            async removeNews(item, index) {
+                if (!item.id) return this.news.splice(index, 1);
+                if (!confirm("Wirklich löschen?")) return;
+                const res = await fetch(`/admin/news/${item.id}`, {method: "DELETE"});
+                const result = await res.json();
+                if (result.success) this.news.splice(index, 1);
             }
-        };
-    }
+        },
+        mounted() {
+            this.fetchNews();
+        }
+    });
+
+    app.config.compilerOptions.delimiters = ['[[', ']]'];
+    app.mount("#newsEditor");
 </script>
 {% endblock %}

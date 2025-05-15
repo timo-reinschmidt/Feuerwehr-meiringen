@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="bg-fwrot text-white py-20">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">🗞️ Aktuelle Mitteilungen</h1>
+        <p class="text-lg md:text-xl text-white/90">
+            Hier findest du alle News & Anlässe der Feuerwehr Meiringen.
+        </p>
+    </div>
+</section>
+
+<!-- NEWS LISTE -->
+<section class="py-16 bg-fwbeige" x-data="newsApp()" x-init="load()">
+    <div class="max-w-6xl mx-auto px-4">
+        <template x-if="news.length === 0">
+            <p class="text-gray-600">Es sind derzeit keine Mitteilungen verfügbar.</p>
+        </template>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <template x-for="item in news" :key="item.id">
+                <div class="bg-white rounded shadow p-6 border-l-4 border-fworange flex flex-col justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500 mb-1" x-text="formatDatum(item.datum)"></p>
+                        <h2 class="text-xl font-bold text-fwblack mb-2" x-text="item.titel"></h2>
+                        <p class="text-gray-700 text-sm" x-text="item.beschreibung"></p>
+                    </div>
+                    <div class="mt-4">
+                        <a :href="'/news/' + item.slug"
+                           class="text-fworange font-semibold hover:underline text-sm">
+                            mehr erfahren →
+                        </a>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</section>
+
+<script>
+    function newsApp() {
+        return {
+            news: [],
+            async load() {
+                const res = await fetch("/api/news/full");
+                this.news = await res.json();
+            },
+            formatDatum(d) {
+                const datum = new Date(d);
+                return datum.toLocaleDateString("de-CH", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric"
+                });
+            }
+        };
+    }
+</script>
+
+{% endblock %}
